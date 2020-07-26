@@ -8,16 +8,16 @@
 
 # Site
 title: Blog
-subtitle: ヾ(≧O≦)〃ao~ welcome to my site
+subtitle: ヾ(≧O≦)〃ao~ welcome to my website
 description: a Data Science major in ECNU
-keywords: Data Science/ python/ sharing love
+keywords: Data Science/ python/ love sharing
 author: "Be_invisible"
 language: zh-CN
 timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://www.bilibili.com
+url: http://ZhangChunXian.github.io
 root: /
 permalink: posts/:url.html
 permalink_defaults:
@@ -330,12 +330,12 @@ social_icons:
 # Blog rolls
 links_settings:
   icon: link
-  title: 友链
+  title: 友情链接
   # Available values: block | inline
   layout: inline
 
 links:
-  Ahaochan: http://blog.ahao.moe
+  GitHub: https://github.com/ZhangChunXian
 
 # Table of Contents in the Sidebar
 # Front-matter variable (unsupport wrap expand_all).
