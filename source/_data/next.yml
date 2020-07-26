@@ -296,7 +296,7 @@ sidebar:
 # Sidebar Avatar
 avatar:
   # Replace the default image and set the url here.
-  url: /images/config/avatar.jpg
+  url: /images/config/myavatar.jpg
   # If true, the avatar will be dispalyed in circle.
   rounded: true
   # If true, the avatar will be rotated with the cursor.
@@ -400,10 +400,10 @@ reward_settings:
   enable: true
   animation: true
   comment: 坚持原创分享，您的支持将鼓励我继续创作!
-
+q
 reward:
-  wechatpay: /images/config/wechatpay.jpg
-  alipay: /images/config/alipay.jpg
+  wechatpay: /images/config/mywechatpay.jpg
+  alipay: /images/config/myalipay.jpg
   #paypal: /images/paypal.png
   #bitcoin: /images/bitcoin.png
 
