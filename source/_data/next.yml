@@ -9,7 +9,7 @@
 # Site
 title: Blog
 subtitle: ヾ(≧O≦)〃ao~ welcome to my website
-description: a Data Science major in ECNU
+description: Love sharing
 keywords: Data Science/ python/ love sharing
 author: "Be_invisible"
 language: zh-CN
@@ -311,7 +311,7 @@ site_state: true
 # Value before `||` delimiter is the target permalink, value after `||` delimiter is the name of Font Awesome icon.
 social:
   GitHub: https://github.com/ZhangChunXian || github
-  #E-Mail: mailto:yourname@gmail.com || envelope
+  E-Mail: mailto:1836891291@qq.com || envelope
   #Weibo: https://weibo.com/yourname || weibo
   #Google: https://plus.google.com/yourname || google
   #Twitter: https://twitter.com/yourname || twitter
@@ -335,7 +335,9 @@ links_settings:
   layout: inline
 
 links:
-  GitHub: https://github.com/ZhangChunXian
+  华东师范大学数据科学与工程学院: http://dase.ecnu.edu.cn/
+  
+
 
 # Table of Contents in the Sidebar
 # Front-matter variable (unsupport wrap expand_all).
