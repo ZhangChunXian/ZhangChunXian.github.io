@@ -5,8 +5,7 @@ tags:
   - tag1
   - tag1
 categories:
-  - 分类1
-  - 分类3
+  - 博客
 date: 2020-03-28 00:00:00
 ---
 
