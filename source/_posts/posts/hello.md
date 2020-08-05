@@ -2,8 +2,7 @@
 title: hello world
 url: hello_world_url
 tags:
-  - tag1
-  - tag1
+  - hello world
 categories:
   - 博客
 date: 2020-03-28 00:00:00
