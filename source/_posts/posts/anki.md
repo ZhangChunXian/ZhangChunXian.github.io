@@ -13,19 +13,19 @@ date: 2020-08-05 12:00:00
 
 ***为了更好的阅读，请先收藏本文结构的思维导图***
 
-<img src="picture/50.png" style="zoom: 33%;" />
+<img src="/images/50.png" style="zoom: 33%;" />
 
 #### 情境：你学习中有木有这样的烦恼？背东西背的慢，记不住，感觉知识不进脑子。
 
-<img src="picture/知识不进脑子.jpg" style="zoom:50%;" />
+<img src="/images/知识不进脑子.jpg" style="zoom:50%;" />
 
 #### 好不容易记住知识，可自己好像一眨眼就忘了
 
-<img src="picture/马冬梅.png" style="zoom:50%;" />
+<img src="/images/马冬梅.png" style="zoom:50%;" />
 
 #### 有没用这样一款软件，背东西背不会就一直复现，背完了又可以科学复习，还能自己定制需要背诵的内容？最好呢，还能白嫖！！反正我知道你心动了，不如就介绍一下本文的主角——anki。
 
-![](picture/白嫖.jpg)
+![](/images/白嫖.jpg)
 
 ## 正文
 
@@ -33,7 +33,7 @@ date: 2020-08-05 12:00:00
 
 #### 举个例子,今天新学50个单词，设定复习时间为一天后，再第二天设定时刻后，这50个单词将在你背诵时再次出现，实现重复记忆。这些是软件自动去完成的。
 
-<img src="picture/anki.png"  />
+<img src="/images/anki.png"  />
 
 ### 下载链接和地址：
 
@@ -45,7 +45,7 @@ date: 2020-08-05 12:00:00
 
 ### 1.获取anki应用：打开App Store ，输入关键词anki，找到应用AnkiMobile Flashcards，下载。
 
-<img src="picture/ankiinstall.png" style="zoom: 33%;" />
+<img src="/images/ankiinstall.png" style="zoom: 33%;" />
 
 **1.在App Store中有多个应用包含关键词anki,请认准上图APP。**
 
@@ -55,7 +55,7 @@ date: 2020-08-05 12:00:00
 
 ### 2.打开anki,主界面介绍如下
 
-<img src="picture/8.png" style="zoom: 33%;" />
+<img src="/images/8.png" style="zoom: 33%;" />
 
 ##### 1.官网链接：点击进入anki官网
 
@@ -63,7 +63,7 @@ date: 2020-08-05 12:00:00
 
 ##### 3.卡片浏览器：以关键词搜索所有卡片
 
-<img src="picture/9.png" style="zoom: 25%;" />
+<img src="/images/9.png" style="zoom: 25%;" />
 
 ##### 4.偏好设置：设置复习的频率，时间，数量等
 
@@ -77,7 +77,7 @@ date: 2020-08-05 12:00:00
 
 ##### 2. 按住牌组名向右移动，选择重命名或删除牌组。
 
-![](picture/13.png)**小技巧：在命名中 加入 :: 设置多级菜单牌组**
+![](/images/13.png)**小技巧：在命名中 加入 :: 设置多级菜单牌组**
 
 ​               **一级牌组::二级牌组**
 
@@ -87,11 +87,11 @@ date: 2020-08-05 12:00:00
 
 *卡片背面*
 
-<img src="picture/10.png" style="zoom:33%;" />
+<img src="/images/10.png" style="zoom:33%;" />
 
 *卡片正面*
 
-<img src="picture/11.png" style="zoom:33%;" />
+<img src="/images/11.png" style="zoom:33%;" />
 
 ##### 3.点击屏幕即可切换反面到正面，选择复习时间间隔后即可跳转到下一张卡片。现在，可以开始你的anki初体验了！
 
@@ -99,11 +99,11 @@ date: 2020-08-05 12:00:00
 
 #### 1.基础设置
 
-<img src="picture/偏好设置.png" style="zoom: 33%;" />
+<img src="/images/偏好设置.png" style="zoom: 33%;" />
 
 #### 2. 复习卡片内设置
 
-<img src="picture/12.png" style="zoom: 33%;" />
+<img src="/images/12.png" style="zoom: 33%;" />
 
 ## Mac端（桌面端）anki使用教程
 
@@ -149,7 +149,7 @@ date: 2020-08-05 12:00:00
 
    考研单词5000词正确样式为
 
-   ![](picture/14.png)
+   ![](/images/14.png)
 
    
    
@@ -195,7 +195,7 @@ date: 2020-08-05 12:00:00
 
 **贴一张自己的使用记录φ(≧ω≦*)♪**
 
-<img src="picture/17.png" style="zoom:50%;" />
+<img src="/images/17.png" style="zoom:50%;" />
 
  **用了几个月，累计复习80000次卡片，效果还不错(p≧w≦q)，等到了十万就换十万上去n(*≧▽≦*)n**
 
