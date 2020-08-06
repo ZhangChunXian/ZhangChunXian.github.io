@@ -1,9 +1,9 @@
 <script>
   window.onblur = function() {
-       document.title = '哈哈';
+       document.title = 'Σ(っ°Д°;)っ喔哟，崩溃啦!';
   }
 
   window.onfocus = function() {
-       document.title = '嘻嘻';
+       document.title = '(o゜▽゜)o☆咦，又好啦!';
   }
 </script>
