@@ -1195,3 +1195,5 @@ live2d:
     show: false
   react:
     opacity: 0.7
+# Fireworks  点击爆炸效果
+fireworks: true
