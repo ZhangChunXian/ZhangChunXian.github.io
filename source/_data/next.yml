@@ -107,7 +107,8 @@ deploy:
     repo: 
       github: git@github.com:ZhangChunXian/ZhangChunXian.github.io.git,master
       coding: git@e.coding.net:zcxblog/zhangchunxian.coding.me/zhangchunxian.coding.me.git,master
-    ## branch: master
+  ## branch: master
+
 
 feed:
   type: rss2
