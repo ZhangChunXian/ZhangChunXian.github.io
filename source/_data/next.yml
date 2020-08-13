@@ -105,8 +105,8 @@ theme: next
 deploy:
   - type: git
     repo: 
-      github: https://54b0fef8f44f7d1901a42abe99035ac0cb2a49b5@github.com/ZhangChunXian/ZhangChunXian.github.io.git
-      coding: https://RmlFxGVCDZ:558f8473736d67c6d373f01208f895ea322f96fd@e.coding.net/zcxblog/zhangchunxian.coding.me/zhangchunxian.coding.me.git
+      github: https://d774b95d8c3f61efd253eed4c5a7ad5d291ea314@github.com/ZhangChunXian/ZhangChunXian.github.io.git
+      coding: https://RmlFxGVCDZ:2e2b76d710543d1b1db0ec117eba1a588f28cd36@e.coding.net/zcxblog/zhangchunxian.coding.me/zhangchunxian.coding.me.git
     branch: master
 
 
