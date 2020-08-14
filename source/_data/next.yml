@@ -104,11 +104,8 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   - type: git
-    repo: 
-      github: https://d774b95d8c3f61efd253eed4c5a7ad5d291ea314@github.com/ZhangChunXian/ZhangChunXian.github.io.git
-      coding: https://RmlFxGVCDZ:2e2b76d710543d1b1db0ec117eba1a588f28cd36@e.coding.net/zcxblog/zhangchunxian.coding.me/zhangchunxian.coding.me.git
+    repo: https://REPO_TOKEN@github.com/ZhangChunXian/ZhangChunXian.github.io.git
     branch: master
-
 
 feed:
   type: rss2
