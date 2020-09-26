@@ -7,6 +7,7 @@ type: "about"
 ## 个人信息
 
 + 现就读于华东师范大学数据科学与大数据技术专业
++ **是学生，更是一名开发者**
 + 技术博客：https://zcxblog.cn/
 + GitHub：https://github.com/ZhangChunXian
 + 期望职位：大数据分析师
@@ -72,7 +73,7 @@ type: "about"
 
 1.担任谷歌AI中国中心主任
 
-2.担任Youtube大数据分析师
+2.担任YouTube大数据分析师
 
 ### 阿里巴巴网络技术有限公司（2019年7月~至今）
 
