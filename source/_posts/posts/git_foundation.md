@@ -1,6 +1,6 @@
 ---
-title: 记忆神器anki——基础篇
-url: 记忆神器anki_基础篇_url
+title: Git 基础回顾
+url: git_foundatoin_url
 tags:
   - 软件应用
   - 开发
