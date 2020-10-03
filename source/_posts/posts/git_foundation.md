@@ -1,4 +1,14 @@
-
+---
+title: 记忆神器anki——基础篇
+url: 记忆神器anki_基础篇_url
+tags:
+  - 软件应用
+  - 开发
+categories:
+  - 软件应用
+  - 开发
+date: 2020-10-01 12:00:00
+---
 
 前言: 最近换了一台新笔记本,  需要花费大量时间个人定制笔记本上的编程环境. 对于一个计算机专业的学生来说, git肯定是必不可少的. 说来惭愧, 本人在初次用命令行学习git后就转向了Github Desktop和vscode的图形化界面来进行日常的代码版本控制, 没有很好的将命令行运用在平时的学习中. 加上九月份Github Cli 稳定版发布, Github上的操作也可以用命令行完成, 故趁部署个人开发环境之机回顾所学Git知识与操作, 培养命令行操作的习惯.
 
@@ -7,6 +17,8 @@
 **注: 本文仅仅涉及到git的冰山一角, 仅仅满足学生日常小项目开发需求, 更多操作可参考书籍或git官方文档**
 
 #  Git 基础回顾
+
+<!-- more -->
 
 ## 1. git基本工作流程
 
@@ -36,10 +48,10 @@ Git基本工作区域可以分为以下三部分
 git config --global user.name "username"
 ```
 
-设置用户名邮箱(useremail即为Github注册邮箱)
+设置用户名邮箱(useremail即为Github注册邮箱, **不用加引号**)
 
 ```shell
-git config --global user.email "useremail"
+git config --global user.email useremail
 ```
 
 使用下列命令查看是否设置成功
@@ -185,7 +197,7 @@ code .						# 使用vscode打开当前文件夹
    提交操作
 
    ```shell
-   git commit -m "Your description about this change"			# ''中填写你对本次修改的说明(必须)
+   git commit -m 'Your description about this change'		# ''中填写你对本次修改的说明(必须)
    ```
 
 ##  3. Git管理远程仓库
