@@ -159,7 +159,13 @@ code .						# 使用vscode打开当前文件夹
    ```shell
    git add 'filename'				# 将新文件提交到 暂存区
    ```
+   当改变的文件较多，git add 逐个提交命令繁琐或者不上传新文件，被删除文件时，以用如下的命令
 
+   ```shell
+   git add -A  # 提交所有变化
+   git add -u  # 提交被修改(modified)和被删除(deleted)文件，不包括新文件(new)
+   git add .  #提交新文件(new)和被修改(modified)文件，不包括被删除(deleted)文件
+   ```
 >此时输入 git status 会显示如下
 >
 >On branch master
