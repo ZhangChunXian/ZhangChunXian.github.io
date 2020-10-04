@@ -1,6 +1,6 @@
 ---
 title: CSAPP: 2.1 信息的存储
-url: CSAPP_2.1_信息的存储_url
+url: CSAPP_2_1_信息的存储_url
 tags:
   - 计算机系统
 categories:
