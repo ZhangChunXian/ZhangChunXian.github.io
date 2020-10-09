@@ -63,9 +63,10 @@ git config --list
 在下面出现的信息中出现`user.name:`, `user.email` , 以及后面信息均正确则说明配置成功.
 
 > 常用Linux命令
->      `pwd`查看当前动作目录, 返回当前工作目录的绝对路径
+>         `pwd`查看当前动作目录, 返回当前工作目录的绝对路径
 >
-> `ls`查看在此文件夹中的文件列表 
+> `ls`查看在此文件夹中的文件(非隐藏文件)
+> 		ls -a 查看所有文件包括隐藏文件.  比如git初始化后生成的`.git`文件夹就是隐藏文件, ls命令是看不到的.
 
 ### 初始化一个Git仓库
 
@@ -79,25 +80,31 @@ git config --list
    
 2. 在文件内初始化Git(创建git仓库)
 
-   通过Linux命令到达新创建文件夹位置
+   通过Linux命令进入文件夹.
 
    ```shell
    cd foldername
    ```
 
-   初始化Git
+   逆操作: 返回上一级文件夹
 
+   ```shell
+   cd ..
+   ```
+
+   初始化Git
+   
    ```shell
    git init
    ```
-
+   
    之后在新创建文件夹中会出现隐藏文件`.git`(如果看不到的话设置电脑显示隐藏文件)
 
 ### 向仓库中添加文件
 
 **一开始的操作均是在本地工作区(Working Directory)**
 
-1. 新建新文件
+1. 新建文件
 
    ```shell
    touch filename
@@ -107,7 +114,7 @@ git config --list
 
    > git常用命令
    >
-   > 利用git status可以查看当前工作目录的状态.
+   > git status 可以查看当前工作目录的状态.
    
    在git bash中输入Linux命令 `git status`, 输出
    
@@ -131,12 +138,12 @@ git config --list
    在git bash中输入以下命令
 
    ```shell
-   vi filename
+   vim filename                           # 在命令行中打开vim编辑器修改文件
    ```
 
-会出现许多以`-`开头的空行,并在下方显示`filename [unix] (time date) `  
+ 会出现许多以`-`开头的空行,并在下方显示`filename [unix] (time date) `                                                                                                                                                                                                          		在空行区域即可用vim编辑文件, 注意先按 “i”键进入插入模式再开始编辑!
 
-​                                                                                                                                                                                                            		在空行区域即可编辑文件
+题外话: vim编辑器是知乎, 学长, Google等都在推荐的编辑器, 目前为止我还不是习惯vim这种极简的编辑器(当然以后会折腾vim的配置), 正在努力适应.
 
 当然也可以用编辑器或者IDE来编辑(修改文件), 在git bash中输入以下命令
 
@@ -150,7 +157,7 @@ code .						# 使用vscode打开当前文件夹
 
 >Linux命令
 >
->cat filename				// 查看当前文件
+>cat filename				// 查看当前文件中的内容
 
 4.  将修改文件提交到暂存区
 
@@ -197,7 +204,7 @@ code .						# 使用vscode打开当前文件夹
    从git中删除文件
 
    ```shell
-   git rm filename											 # filename指的是需要操作的文件名
+   git rm filename											# filename指的是需要操作的文件名
    ```
 
    提交操作
@@ -230,6 +237,41 @@ code .						# 使用vscode打开当前文件夹
    ```
 
    使用git pull 更新，相当于是从远程获取最新版本并merge到本地
+
+## 4. 拓展
+
+> Git website: http://git-scm.com
+>
+> Free on-line book: http://git-scm.com/book
+>
+> Reference page for Git:http://gitref.org/index.html
+>
+> Git tutorial :http://schacon.github.com/git/gittutorial.html
+>
+> Git for Computer Scientists: http://eagain.net/articles/git-for-computer-scientists/ 
+
+在命令行中, 输入以下指令获取更多git指令
+
+```shell
+git help verb     # verb = config, add, commit, etc
+```
+
+推荐书籍:
+
+# Pro Git
+
+[![Pro Git](https://img9.doubanio.com/view/subject/s/public/s4245786.jpg)](https://img9.doubanio.com/view/subject/l/public/s4245786.jpg)
+
+作者: [Scott Chacon](https://book.douban.com/author/4560652/)
+		出版社: Apress
+		出版年: 2009-8-27
+		页数: 288
+		定价: USD 34.99
+		装帧: Paperback
+		ISBN: 9781430218333
+
+
+
 
 
 结语: 仅仅掌握这些是远远不够的, 真实的项目开发要复杂的多, git也不是一篇两篇文章可以掌握的. 后续会参考一些书籍与视频, 完善git从入门到精通的种种操作,  争取将git熟练运用于真实的项目开发中.
