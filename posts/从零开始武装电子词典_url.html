@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/config/favicon-32x32-next.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/config/favicon-16x16-next.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Consolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhangchunxian.github.io","root":"/","scheme":"Mist","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="公欲善其事,必先利其器——从零开始武装电子词典为了更好的阅读，请先收藏本文结构的思维导图  前言：好的英语学习者必备的一样利器,就是词典。遇到生词要查,遇到需要替换的表达要查,遇到熟词生义要查,在这样反复的查询中,词汇量就会显著增加,对英语的语感也会逐渐培养起来。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从零开始武装电子词典">
+<meta property="og:url" content="http://zhangchunxian.github.io/posts/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E6%AD%A6%E8%A3%85%E7%94%B5%E5%AD%90%E8%AF%8D%E5%85%B8_url.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="公欲善其事,必先利其器——从零开始武装电子词典为了更好的阅读，请先收藏本文结构的思维导图  前言：好的英语学习者必备的一样利器,就是词典。遇到生词要查,遇到需要替换的表达要查,遇到熟词生义要查,在这样反复的查询中,词汇量就会显著增加,对英语的语感也会逐渐培养起来。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E6%AD%A6%E8%A3%85%E7%94%B5%E5%AD%90%E8%AF%8D%E5%85%B8.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/%E8%AF%8D%E5%85%B8.jpg">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/%E5%93%AA%E9%87%8C%E8%83%BD%E9%85%8D%E7%BD%AE%E5%88%B0.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/%E6%AC%A7%E9%99%86%E8%AF%8D%E5%85%B8.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/sound++.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/%E4%BC%98%E8%AF%8D%E8%AF%8D%E6%A0%B9.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/%E9%87%8A%E4%B9%89%E6%AF%94%E4%BE%8B.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/%E6%9C%97%E6%96%87.jpg">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/English%E8%AF%8D%E6%A0%B9.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/%E6%9C%89%E9%81%93%E8%BE%A8%E6%9E%90.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E7%AE%A1%E7%90%86.jpg">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/%E5%AF%BC%E5%87%BA.jpg">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/%E5%AF%BC%E5%87%BA2.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/%E6%89%93%E5%BC%80.jpg">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/openxml.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/1.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/2.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/3.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/4.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/5.png">
+<meta property="article:published_time" content="2020-08-05T04:00:00.000Z">
+<meta property="article:modified_time" content="2020-11-11T02:57:05.611Z">
+<meta property="article:author" content="Be_invisible">
+<meta property="article:tag" content="软件应用">
+<meta property="article:tag" content="英语">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zhangchunxian.github.io/images/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E6%AD%A6%E8%A3%85%E7%94%B5%E5%AD%90%E8%AF%8D%E5%85%B8.png">
+
+<link rel="canonical" href="http://zhangchunxian.github.io/posts/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E6%AD%A6%E8%A3%85%E7%94%B5%E5%AD%90%E8%AF%8D%E5%85%B8_url.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+<script>
+  window.onblur = function() {
+       document.title = 'Σ(っ°Д°;)っ喔哟，崩溃啦!';
+  }
+
+  window.onfocus = function() {
+       document.title = '(o゜▽゜)o☆咦，又好啦!';
+  }
+</script>
+
+    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+  
+
+  <title>从零开始武装电子词典 | Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/rss.xml" title="Blog" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">ヾ(≧O≦)〃ao~ welcome to my website</h1>
+      
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">13</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">14</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">30</span></a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/ZhangChunXian" class="github-corner" title="我的Github" aria-label="我的Github" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zhangchunxian.github.io/posts/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E6%AD%A6%E8%A3%85%E7%94%B5%E5%AD%90%E8%AF%8D%E5%85%B8_url.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/config/myavatar.png">
+      <meta itemprop="name" content="Be_invisible">
+      <meta itemprop="description" content="Love sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          从零开始武装电子词典<a href="https://github.com/ZhangChunXian/ZhangChunXian.github.io/blob/source/source/_posts/_posts/posts/英语词典.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil"></i></a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-05 12:00:00" itemprop="dateCreated datePublished" datetime="2020-08-05T12:00:00+08:00">2020-08-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%BA%94%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">软件应用</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%BA%94%E7%94%A8/%E8%8B%B1%E8%AF%AD/" itemprop="url" rel="index"><span itemprop="name">英语</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="公欲善其事-必先利其器——从零开始武装电子词典"><a href="#公欲善其事-必先利其器——从零开始武装电子词典" class="headerlink" title="公欲善其事,必先利其器——从零开始武装电子词典"></a>公欲善其事,必先利其器——从零开始武装电子词典</h1><p><strong><em>为了更好的阅读，请先收藏本文结构的思维导图</em></strong></p>
+<p><img data-src="/images/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E6%AD%A6%E8%A3%85%E7%94%B5%E5%AD%90%E8%AF%8D%E5%85%B8.png" alt=""></p>
+<h1 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h1><p>好的英语学习者必备的一样利器,就是词典。遇到生词要查,遇到需要替换的表达要查,遇到熟词生义要查,在这样反复的查询中,词汇量就会显著增加,对英语的语感也会逐渐培养起来。</p>
+<a id="more"></a>
+
+<h1 id="话不多说，先展示一下我自己配置的电子词典"><a href="#话不多说，先展示一下我自己配置的电子词典" class="headerlink" title="话不多说，先展示一下我自己配置的电子词典"></a>话不多说，先展示一下我自己配置的电子词典</h1><img data-src="/images/词典.jpg" style="zoom: 25%;" />
+
+<p> 自我感觉还阔以(‾◡◝)，也希望各位大佬评论给出一些意见，最近在纠结要不要加上英英字典=￣ω￣=</p>
+<p> 所以这样一款颜值高，功能全的字典在哪里配置得到呢？</p>
+<img data-src="/images/哪里能配置到.png" style="zoom:50%;" />
+
+<p>下面就告诉你o(*≧▽≦)ツ</p>
+<h1 id="所需软件：欧陆词典"><a href="#所需软件：欧陆词典" class="headerlink" title="所需软件：欧陆词典"></a>所需软件：欧陆词典</h1><img data-src="/images/欧陆词典.png" style="zoom: 33%;" />
+
+<h2 id="关于欧陆词典的介绍请阅读下一个链接，这里不在赘述"><a href="#关于欧陆词典的介绍请阅读下一个链接，这里不在赘述" class="headerlink" title="关于欧陆词典的介绍请阅读下一个链接，这里不在赘述"></a>关于欧陆词典的介绍请阅读下一个链接，这里不在赘述</h2><p><a href="https://zhuanlan.zhihu.com/p/61088145" target="_blank" rel="noopener">欧路词典－不仅仅是一个查词软件丨使用指南</a></p>
+<h1 id="选择合适的mdd-mdx等字典资源"><a href="#选择合适的mdd-mdx等字典资源" class="headerlink" title="选择合适的mdd,mdx等字典资源"></a>选择合适的mdd,mdx等字典资源</h1><h2 id="如果你有足够兴趣，可以选择词典文件论坛来搜集到到需要的词典资源"><a href="#如果你有足够兴趣，可以选择词典文件论坛来搜集到到需要的词典资源" class="headerlink" title="如果你有足够兴趣，可以选择词典文件论坛来搜集到到需要的词典资源."></a>如果你有足够兴趣，可以选择<a href="https://www.pdawiki.com/forum/" target="_blank" rel="noopener">词典文件论坛</a>来搜集到到需要的词典资源.</h2><h2 id="你也可以打包用我的词典文件，链接在下方自取。"><a href="#你也可以打包用我的词典文件，链接在下方自取。" class="headerlink" title="你也可以打包用我的词典文件，链接在下方自取。"></a>你也可以打包用我的词典文件，链接在下方自取。</h2><p><a href="https://pan.baidu.com/s/1yrH06yvpR9yD6mB62fWM7g" target="_blank" rel="noopener">个人词典链接</a>    提取码：9hnt<br>        <a href="https://pan.baidu.com/s/1cEPdyDUBCqEcEWtCfJzKSg" target="_blank" rel="noopener">备用词典链接</a>    提取码：92um</p>
+<h2 id="词典介绍"><a href="#词典介绍" class="headerlink" title="词典介绍"></a>词典介绍</h2><h3 id="sound"><a href="#sound" class="headerlink" title="sound++"></a><strong>sound++</strong></h3><p>该字典可以查单词的各个形式（如过去式，过去分词等），和使用频率（如单词在COCA，经济学人中使用频率的排名）,以及单词所属的应试水平（4，6，研，八，托，雅，GRE等）。一般用来判断单词是否超纲及其重要程度。</p>
+<p><img data-src="/images/sound++.png" alt=""></p>
+<h3 id="优词词根"><a href="#优词词根" class="headerlink" title="优词词根"></a>优词词根</h3><p>该字典可以查询部分单词的词根，构词原理和变形。一般适合于用来快速记忆同根词。</p>
+<p><strong>在未来英语学习中你可能会听说词根构词法，这个方法可以用来记忆一些复杂的单词</strong></p>
+<p><img data-src="/images/%E4%BC%98%E8%AF%8D%E8%AF%8D%E6%A0%B9.png" alt=""></p>
+<h3 id="释义比例词典（带词性）"><a href="#释义比例词典（带词性）" class="headerlink" title="释义比例词典（带词性）"></a>释义比例词典（带词性）</h3><p>当查到一些多义词时，该词典可以以百分比的形式归纳除词汇的主要释义及词性，帮助我们快速掌握词汇的主要释义。</p>
+<p><img data-src="/images/%E9%87%8A%E4%B9%89%E6%AF%94%E4%BE%8B.png" alt=""></p>
+<h3 id="朗文双解"><a href="#朗文双解" class="headerlink" title="朗文双解"></a>朗文双解</h3><p>《朗文双解》是为中等程度的英语学习者所打造，目的是帮助他们进一步巩固已有的英语基础，使他们对英语的各个方面有更深入的认识，从而提高他们理解及运用英语的能力。 该词典收词量丰富，例句大量选自英语语库资料，不但文字深入浅出，而且内容与我们的生活息息相关。</p>
+<img data-src="/images/朗文.jpg" style="zoom:50%;" />
+
+<h3 id="English词根词缀词频"><a href="#English词根词缀词频" class="headerlink" title="English词根词缀词频"></a>English词根词缀词频</h3><p>该词典以同根词的形式，列举出单词，以及他们的释义，词频率，构词法解释，可以用来更好的归纳与记忆同根词和词根。</p>
+<img data-src="/images/English词根.png" style="zoom:50%;" />
+
+<h3 id="有道词语辨析（同义词词典）"><a href="#有道词语辨析（同义词词典）" class="headerlink" title="有道词语辨析（同义词词典）"></a>有道词语辨析（同义词词典）</h3><p>该词典将意思相近的词归纳起来，并说明词汇之间的差别，适合于单词的深度学习。</p>
+<img data-src="/images/有道辨析.png" style="zoom:50%;" />
+
+<p> 以上就是我最常用的六个字典。还有其他好的词典等着各位探索呢ヾ(≧O≦)〃嗷~</p>
+<h1 id="一些小技巧"><a href="#一些小技巧" class="headerlink" title="一些小技巧"></a>一些小技巧</h1><p><strong>PC段欧陆词典：1.按ctrl+F组合键搜索释义内的文字~</strong></p>
+<p>​                            <strong>2.将pdf导入到欧陆词典阅读，英语单词点击就可以查了奈ヾ(≧▽≦*)o</strong></p>
+<p><strong>移动版欧陆字典：1.在菜单里选择Search in the text搜索释义内的文字~</strong></p>
+<p>​                               <strong>2.将pdf导入到欧陆词典阅读，英语单词点击就可以查了奈ヾ(≧▽≦*)o</strong></p>
+<p> 最后不要忘了，将不熟悉的单词放进生词本哦！ヽ(✿ﾟ▽ﾟ)ノ</p>
+<h1 id="欧陆词典其他软件配合"><a href="#欧陆词典其他软件配合" class="headerlink" title="欧陆词典其他软件配合"></a>欧陆词典其他软件配合</h1><h2 id="欧陆词典与anki"><a href="#欧陆词典与anki" class="headerlink" title="欧陆词典与anki"></a>欧陆词典与anki</h2><pre><code>不知道anki的小伙伴请移步下面的链接</code></pre><p><a href="">2.我的英语词汇背诵方法——利用anki实现快速记忆和有效复习</a></p>
+<p><strong>系统：Windows10 （OS X类似)</strong></p>
+<h3 id="1-如何将欧陆词典中的生词导入到anki？"><a href="#1-如何将欧陆词典中的生词导入到anki？" class="headerlink" title="1.如何将欧陆词典中的生词导入到anki？"></a>1.如何将欧陆词典中的生词导入到anki？</h3><p>1.打开欧陆词典，选择工具-学习记录管理器</p>
+<p><img data-src="/images/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E7%AE%A1%E7%90%86.jpg" alt=""></p>
+<p>2.选中所需要生词所在的生词本，点击导出</p>
+<img data-src="/images/导出.jpg" style="zoom: 67%;" />
+
+<p>3.将导出格式设置为xml格式，导出项目更改为导出简明解释</p>
+<img data-src="/images/导出2.png" style="zoom:67%;" />
+
+<p>4.用excel打开导出的xml文件,在打开选项中选择打开方式为 As an Xml table</p>
+<img data-src="/images/打开.jpg" style="zoom: 67%;" />
+
+<img data-src="/images/openxml.png" style="zoom:67%;" />
+
+
+
+<p>5.之后文件会以excel的形式打开，删除除单词外的所有列</p>
+<img data-src="/images/1.png" style="zoom: 33%;" />
+
+<img data-src="/images/2.png" style="zoom: 33%;" />
+
+<p>6.将xml文件另存为txt（Tab delimited）格式</p>
+<p><img data-src="/images/3.png" alt=""></p>
+<p>7.打开anki桌面端，导入txt文件</p>
+<p><img data-src="/images/4.png" alt=""></p>
+<img data-src="/images/5.png" style="zoom:50%;" />
+
+<p>8 <strong>请点击下方的链接，学习使用anki插件wordquery，实现模板化自动化制作记忆卡片</strong></p>
+<p><strong><a href="https://www.bilibili.com/video/BV1qW411a7fZ" target="_blank" rel="noopener">wordquery使用介绍</a></strong></p>
+<p>下面是本人的牌组及其词典 文件</p>
+<p><a href="https://pan.baidu.com/s/1G-dqCSTDKKF6-y4tHc5NhQ" target="_blank" rel="noopener">牌组和词典文件</a>  提取码：d657</p>
+<p>制作卡片可能需要的词表<br>        <a href="https://pan.baidu.com/s/1DVoMVxkbqiOk-33cz_UBCQ" target="_blank" rel="noopener">词表</a>                     提取码：1234        </p>
+<p>9 <strong>如果需要在移动端平台背诵，请申请ankiweb账号并保存移动端pc端在线，在任何系统中点击同步即可申请。</strong></p>
+<p><strong>更多anki使用方法请点击下方的链接</strong>(待更新)</p>
+<p>anki——记忆神器</p>
+<ul>
+<li>如果有错误或者是改进的意见，请在下方评论区畅所欲言。笔者第一次做个人博客，没有经验，写作也还有些欠</li>
+<li>如果你觉得对你有帮助，请动一动你可爱的小手给我打几颗星，不要下次一定好不好？</li>
+<li>(￣▽￣)～■干杯□～(￣▽￣)</li>
+<li>最后的最后，如果可以，请到我的GitHub主页给我点个star小星星吧( <em>￣▽￣)((≧︶≦</em>)</li>
+</ul>
+<p>​    </p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>坚持原创分享，您的支持将鼓励我继续创作!</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/config/mywechatpay.jpg" alt="Be_invisible 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/config/myalipay.jpg" alt="Be_invisible 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Be_invisible
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://zhangchunxian.github.io/posts/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E6%AD%A6%E8%A3%85%E7%94%B5%E5%AD%90%E8%AF%8D%E5%85%B8_url.html" title="从零开始武装电子词典">http://zhangchunxian.github.io/posts/从零开始武装电子词典_url.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%BA%94%E7%94%A8/" rel="tag"># 软件应用</a>
+              <a href="/tags/%E8%8B%B1%E8%AF%AD/" rel="tag"># 英语</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/%E6%8F%92%E7%8F%AD%E7%94%9F%E8%80%83%E8%AF%95_%E6%96%B9%E6%B3%95_url.html" rel="prev" title="方法">
+      <i class="fa fa-chevron-left"></i> 方法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/%E8%AE%B0%E7%AC%94%E8%AE%B0%E7%9A%84%E9%AB%98%E6%95%88%E5%A7%BF%E5%8A%BF%E8%87%AA%E5%AD%A6%E7%AF%87_%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE%E7%AC%94%E8%AE%B0_url.html" rel="next" title="记笔记的高效姿势自学篇——思维导图笔记">
+      记笔记的高效姿势自学篇——思维导图笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#公欲善其事-必先利其器——从零开始武装电子词典"><span class="nav-number">1.</span> <span class="nav-text">公欲善其事,必先利其器——从零开始武装电子词典</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#前言："><span class="nav-number">2.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#话不多说，先展示一下我自己配置的电子词典"><span class="nav-number">3.</span> <span class="nav-text">话不多说，先展示一下我自己配置的电子词典</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#所需软件：欧陆词典"><span class="nav-number">4.</span> <span class="nav-text">所需软件：欧陆词典</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于欧陆词典的介绍请阅读下一个链接，这里不在赘述"><span class="nav-number">4.1.</span> <span class="nav-text">关于欧陆词典的介绍请阅读下一个链接，这里不在赘述</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#选择合适的mdd-mdx等字典资源"><span class="nav-number">5.</span> <span class="nav-text">选择合适的mdd,mdx等字典资源</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#如果你有足够兴趣，可以选择词典文件论坛来搜集到到需要的词典资源"><span class="nav-number">5.1.</span> <span class="nav-text">如果你有足够兴趣，可以选择词典文件论坛来搜集到到需要的词典资源.</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#你也可以打包用我的词典文件，链接在下方自取。"><span class="nav-number">5.2.</span> <span class="nav-text">你也可以打包用我的词典文件，链接在下方自取。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#词典介绍"><span class="nav-number">5.3.</span> <span class="nav-text">词典介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sound"><span class="nav-number">5.3.1.</span> <span class="nav-text">sound++</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优词词根"><span class="nav-number">5.3.2.</span> <span class="nav-text">优词词根</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#释义比例词典（带词性）"><span class="nav-number">5.3.3.</span> <span class="nav-text">释义比例词典（带词性）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#朗文双解"><span class="nav-number">5.3.4.</span> <span class="nav-text">朗文双解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#English词根词缀词频"><span class="nav-number">5.3.5.</span> <span class="nav-text">English词根词缀词频</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有道词语辨析（同义词词典）"><span class="nav-number">5.3.6.</span> <span class="nav-text">有道词语辨析（同义词词典）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一些小技巧"><span class="nav-number">6.</span> <span class="nav-text">一些小技巧</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#欧陆词典其他软件配合"><span class="nav-number">7.</span> <span class="nav-text">欧陆词典其他软件配合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#欧陆词典与anki"><span class="nav-number">7.1.</span> <span class="nav-text">欧陆词典与anki</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-如何将欧陆词典中的生词导入到anki？"><span class="nav-number">7.1.1.</span> <span class="nav-text">1.如何将欧陆词典中的生词导入到anki？</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Be_invisible"
+      src="/images/config/myavatar.png">
+  <p class="site-author-name" itemprop="name">Be_invisible</p>
+  <div class="site-description" itemprop="description">Love sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZhangChunXian" title="GitHub → https://github.com/ZhangChunXian" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1836891291@qq.com" title="E-Mail → mailto:1836891291@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://dase.ecnu.edu.cn/" title="http://dase.ecnu.edu.cn/" rel="noopener" target="_blank">华东师范大学数据科学与工程学院</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Be_invisible</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">82k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:44</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.7.2
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5f2d1e5036597eb8" async="async"></script>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id    : 26659,
+      el    : 'wpac-rating',
+      color : 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes : 0,
+          toolbar  : 0,
+          statusbar: 0,
+          pagemode : 'thumbs',
+          view     : 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height   : element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'http://zhangchunxian.github.io/posts/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E6%AD%A6%E8%A3%85%E7%94%B5%E5%AD%90%E8%AF%8D%E5%85%B8_url.html',]
+      });
+      });
+  </script>
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'b186245383615fbfac1a',
+      clientSecret: '181602de35dbbd6cd7f473c1ea60ee20142893b5',
+      repo        : 'ZhangChunXian.github.io',
+      owner       : 'ZhangChunXian',
+      admin       : ['ZhangChunXian'],
+      id          : 'c866d7d8de319adf5e2189a8ef4445a7',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1.2,"jsonPath":"https://cdn.jsdelivr.net/npm/live2d-widget-model-koharu@1.0.5/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

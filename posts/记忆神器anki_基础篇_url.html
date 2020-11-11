@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/config/favicon-32x32-next.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/config/favicon-16x16-next.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Consolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhangchunxian.github.io","root":"/","scheme":"Mist","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="记忆神器anki——基础篇为了更好的阅读，请注意本文结构的思维导图   情境： 你学习中有木有这样的烦恼？背东西背的慢，记不住，感觉知识不进脑子。   好不容易记住知识，可自己好像一眨眼就忘了   有没用这样一款软件，背东西背不会就一直复现，背完了又可以科学复习，还能自己定制需要背诵的内容？最好呢，还能白嫖！！反正我知道你心动了，不如就介绍一下本文的主角——anki。  正文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记忆神器anki——基础篇">
+<meta property="og:url" content="http://zhangchunxian.github.io/posts/%E8%AE%B0%E5%BF%86%E7%A5%9E%E5%99%A8anki_%E5%9F%BA%E7%A1%80%E7%AF%87_url.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="记忆神器anki——基础篇为了更好的阅读，请注意本文结构的思维导图   情境： 你学习中有木有这样的烦恼？背东西背的慢，记不住，感觉知识不进脑子。   好不容易记住知识，可自己好像一眨眼就忘了   有没用这样一款软件，背东西背不会就一直复现，背完了又可以科学复习，还能自己定制需要背诵的内容？最好呢，还能白嫖！！反正我知道你心动了，不如就介绍一下本文的主角——anki。  正文">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/50.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/%E7%9F%A5%E8%AF%86%E4%B8%8D%E8%BF%9B%E8%84%91%E5%AD%90.jpg">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/%E9%A9%AC%E5%86%AC%E6%A2%85.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/%E7%99%BD%E5%AB%96.jpg">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/anki.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/ankiinstall.PNG">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/8.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/9.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/13.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/10.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/11.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/%E5%81%8F%E5%A5%BD%E8%AE%BE%E7%BD%AE.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/12.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/14.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/17.png">
+<meta property="article:published_time" content="2020-08-05T04:00:00.000Z">
+<meta property="article:modified_time" content="2020-11-11T02:57:05.399Z">
+<meta property="article:author" content="Be_invisible">
+<meta property="article:tag" content="软件应用">
+<meta property="article:tag" content="效率">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zhangchunxian.github.io/images/50.png">
+
+<link rel="canonical" href="http://zhangchunxian.github.io/posts/%E8%AE%B0%E5%BF%86%E7%A5%9E%E5%99%A8anki_%E5%9F%BA%E7%A1%80%E7%AF%87_url.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+<script>
+  window.onblur = function() {
+       document.title = 'Σ(っ°Д°;)っ喔哟，崩溃啦!';
+  }
+
+  window.onfocus = function() {
+       document.title = '(o゜▽゜)o☆咦，又好啦!';
+  }
+</script>
+
+    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+  
+
+  <title>记忆神器anki——基础篇 | Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/rss.xml" title="Blog" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">ヾ(≧O≦)〃ao~ welcome to my website</h1>
+      
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">13</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">14</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">30</span></a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/ZhangChunXian" class="github-corner" title="我的Github" aria-label="我的Github" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zhangchunxian.github.io/posts/%E8%AE%B0%E5%BF%86%E7%A5%9E%E5%99%A8anki_%E5%9F%BA%E7%A1%80%E7%AF%87_url.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/config/myavatar.png">
+      <meta itemprop="name" content="Be_invisible">
+      <meta itemprop="description" content="Love sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          记忆神器anki——基础篇<a href="https://github.com/ZhangChunXian/ZhangChunXian.github.io/blob/source/source/_posts/_posts/posts/anki.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil"></i></a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-05 12:00:00" itemprop="dateCreated datePublished" datetime="2020-08-05T12:00:00+08:00">2020-08-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%BA%94%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">软件应用</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%BA%94%E7%94%A8/%E6%95%88%E7%8E%87/" itemprop="url" rel="index"><span itemprop="name">效率</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="记忆神器anki——基础篇"><a href="#记忆神器anki——基础篇" class="headerlink" title="记忆神器anki——基础篇"></a>记忆神器anki——基础篇</h1><p><strong><em>为了更好的阅读，请注意本文结构的思维导图</em></strong></p>
+<img data-src="/images/50.png" style="zoom: 33%;" />
+
+<h2 id="情境："><a href="#情境：" class="headerlink" title="情境："></a>情境：</h2><p> 你学习中有木有这样的烦恼？背东西背的慢，记不住，感觉知识不进脑子。</p>
+<img data-src="/images/知识不进脑子.jpg" style="zoom:50%;" />
+
+<p>好不容易记住知识，可自己好像一眨眼就忘了</p>
+<img data-src="/images/马冬梅.png" style="zoom:50%;" />
+
+<p>有没用这样一款软件，背东西背不会就一直复现，背完了又可以科学复习，还能自己定制需要背诵的内容？最好呢，还能白嫖！！反正我知道你心动了，不如就介绍一下本文的主角——anki。</p>
+<p><img data-src="/images/%E7%99%BD%E5%AB%96.jpg" alt=""></p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><a id="more"></a>
+
+<h2 id="anki的基础功能"><a href="#anki的基础功能" class="headerlink" title="anki的基础功能"></a>anki的基础功能</h2><p>anki的基础功能就是提供知识卡片的实时自定义复习——自定义复习知识的频率，数量和时间。这一切都是软件自动去部署，分配的。前期导入知识卡片后，使用者只需关注知识本身——复习计划什么的交给软件。</p>
+<p> 举个例子,今天新学50个单词，设定复习时间为一天后，再第二天设定时刻后，这50个单词将在你背诵时再次出现，实现重复记忆。这些是软件自动去完成的。</p>
+<img data-src="/images/anki.png"  />
+
+<h2 id="下载链接和地址："><a href="#下载链接和地址：" class="headerlink" title="下载链接和地址："></a>下载链接和地址：</h2><p><strong><a href="https://pan.baidu.com/s/1Sho5nVWuFybaZdKkxHIRbA" target="_blank" rel="noopener">安卓系统anki安装包</a>       提取码:yoe3(放弃在自己手机内置应用商店寻找吧，国内应用商店里没有这个app）</strong></p>
+<p><a href="https://apps.ankiweb.net/" target="_blank" rel="noopener"><strong>Windows和mac系统版本下载地址</strong></a></p>
+<h2 id="iPadOS系统（移动端）anki使用基础教程"><a href="#iPadOS系统（移动端）anki使用基础教程" class="headerlink" title="iPadOS系统（移动端）anki使用基础教程"></a>iPadOS系统（移动端）anki使用基础教程</h2><h3 id="获取anki应用：打开App-Store-，输入关键词anki，找到应用AnkiMobile-Flashcards，下载。"><a href="#获取anki应用：打开App-Store-，输入关键词anki，找到应用AnkiMobile-Flashcards，下载。" class="headerlink" title="获取anki应用：打开App Store ，输入关键词anki，找到应用AnkiMobile Flashcards，下载。"></a>获取anki应用：打开App Store ，输入关键词anki，找到应用AnkiMobile Flashcards，下载。</h3><img data-src="/images/ankiinstall.PNG" style="zoom: 33%;" />
+
+<p><strong>1.在App Store中有多个应用包含关键词anki,请认准上图APP。</strong></p>
+<p><strong>2.iOS是anki在所有系统中唯一需要付费的版本，付费163元，可用共享账号方式免费获取。</strong></p>
+<h3 id="打开anki-主界面介绍如下"><a href="#打开anki-主界面介绍如下" class="headerlink" title="打开anki,主界面介绍如下"></a>打开anki,主界面介绍如下</h3><img data-src="/images/8.png" style="zoom: 33%;" />
+
+<p>1.官网链接：点击进入anki官网</p>
+<p>2.学习记录：以图表和数据形式记录anki使用记录</p>
+<p>3.卡片浏览器：以关键词搜索所有卡片</p>
+<img data-src="/images/9.png" style="zoom: 25%;" />
+
+<p> 4.偏好设置：设置复习的频率，时间，数量等</p>
+<p> 5.同步：登录ankiweb账号后在各系统之间进行同步。</p>
+<p> 6.卡片与牌组：卡片是anki中的基本复习单位，牌组（卡组）是特定卡片的集合。</p>
+<h2 id="anki导入牌组并开始复习"><a href="#anki导入牌组并开始复习" class="headerlink" title="anki导入牌组并开始复习"></a>anki导入牌组并开始复习</h2><p> 1.将牌组上传到iPad，选择用其他应用打开，拷贝到anki。</p>
+<ol start="2">
+<li>按住牌组名向右移动，选择重命名或删除牌组。</li>
+</ol>
+<p><img data-src="/images/13.png" alt=""><strong>小技巧：在命名中 加入 :: 设置多级菜单牌组</strong></p>
+<p>​               <strong>一级牌组::二级牌组</strong></p>
+<p> 2.点击相应牌组，进入复习界面。anki的卡片分为背面和正面（可以自主设置）</p>
+<p><em>卡片背面</em></p>
+<img data-src="/images/10.png" style="zoom:33%;" />
+
+<p><em>卡片正面</em></p>
+<img data-src="/images/11.png" style="zoom:33%;" />
+
+<p> 3.点击屏幕即可切换反面到正面，选择复习时间间隔后即可跳转到下一张卡片。现在，可以开始你的anki初体验了！</p>
+<h2 id="复习偏好设置"><a href="#复习偏好设置" class="headerlink" title="复习偏好设置"></a>复习偏好设置</h2><h3 id="基础设置"><a href="#基础设置" class="headerlink" title="基础设置"></a>基础设置</h3><img data-src="/images/偏好设置.png" style="zoom: 33%;" />
+
+<h3 id="复习卡片内设置"><a href="#复习卡片内设置" class="headerlink" title="复习卡片内设置"></a>复习卡片内设置</h3><img data-src="/images/12.png" style="zoom: 33%;" />
+
+<h2 id="Mac端（桌面端）anki使用教程"><a href="#Mac端（桌面端）anki使用教程" class="headerlink" title="Mac端（桌面端）anki使用教程"></a>Mac端（桌面端）anki使用教程</h2><p><a href="https://www.zhihu.com/question/28335314" target="_blank" rel="noopener">知乎 高冷冷：Anki怎么用？</a></p>
+<h3 id="必要说明：1-如果你觉得这个软件难用（可能还有界面丑），这就对了。这个软件的特点就是硬核，操作对新手不友好，需要付出一定的学习成本。但是，我郑重声明："><a href="#必要说明：1-如果你觉得这个软件难用（可能还有界面丑），这就对了。这个软件的特点就是硬核，操作对新手不友好，需要付出一定的学习成本。但是，我郑重声明：" class="headerlink" title="必要说明：1.如果你觉得这个软件难用（可能还有界面丑），这就对了。这个软件的特点就是硬核，操作对新手不友好，需要付出一定的学习成本。但是，我郑重声明："></a>必要说明：1.如果你觉得这个软件难用（可能还有界面丑），这就对了。这个软件的特点就是硬核，操作对新手不友好，需要付出一定的学习成本。但是，我郑重声明：</h3><p>  <strong><em>利用这个软件在学习上提高的效益远大于学习它的时间成本。</em></strong></p>
+<p><strong><em>利用这个软件在学习上提高的效益远大于学习它的时间成本。</em></strong></p>
+<p><strong><em>利用这个软件在学习上提高的效益远大于学习它的时间成本。</em></strong></p>
+<h3 id="长时间使用的话，平板体验最佳。"><a href="#长时间使用的话，平板体验最佳。" class="headerlink" title="长时间使用的话，平板体验最佳。"></a>长时间使用的话，平板体验最佳。</h3><h3 id="anki更多进阶用法详见anki官网，本人博客未来也会更新。"><a href="#anki更多进阶用法详见anki官网，本人博客未来也会更新。" class="headerlink" title="anki更多进阶用法详见anki官网，本人博客未来也会更新。"></a>anki更多进阶用法详见anki官网，本人博客未来也会更新。</h3><h2 id="资源分享"><a href="#资源分享" class="headerlink" title="资源分享"></a>资源分享</h2><p><a href="https://ankiweb.net/shared/decks/" target="_blank" rel="noopener">公开anki牌组（网络）</a></p>
+<p>个人（就系我辣）定制系列：</p>
+<p>[个人定制六级考研重点词汇3000]（有一些卡片重复，建议背诵去除）</p>
+<p>[个人定制考研单词6000词正序版]</p>
+<p>[个人定制考研单词5000词正序版]（六千改良版，去掉开头1000个单词）</p>
+<p>[插班生四选一选择题集错]</p>
+<p>[插班生强化系列重点单词和词组]（有一些卡片重复，建议背诵时去除）</p>
+<p>[插班生英语阅读句型和句式]</p>
+<p>[插班生英语翻译指导]</p>
+<p><a href="https://pan.baidu.com/s/19f8q1P6LdMmQKUgxzbfioQ" target="_blank" rel="noopener">资源地址</a>        提取码：w2u6</p>
+<p><strong>可能问题</strong></p>
+<ol>
+<li><p>牌组的字体样式不对，如字体样式单一，颜色单一</p>
+<p>考研单词5000词正确样式为</p>
+<p><img data-src="/images/14.png" alt=""></p>
+</li>
+</ol>
+<p>   <strong>解决方法</strong>：</p>
+<p>   利用anki的wordquery插件在pc或mac上自制牌组后同步到移动端：</p>
+<p>   wordquery插件的使用方法见下面链接：</p>
+<p>   anki高阶用法：利用wordquery插件实现模板化自动化制作卡片（待更新）</p>
+<p>   <a href="https://www.bilibili.com/video/BV1qW411a7fZ" target="_blank" rel="noopener">wordquery网络教学视频链接</a></p>
+<p>   <a href="https://finalion.github.io/WordQuery/guide-cn.html" target="_blank" rel="noopener">wordquery官方文档</a></p>
+<h2 id="个人使用感受"><a href="#个人使用感受" class="headerlink" title="个人使用感受"></a>个人使用感受</h2><h3 id="优点"><a href="#优点" class="headerlink" title="优点:"></a>优点:</h3><ol>
+<li>利用anki科学的复习机制和自动化部署复习卡片，如果肯花时间并坚持下来，短期记忆转化为长期记忆，记忆效果好。</li>
+</ol>
+<p>2.正确评估自己，塑造危机感。因为anki都有数据记录，能明确知道，自己的学习进度和速度。</p>
+<ol start="3">
+<li>软件开源，高度自由。相对于墨墨背单词等同样拥有复习机制的应用来说，anki的自由度更高，可以自己定制牌组的样式，内容，复习机制等方方面面。</li>
+</ol>
+<p>4.全平台同步，系统之间数据互相流通。比如我通常在pc端做好卡片同步到iPad上去背诵。</p>
+<p> 5.插件多，用法多样。anki拥有大量的插件，可以满足不同人群的不同功能。没有想要的插件的话，大佬可以自己DIY一个～(￣▽￣～)(～￣▽￣)～</p>
+<ol start="6">
+<li>除iOS外其他系统均免费下载~，白嫖党的胜利ヾ(≧∇≦*)ゝ</li>
+</ol>
+<h3 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h3><ol>
+<li><p>软件入门难，选项多，操作较复杂。（教程多 B站&amp;知乎）</p>
+</li>
+<li><p>前期需要摸索适合自己的复习机制，复习频繁了会加大工作量，复习不够又记不住。（anki默认的复习机制适合大多数人）</p>
+</li>
+<li><p>无官方牌组文件，所有牌组都要自己获取。（网上有很多资源）</p>
+</li>
+<li><p>软件没有沉没机制，未复习卡片会一天天累加，需要日日清。比如我大一暑假一个月没有用anki,待复习卡片数量暴涨到6000多。当然，直接删除牌组就什么事都木有了。</p>
+<p>5.因服务器在国外，anki的同步较慢，且同步失败率较高，这个时候重新同步就好了。</p>
+</li>
+</ol>
+<p><strong>贴一张自己的使用记录φ(≧ω≦*)♪</strong></p>
+<img data-src="/images/17.png" style="zoom:50%;" />
+
+<p> <strong>用了几个月，累计复习80000次卡片，效果还不错(p≧w≦q)，等到了十万就换十万上去n(<em>≧▽≦</em>)n</strong></p>
+<h1 id="友情链接："><a href="#友情链接：" class="headerlink" title="友情链接："></a>友情链接：</h1><h2 id="记忆神器anki——进阶教程（一）-待更新"><a href="#记忆神器anki——进阶教程（一）-待更新" class="headerlink" title="记忆神器anki——进阶教程（一）(待更新)"></a>记忆神器anki——进阶教程（一）(待更新)</h2><ul>
+<li>如果有错误或者是改进的意见，请在下方评论区畅所欲言。笔者第一次做个人博客，没有经验，写作也还有些欠</li>
+<li>如果你觉得对你有帮助，请动一动你可爱的小手给我打几颗星，不要下次一定好不好？</li>
+<li>(￣▽￣)～■干杯□～(￣▽￣)</li>
+<li>最后的最后，如果可以，请到我的GitHub主页给我点个star小星星吧( <em>￣▽￣)((≧︶≦</em>)</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>坚持原创分享，您的支持将鼓励我继续创作!</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/config/mywechatpay.jpg" alt="Be_invisible 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/config/myalipay.jpg" alt="Be_invisible 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Be_invisible
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://zhangchunxian.github.io/posts/%E8%AE%B0%E5%BF%86%E7%A5%9E%E5%99%A8anki_%E5%9F%BA%E7%A1%80%E7%AF%87_url.html" title="记忆神器anki——基础篇">http://zhangchunxian.github.io/posts/记忆神器anki_基础篇_url.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%BA%94%E7%94%A8/" rel="tag"># 软件应用</a>
+              <a href="/tags/%E6%95%88%E7%8E%87/" rel="tag"># 效率</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/%E8%8B%B1%E8%AF%AD%E8%AF%8D%E6%B1%87%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0_url.html" rel="prev" title="英语词汇的深度学习">
+      <i class="fa fa-chevron-left"></i> 英语词汇的深度学习
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/%E6%8F%92%E7%8F%AD%E7%94%9F%E8%80%83%E8%AF%95_%E6%96%B9%E6%B3%95_url.html" rel="next" title="方法">
+      方法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#记忆神器anki——基础篇"><span class="nav-number">1.</span> <span class="nav-text">记忆神器anki——基础篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#情境："><span class="nav-number">1.1.</span> <span class="nav-text">情境：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#anki的基础功能"><span class="nav-number">2.1.</span> <span class="nav-text">anki的基础功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载链接和地址："><span class="nav-number">2.2.</span> <span class="nav-text">下载链接和地址：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iPadOS系统（移动端）anki使用基础教程"><span class="nav-number">2.3.</span> <span class="nav-text">iPadOS系统（移动端）anki使用基础教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取anki应用：打开App-Store-，输入关键词anki，找到应用AnkiMobile-Flashcards，下载。"><span class="nav-number">2.3.1.</span> <span class="nav-text">获取anki应用：打开App Store ，输入关键词anki，找到应用AnkiMobile Flashcards，下载。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打开anki-主界面介绍如下"><span class="nav-number">2.3.2.</span> <span class="nav-text">打开anki,主界面介绍如下</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#anki导入牌组并开始复习"><span class="nav-number">2.4.</span> <span class="nav-text">anki导入牌组并开始复习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复习偏好设置"><span class="nav-number">2.5.</span> <span class="nav-text">复习偏好设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础设置"><span class="nav-number">2.5.1.</span> <span class="nav-text">基础设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复习卡片内设置"><span class="nav-number">2.5.2.</span> <span class="nav-text">复习卡片内设置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mac端（桌面端）anki使用教程"><span class="nav-number">2.6.</span> <span class="nav-text">Mac端（桌面端）anki使用教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#必要说明：1-如果你觉得这个软件难用（可能还有界面丑），这就对了。这个软件的特点就是硬核，操作对新手不友好，需要付出一定的学习成本。但是，我郑重声明："><span class="nav-number">2.6.1.</span> <span class="nav-text">必要说明：1.如果你觉得这个软件难用（可能还有界面丑），这就对了。这个软件的特点就是硬核，操作对新手不友好，需要付出一定的学习成本。但是，我郑重声明：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#长时间使用的话，平板体验最佳。"><span class="nav-number">2.6.2.</span> <span class="nav-text">长时间使用的话，平板体验最佳。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#anki更多进阶用法详见anki官网，本人博客未来也会更新。"><span class="nav-number">2.6.3.</span> <span class="nav-text">anki更多进阶用法详见anki官网，本人博客未来也会更新。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源分享"><span class="nav-number">2.7.</span> <span class="nav-text">资源分享</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#个人使用感受"><span class="nav-number">2.8.</span> <span class="nav-text">个人使用感受</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优点"><span class="nav-number">2.8.1.</span> <span class="nav-text">优点:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点："><span class="nav-number">2.8.2.</span> <span class="nav-text">缺点：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#友情链接："><span class="nav-number">3.</span> <span class="nav-text">友情链接：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#记忆神器anki——进阶教程（一）-待更新"><span class="nav-number">3.1.</span> <span class="nav-text">记忆神器anki——进阶教程（一）(待更新)</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Be_invisible"
+      src="/images/config/myavatar.png">
+  <p class="site-author-name" itemprop="name">Be_invisible</p>
+  <div class="site-description" itemprop="description">Love sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZhangChunXian" title="GitHub → https://github.com/ZhangChunXian" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1836891291@qq.com" title="E-Mail → mailto:1836891291@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://dase.ecnu.edu.cn/" title="http://dase.ecnu.edu.cn/" rel="noopener" target="_blank">华东师范大学数据科学与工程学院</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Be_invisible</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">82k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:44</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.7.2
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5f2d1e5036597eb8" async="async"></script>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id    : 26659,
+      el    : 'wpac-rating',
+      color : 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes : 0,
+          toolbar  : 0,
+          statusbar: 0,
+          pagemode : 'thumbs',
+          view     : 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height   : element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'http://zhangchunxian.github.io/posts/%E8%AE%B0%E5%BF%86%E7%A5%9E%E5%99%A8anki_%E5%9F%BA%E7%A1%80%E7%AF%87_url.html',]
+      });
+      });
+  </script>
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'b186245383615fbfac1a',
+      clientSecret: '181602de35dbbd6cd7f473c1ea60ee20142893b5',
+      repo        : 'ZhangChunXian.github.io',
+      owner       : 'ZhangChunXian',
+      admin       : ['ZhangChunXian'],
+      id          : 'cc467baa095aeb39a0e2e525600aa474',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1.2,"jsonPath":"https://cdn.jsdelivr.net/npm/live2d-widget-model-koharu@1.0.5/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

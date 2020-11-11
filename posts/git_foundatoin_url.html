@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/config/favicon-32x32-next.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/config/favicon-16x16-next.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Consolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhangchunxian.github.io","root":"/","scheme":"Mist","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言: 最近换了一台新笔记本,  需要花费大量时间个人定制笔记本上的编程环境. 对于一个计算机专业的学生来说, git肯定是必不可少的. 说来惭愧, 本人在初次用命令行学习git后就转向了Github Desktop和vscode的图形化界面来进行日常的代码版本控制, 没有很好的将命令行运用在平时的学习中. 加上九月份Github Cli 稳定版发布, Github上的操作也可以用命令行完成, 故">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git 基础回顾">
+<meta property="og:url" content="http://zhangchunxian.github.io/posts/git_foundatoin_url.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="前言: 最近换了一台新笔记本,  需要花费大量时间个人定制笔记本上的编程环境. 对于一个计算机专业的学生来说, git肯定是必不可少的. 说来惭愧, 本人在初次用命令行学习git后就转向了Github Desktop和vscode的图形化界面来进行日常的代码版本控制, 没有很好的将命令行运用在平时的学习中. 加上九月份Github Cli 稳定版发布, Github上的操作也可以用命令行完成, 故">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img9.doubanio.com/view/subject/s/public/s4245786.jpg">
+<meta property="article:published_time" content="2020-10-01T04:00:00.000Z">
+<meta property="article:modified_time" content="2020-11-11T02:57:05.399Z">
+<meta property="article:author" content="Be_invisible">
+<meta property="article:tag" content="软件应用">
+<meta property="article:tag" content="开发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img9.doubanio.com/view/subject/s/public/s4245786.jpg">
+
+<link rel="canonical" href="http://zhangchunxian.github.io/posts/git_foundatoin_url.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+<script>
+  window.onblur = function() {
+       document.title = 'Σ(っ°Д°;)っ喔哟，崩溃啦!';
+  }
+
+  window.onfocus = function() {
+       document.title = '(o゜▽゜)o☆咦，又好啦!';
+  }
+</script>
+
+    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+  
+
+  <title>Git 基础回顾 | Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/rss.xml" title="Blog" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">ヾ(≧O≦)〃ao~ welcome to my website</h1>
+      
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">13</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">14</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">30</span></a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/ZhangChunXian" class="github-corner" title="我的Github" aria-label="我的Github" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zhangchunxian.github.io/posts/git_foundatoin_url.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/config/myavatar.png">
+      <meta itemprop="name" content="Be_invisible">
+      <meta itemprop="description" content="Love sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          Git 基础回顾<a href="https://github.com/ZhangChunXian/ZhangChunXian.github.io/blob/source/source/_posts/_posts/posts/git_foundation.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil"></i></a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-01 12:00:00" itemprop="dateCreated datePublished" datetime="2020-10-01T12:00:00+08:00">2020-10-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%BA%94%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">软件应用</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%BA%94%E7%94%A8/%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">开发</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>前言: 最近换了一台新笔记本,  需要花费大量时间个人定制笔记本上的编程环境. 对于一个计算机专业的学生来说, git肯定是必不可少的. 说来惭愧, 本人在初次用命令行学习git后就转向了Github Desktop和vscode的图形化界面来进行日常的代码版本控制, 没有很好的将命令行运用在平时的学习中. 加上九月份Github Cli 稳定版发布, Github上的操作也可以用命令行完成, 故趁部署个人开发环境之机回顾所学Git知识与操作, 培养命令行操作的习惯.</p>
+<p>更重要的原因是, 在旁听某个Linux操作系统通识课时, w接触到一位熟练掌握Linux命令行和快捷键的大二软件工程专业学长, 全程脱离鼠标,仅仅在键盘上就完成了平时开发的各项操作. 顿时感到钦佩, 真正领略到了命令行的魅力,并长叹“我要这鼠标有何用”(狗头), 并在学长好基友的怂恿下“入了教”, 悉心向教主学习. </p>
+<p><strong>注: 本文仅仅涉及到git的冰山一角, 仅仅满足学生日常小项目开发需求, 更多操作可参考书籍或git官方文档</strong></p>
+<h1 id="Git-基础回顾"><a href="#Git-基础回顾" class="headerlink" title="Git 基础回顾"></a>Git 基础回顾</h1><a id="more"></a>
+
+<h2 id="1-git基本工作流程"><a href="#1-git基本工作流程" class="headerlink" title="1. git基本工作流程"></a>1. git基本工作流程</h2><p>Git基本工作区域可以分为以下三部分</p>
+<ol>
+<li><p>Working Directory(工作区)</p>
+<p>添加, 编辑, 修改文件等动作</p>
+</li>
+<li><p>暂存区</p>
+<p>暂存已经修改的文件统一提交到git仓库中. </p>
+</li>
+<li><p>Git Repository(Git仓库)</p>
+<p>最终确定的文件保存在仓库, 成为一个新的版本. </p>
+</li>
+</ol>
+<h2 id="2-git本地操作"><a href="#2-git本地操作" class="headerlink" title="2.git本地操作"></a>2.git本地操作</h2><h3 id="基本信息设置-全局"><a href="#基本信息设置-全局" class="headerlink" title="基本信息设置(全局)"></a>基本信息设置(全局)</h3><p>在工程项目文件夹中右键选择<code>Git Bash Here</code>, 打开<code>git</code>命令行.</p>
+<p>设置用户名(username即为Github用户名)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name "username"</span><br></pre></td></tr></table></figure>
+
+<p>设置用户名邮箱(useremail即为Github注册邮箱, <strong>不用加引号</strong>)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.email useremail</span><br></pre></td></tr></table></figure>
+
+<p>使用下列命令查看是否设置成功</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --list</span><br></pre></td></tr></table></figure>
+
+<p>在下面出现的信息中出现<code>user.name:</code>, <code>user.email</code> , 以及后面信息均正确则说明配置成功.</p>
+<blockquote>
+<p>常用Linux命令<br>        <code>pwd</code>查看当前动作目录, 返回当前工作目录的绝对路径</p>
+<p><code>ls</code>查看在此文件夹中的文件(非隐藏文件)<br>        ls -a 查看所有文件包括隐藏文件.  比如git初始化后生成的<code>.git</code>文件夹就是隐藏文件, ls命令是看不到的.</p>
+</blockquote>
+<h3 id="初始化一个Git仓库"><a href="#初始化一个Git仓库" class="headerlink" title="初始化一个Git仓库"></a>初始化一个Git仓库</h3><ol>
+<li><p>创建文件夹(在Git bash中运用Linux命令)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir foldername</span><br></pre></td></tr></table></figure>
+
+<p>foldername对应与创建文件夹的名字</p>
+</li>
+<li><p>在文件内初始化Git(创建git仓库)</p>
+<p>通过Linux命令进入文件夹.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd foldername</span><br></pre></td></tr></table></figure>
+
+<p>逆操作: 返回上一级文件夹</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd ..</span><br></pre></td></tr></table></figure>
+
+<p>初始化Git</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+
+<p>之后在新创建文件夹中会出现隐藏文件<code>.git</code>(如果看不到的话设置电脑显示隐藏文件)</p>
+</li>
+</ol>
+<h3 id="向仓库中添加文件"><a href="#向仓库中添加文件" class="headerlink" title="向仓库中添加文件"></a>向仓库中添加文件</h3><p><strong>一开始的操作均是在本地工作区(Working Directory)</strong></p>
+<ol>
+<li><p>新建文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch filename</span><br></pre></td></tr></table></figure>
+
+<p>文件夹中便会出现目标文件</p>
+<blockquote>
+<p>git常用命令</p>
+<p>git status 可以查看当前工作目录的状态.</p>
+</blockquote>
+<p>在git bash中输入Linux命令 <code>git status</code>, 输出</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">On branch master					# 当前处于仓库中的master分支</span><br><span class="line"></span><br><span class="line">No commits yet						# 还没有commit</span><br><span class="line"></span><br><span class="line">Untracked files:</span><br><span class="line">  (use "git add &lt;file&gt;..." to include in what will be committed)	# 检测到未提交(add)的改变</span><br><span class="line">        filename</span><br><span class="line"></span><br><span class="line">nothing added to commit but untracked files present (use "git add" to track)</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="2">
+<li><p>编辑(修改)新文件(可选)</p>
+<p>在git bash中输入以下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim filename                           # 在命令行中打开vim编辑器修改文件</span><br></pre></td></tr></table></figure>
+
+<p>会出现许多以<code>-</code>开头的空行,并在下方显示<code>filename [unix] (time date)</code>                                                                                                                                                                                                                  在空行区域即可用vim编辑文件, 注意先按 “i”键进入插入模式再开始编辑!</p>
+</li>
+</ol>
+<p>题外话: vim编辑器是知乎, 学长, Google等都在推荐的编辑器, 目前为止我还不是习惯vim这种极简的编辑器(当然以后会折腾vim的配置), 正在努力适应.</p>
+<p>当然也可以用编辑器或者IDE来编辑(修改文件), 在git bash中输入以下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">code .						# 使用vscode打开当前文件夹</span><br></pre></td></tr></table></figure>
+
+<p>​    3. 退出文件修改并保存(命令行中, 可选)</p>
+<p>按esc键(结束输入), 并在下方输入<code>:wq</code>,退出编辑.</p>
+<blockquote>
+<p>Linux命令</p>
+<p>cat filename                // 查看当前文件中的内容</p>
+</blockquote>
+<ol start="4">
+<li><p>将修改文件提交到暂存区</p>
+<p>在修改文件所在文件夹中打开git bash 输入以下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add 'filename'				# 将新文件提交到 暂存区</span><br></pre></td></tr></table></figure>
+<p>当改变的文件较多，git add 逐个提交命令繁琐或者不上传新文件，被删除文件时，以用如下的命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add -A  # 提交所有变化</span><br><span class="line">git add -u  # 提交被修改(modified)和被删除(deleted)文件，不包括新文件(new)</span><br><span class="line">git add .  #提交新文件(new)和被修改(modified)文件，不包括被删除(deleted)文件</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>此时输入 git status 会显示如下</p>
+<p>On branch master</p>
+<p>No commits yet</p>
+<p>Changes to be committed:<br>  (use “git rm –cached <file>…” to unstage)</p>
+<pre><code>new file:   filename                                                                // 显示暂存区内的新文件</code></pre></blockquote>
+</li>
+</ol>
+<p><strong>此时文件从本地工作区提交到暂存区.</strong></p>
+<ol start="5">
+<li><p>将暂存区文件添加到仓库</p>
+<p>在git bash 中输入以下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m "Your description about this change"			# ''中填写你对本次修改的说明(必须)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除文件并提交到仓库</p>
+<p>Linux命令从工作区中删除文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -rf filename											 # 删除文件</span><br></pre></td></tr></table></figure>
+
+<p>从git中删除文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm filename											# filename指的是需要操作的文件名</span><br></pre></td></tr></table></figure>
+
+<p>提交操作</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m 'Your description about this change'		# ''中填写你对本次修改的说明(必须)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="3-Git管理远程仓库"><a href="#3-Git管理远程仓库" class="headerlink" title="3. Git管理远程仓库"></a>3. Git管理远程仓库</h2><p>   作用: 备份, 实现代码共享集中化管理.</p>
+<ol>
+<li><p>将Github远程仓库clone到本地</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone repository_location				# repository location指的是需要复制的远程仓库地址</span><br></pre></td></tr></table></figure></li>
+<li><p>对克隆到本地的Github仓库进行操作(详见2.git本地操作)</p>
+</li>
+<li><p>将本地仓库同步到git远程仓库中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（可选）在本地已经有工作区，需要从GitHub远程仓库更新到本地工作区</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull origin branchname	// branchname指的是需要更新的分支的名称</span><br></pre></td></tr></table></figure>
+
+<p>使用git pull 更新，相当于是从远程获取最新版本并merge到本地</p>
+</li>
+</ol>
+<h2 id="4-拓展"><a href="#4-拓展" class="headerlink" title="4. 拓展"></a>4. 拓展</h2><blockquote>
+<p>Git website: <a href="http://git-scm.com" target="_blank" rel="noopener">http://git-scm.com</a></p>
+<p>Free on-line book: <a href="http://git-scm.com/book" target="_blank" rel="noopener">http://git-scm.com/book</a></p>
+<p>Reference page for Git:<a href="http://gitref.org/index.html" target="_blank" rel="noopener">http://gitref.org/index.html</a></p>
+<p>Git tutorial :<a href="http://schacon.github.com/git/gittutorial.html" target="_blank" rel="noopener">http://schacon.github.com/git/gittutorial.html</a></p>
+<p>Git for Computer Scientists: <a href="http://eagain.net/articles/git-for-computer-scientists/" target="_blank" rel="noopener">http://eagain.net/articles/git-for-computer-scientists/</a> </p>
+</blockquote>
+<p>在命令行中, 输入以下指令获取更多git指令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git help verb     # verb = config, add, commit, etc</span><br></pre></td></tr></table></figure>
+
+<p>推荐书籍:</p>
+<h1 id="Pro-Git"><a href="#Pro-Git" class="headerlink" title="Pro Git"></a>Pro Git</h1><p><a href="https://img9.doubanio.com/view/subject/l/public/s4245786.jpg" target="_blank" rel="noopener"><img data-src="https://img9.doubanio.com/view/subject/s/public/s4245786.jpg" alt="Pro Git"></a></p>
+<p>作者: <a href="https://book.douban.com/author/4560652/" target="_blank" rel="noopener">Scott Chacon</a><br>        出版社: Apress<br>        出版年: 2009-8-27<br>        页数: 288<br>        定价: USD 34.99<br>        装帧: Paperback<br>        ISBN: 9781430218333</p>
+<p>结语: 仅仅掌握这些是远远不够的, 真实的项目开发要复杂的多, git也不是一篇两篇文章可以掌握的. 后续会参考一些书籍与视频, 完善git从入门到精通的种种操作,  争取将git熟练运用于真实的项目开发中.</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>坚持原创分享，您的支持将鼓励我继续创作!</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/config/mywechatpay.jpg" alt="Be_invisible 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/config/myalipay.jpg" alt="Be_invisible 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Be_invisible
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://zhangchunxian.github.io/posts/git_foundatoin_url.html" title="Git 基础回顾">http://zhangchunxian.github.io/posts/git_foundatoin_url.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%BA%94%E7%94%A8/" rel="tag"># 软件应用</a>
+              <a href="/tags/%E5%BC%80%E5%8F%91/" rel="tag"># 开发</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/Hexo+Github_pages_%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E8%B8%A9%E9%9B%B7%E5%90%88%E9%9B%86_url.html" rel="prev" title="Hexo+Github pages 个人博客踩雷合集">
+      <i class="fa fa-chevron-left"></i> Hexo+Github pages 个人博客踩雷合集
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/CSAPP_2_1_%E4%BF%A1%E6%81%AF%E7%9A%84%E5%AD%98%E5%82%A8_url.html" rel="next" title="CSAPP 2.1 信息的存储">
+      CSAPP 2.1 信息的存储 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Git-基础回顾"><span class="nav-number">1.</span> <span class="nav-text">Git 基础回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-git基本工作流程"><span class="nav-number">1.1.</span> <span class="nav-text">1. git基本工作流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-git本地操作"><span class="nav-number">1.2.</span> <span class="nav-text">2.git本地操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本信息设置-全局"><span class="nav-number">1.2.1.</span> <span class="nav-text">基本信息设置(全局)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化一个Git仓库"><span class="nav-number">1.2.2.</span> <span class="nav-text">初始化一个Git仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#向仓库中添加文件"><span class="nav-number">1.2.3.</span> <span class="nav-text">向仓库中添加文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Git管理远程仓库"><span class="nav-number">1.3.</span> <span class="nav-text">3. Git管理远程仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-拓展"><span class="nav-number">1.4.</span> <span class="nav-text">4. 拓展</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pro-Git"><span class="nav-number">2.</span> <span class="nav-text">Pro Git</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Be_invisible"
+      src="/images/config/myavatar.png">
+  <p class="site-author-name" itemprop="name">Be_invisible</p>
+  <div class="site-description" itemprop="description">Love sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZhangChunXian" title="GitHub → https://github.com/ZhangChunXian" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1836891291@qq.com" title="E-Mail → mailto:1836891291@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://dase.ecnu.edu.cn/" title="http://dase.ecnu.edu.cn/" rel="noopener" target="_blank">华东师范大学数据科学与工程学院</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Be_invisible</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">82k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:44</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.7.2
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5f2d1e5036597eb8" async="async"></script>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id    : 26659,
+      el    : 'wpac-rating',
+      color : 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes : 0,
+          toolbar  : 0,
+          statusbar: 0,
+          pagemode : 'thumbs',
+          view     : 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height   : element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'http://zhangchunxian.github.io/posts/git_foundatoin_url.html',]
+      });
+      });
+  </script>
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'b186245383615fbfac1a',
+      clientSecret: '181602de35dbbd6cd7f473c1ea60ee20142893b5',
+      repo        : 'ZhangChunXian.github.io',
+      owner       : 'ZhangChunXian',
+      admin       : ['ZhangChunXian'],
+      id          : '0a4491aa6ea49294a82104f025dcece0',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1.2,"jsonPath":"https://cdn.jsdelivr.net/npm/live2d-widget-model-koharu@1.0.5/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

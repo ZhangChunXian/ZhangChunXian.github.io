@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/config/favicon-32x32-next.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/config/favicon-16x16-next.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Consolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhangchunxian.github.io","root":"/","scheme":"Mist","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="贪吃蛇 —— Python 小项目实战前言：在知乎上听大牛说编程直接上项目就是干，以项目为导向，以开发为目标，效果非常好。正巧最近想学python，故尝试以零基础做小项目，疑难部分通过谷歌和书本解决，并通过发表博文检验和锤炼学习成果。 本文结构的思维导图：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="贪吃蛇 —— Python 小项目实战">
+<meta property="og:url" content="http://zhangchunxian.github.io/posts/python%E5%B0%8F%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98_%E8%B4%AA%E5%90%83%E8%9B%87.url.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="贪吃蛇 —— Python 小项目实战前言：在知乎上听大牛说编程直接上项目就是干，以项目为导向，以开发为目标，效果非常好。正巧最近想学python，故尝试以零基础做小项目，疑难部分通过谷歌和书本解决，并通过发表博文检验和锤炼学习成果。 本文结构的思维导图：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/Snake/1.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/Snake/snake_screen.gif">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/Snake/Pygame%E4%B8%ADrect%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/Snake/def%20addnote().png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/Snake/2.gif">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/Snake/3.gif">
+<meta property="article:published_time" content="2020-08-12T11:18:00.000Z">
+<meta property="article:modified_time" content="2020-11-11T02:57:05.615Z">
+<meta property="article:author" content="Be_invisible">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="游戏开发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zhangchunxian.github.io/images/Snake/1.png">
+
+<link rel="canonical" href="http://zhangchunxian.github.io/posts/python%E5%B0%8F%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98_%E8%B4%AA%E5%90%83%E8%9B%87.url.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+<script>
+  window.onblur = function() {
+       document.title = 'Σ(っ°Д°;)っ喔哟，崩溃啦!';
+  }
+
+  window.onfocus = function() {
+       document.title = '(o゜▽゜)o☆咦，又好啦!';
+  }
+</script>
+
+    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+  
+
+  <title>贪吃蛇 —— Python 小项目实战 | Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/rss.xml" title="Blog" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">ヾ(≧O≦)〃ao~ welcome to my website</h1>
+      
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">13</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">14</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">30</span></a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/ZhangChunXian" class="github-corner" title="我的Github" aria-label="我的Github" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zhangchunxian.github.io/posts/python%E5%B0%8F%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98_%E8%B4%AA%E5%90%83%E8%9B%87.url.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/config/myavatar.png">
+      <meta itemprop="name" content="Be_invisible">
+      <meta itemprop="description" content="Love sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          贪吃蛇 —— Python 小项目实战<a href="https://github.com/ZhangChunXian/ZhangChunXian.github.io/blob/source/source/_posts/_posts/posts/贪吃蛇.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil"></i></a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-12 19:18:00" itemprop="dateCreated datePublished" datetime="2020-08-12T19:18:00+08:00">2020-08-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">游戏开发</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>19 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="贪吃蛇-——-Python-小项目实战"><a href="#贪吃蛇-——-Python-小项目实战" class="headerlink" title="贪吃蛇 —— Python 小项目实战"></a>贪吃蛇 —— Python 小项目实战</h1><h1 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h1><p>在知乎上听大牛说编程直接上项目就是干，以项目为导向，以开发为目标，效果非常好。正巧最近想学python，故尝试以零基础做小项目，疑难部分通过谷歌和书本解决，并通过发表博文检验和锤炼学习成果。</p>
+<p>本文结构的思维导图：</p>
+<p><img data-src="/images/Snake/1.png" alt=""></p>
+<a id="more"></a>
+
+<h1 id="导入贪吃蛇小游戏所需要的库和模块"><a href="#导入贪吃蛇小游戏所需要的库和模块" class="headerlink" title="导入贪吃蛇小游戏所需要的库和模块"></a>导入贪吃蛇小游戏所需要的库和模块</h1><h2 id="python导入库和模块"><a href="#python导入库和模块" class="headerlink" title="python导入库和模块"></a>python导入库和模块</h2><p>使用python进行编程时，有些功能无法用原生python实现。这时需要导入一些python库或者模块，这类似于在Windows操作系统为了实现操作系统没有的功能而去install相应的软件。</p>
+<p>导出的基本语法为</p>
+<p><code>import Modulename</code></p>
+<p>Module 模块</p>
+<p>或</p>
+<p><code>import Modulename as Modulename_Aliases</code></p>
+<p>Alias 别名</p>
+<p>如常用的</p>
+<p><code>import pandas</code></p>
+<p><code>import pandas as np</code></p>
+<p>当有多个库或模块时，也可以写到一句中，用逗号隔开</p>
+<p><code>import Module1, Module2, Module3</code></p>
+<h2 id="导入需要的库"><a href="#导入需要的库" class="headerlink" title="导入需要的库"></a>导入需要的库</h2><ul>
+<li><p>pygame</p>
+<p><code>pygame</code>库是一个免费开源的<code>python</code>库，一个利用SDL库的写就的游戏库。</p>
+</li>
+<li><p>sys</p>
+<p><code>sys</code>是一个<code>python</code>标准模块，提供了一些变量和函数。（在该程序中可加可不加）</p>
+</li>
+</ul>
+<ul>
+<li><p>random</p>
+<p><code>random</code>属于<code>python</code>标准库中的数学和数字模块，作用是生成随机数。在贪吃蛇中，食物出现的位置时随机的。</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pygame</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> random</span><br></pre></td></tr></table></figure>
+<p>或者是</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pygame, sys, random</span><br></pre></td></tr></table></figure>
+
+<h1 id="设定贪吃蛇游戏界面的大小"><a href="#设定贪吃蛇游戏界面的大小" class="headerlink" title="设定贪吃蛇游戏界面的大小"></a>设定贪吃蛇游戏界面的大小</h1><h2 id="全局定义"><a href="#全局定义" class="headerlink" title="全局定义"></a>全局定义</h2><p>程序中如果有常量，如恒定的数等。可以在开头全局定义。</p>
+<p>语法格式为</p>
+<p><code>name = value</code></p>
+<p>value 值</p>
+<p><strong>贪吃蛇游戏中，游戏界面的长和宽是不会变化的，是恒定的值</strong></p>
+<h2 id="设定贪吃蛇游戏界面的大小-1"><a href="#设定贪吃蛇游戏界面的大小-1" class="headerlink" title="设定贪吃蛇游戏界面的大小"></a>设定贪吃蛇游戏界面的大小</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 全局定义游戏界面的长和宽（单位为分辨率）</span></span><br><span class="line">SCREEN_X = <span class="number">600</span>                                     <span class="comment"># 全局定义游戏界面的长</span></span><br><span class="line">SCREEN_Y = <span class="number">600</span>                                     <span class="comment"># 全局定义游戏界面的宽</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个函数main()作为主函数 </span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>：                                       # 创建一个名为<span class="title">main</span>的主函数</span></span><br><span class="line"><span class="function">    <span class="title">pygame</span>.<span class="title">init</span><span class="params">()</span>                                  #1 初始化<span class="title">pygame</span>模块，确保<span class="title">pygame</span>模块完整可用</span></span><br><span class="line">    screen_size = (SCREEN_X,SCREEN_Y)</span><br><span class="line">    screen = pygame.display.set_mode(screen_size)  <span class="comment">#2 设定游戏窗口的大小（单位：分辨率）</span></span><br><span class="line">    pygame.display.set_caption(<span class="string">'Snake'</span>)            <span class="comment">#3 设定游戏窗口的标题为“Snake”</span></span><br><span class="line">    screen.fill((<span class="number">25</span>,<span class="number">25</span>,<span class="number">25</span>))                        <span class="comment"># 设定屏幕颜色（RGB）</span></span><br><span class="line">main()                                             <span class="comment"># 运行主函数</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>批注</strong>：在Python中，我们用缩进来表示不同代码之间的关系。若要说明一段代码从属于另一端代码，则需要通过缩进四个空格或一个<code>Tab</code>键来表示。不缩进的代码段之间为同级关系。Python中正确的运用缩进不仅能使程序顺利运行，还可以增强代码的可读性。</p>
+<p>#1 我们已经知道python有一个特殊的“库（模块）”叫pygame了。在我们要动手用它完成我们的想法之前，电脑这个强迫症需要我们检查一遍，这个工具包是否完整，能否正常给我们提供帮助。而这个检查的动作，就是<code>pygame.init()</code>。</p>
+<p>#2 <strong>pygame.display.set_mode(resolution=(SCREEN_X,SCREEN_Y))</strong></p>
+<p>初始化一个准备显示的窗口或屏幕。</p>
+<p>#3 <strong>pygame.display.set_caption(‘title’)</strong></p>
+<p>设置当前游戏窗口的标题</p>
+<p>当设置完成后，运行代码就可以看到一个“一闪而过”的游戏窗口了</p>
+<img data-src="/images\Snake\snake_screen.gif" style="zoom:25%;" />
+
+<h1 id="用类创建一个“贪吃蛇”模板"><a href="#用类创建一个“贪吃蛇”模板" class="headerlink" title="用类创建一个“贪吃蛇”模板"></a>用类创建一个“贪吃蛇”模板</h1><p>Python从问世之初就是一个可以面向对象的语言。在面向对象编程中，可以用类(class)表示现实世界的事物和情形。类(class)类似于现实世界中的模板。当创建了类后，你定义了整个对象类别可以有的一般行为和特征。</p>
+<p>如在贪吃蛇游戏中，我需要定义一个贪吃蛇的类，在其中定义一般贪吃蛇所具有的行为和特征。当用贪吃蛇的类创建一个独立的对象——一条贪吃蛇，就等于把这个类<strong>实例化(instantiation)</strong>。该条贪吃蛇就可以一个<strong>实例(instance)。</strong></p>
+<p>在python中创建一个类的基本语法为(在Python中以下三者等价):</p>
+<p><code>class ClassName:</code></p>
+<p><code>class ClassName():</code></p>
+<p><code>class ClassName(object):</code></p>
+<h2 id="创建一个贪吃蛇的类，并初始化个各种需要的属性"><a href="#创建一个贪吃蛇的类，并初始化个各种需要的属性" class="headerlink" title="创建一个贪吃蛇的类，并初始化个各种需要的属性"></a>创建一个贪吃蛇的类，并初始化个各种需要的属性</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在Python中类的名称一般首字母大写，与类的实例（全部小写）进行区分</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Snake</span>:</span></span><br><span class="line">    <span class="comment"># 初始化各种需要的属性 [开始时默认向右/身体块x5]</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span>                    <span class="comment">#4</span></span><br><span class="line">        self.dirction = pygame.K_RIGHT     <span class="comment">#5 设置贪吃蛇默认从右边开始运动，即按→方向键</span></span><br><span class="line">        self.body = []                     <span class="comment">#6 为实例创建一个名为body的空列表</span></span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">5</span>):                 <span class="comment">#7 将addnote()函数从0到4循环五次</span></span><br><span class="line">            self.addnode()                 <span class="comment">#8 初始设定贪吃蛇有5个蛇块</span></span><br></pre></td></tr></table></figure>
+
+
+<p><strong>类中的函数在Python中叫做方法（method）。</strong>在类中的方法具有函数的一切特征，也有一些区别。</p>
+<p>创建函数的一般语法为</p>
+<p><code>def funcitonname(parameter1, parameter2, ...):</code></p>
+<p>parameter 参数</p>
+<p>#4处的<code>__init__</code>是一类特殊的函数。当我们根据类创建了一个实例时，Python会<strong>自动调用<code>__init__</code>函数。</strong> <strong>在Python中的每个类中都必须要有<code>__init__</code>函数。</strong></p>
+<p>#4处定义的<code>__init__</code>函数一个参数<code>self</code>。<strong><code>self</code>参数在每一个类的每一个方法里都是必须的，而且顺序必须是第一个。</strong>因为当我们根据类创建实例后，每一个与实例相关联的方法的调用会自动传递<code>self</code>参数，<code>self</code>是对实例本身的引用，它可以让各个实例可以访问类中的属性。在我们创建的<code>__init__</code>函数中，不需要其他参数，所以只需要<code>self</code>一个必须参数就可以了。</p>
+<p>#5处的变量<code>self.dirction</code>带有<code>self</code>的前缀。在类中任何以self为前缀的变量都可以被类中的每个方法调用(因为每个方法中都有参数self)，我们也可以通过从类中创建的任何实例来访问这些变量。</p>
+<p>#5处的<code>pygame.K_RIGHT</code>是Pygame库中的属性，作用是使创建的对象（在这里是贪吃蛇）向右运动，相当于键入→方向键。</p>
+<p>同理 <code>pygame.K_UP</code>使创建的对象向上运动。</p>
+<p>同理 <code>pygame.K_DOWN</code>使创建的对象向下运动。<br><strong>Pygame库中可以用字符常量表示输入键盘中的特定键位。</strong></p>
+<table>
+<thead>
+<tr>
+<th>Pygame Constant</th>
+<th>The key in keyboard</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>K_UP</td>
+<td>up arrow</td>
+</tr>
+<tr>
+<td>K_DOWN</td>
+<td>down arrow</td>
+</tr>
+<tr>
+<td>K_LEFT</td>
+<td>left arrow</td>
+</tr>
+<tr>
+<td>K_RIGHT</td>
+<td>right arrow</td>
+</tr>
+<tr>
+<td>K_SPACE</td>
+<td>space</td>
+</tr>
+</tbody></table>
+<p>#6处为self参数创建一个body的属性，body初始化为空列表，利用列表的可变性（列表中元素的值和数量都可以变化）存放蛇块。</p>
+<p>#7&amp;#8处，为self参数创建一个addnote()的属性，用以增加蛇块的数量，初始化蛇块数量设定为5(可以根据个人喜好修改，但不宜过多)</p>
+<h2 id="设定贪吃蛇移动时的蛇块变化"><a href="#设定贪吃蛇移动时的蛇块变化" class="headerlink" title="设定贪吃蛇移动时的蛇块变化"></a>设定贪吃蛇移动时的蛇块变化</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 无论何时 都在前端增加蛇块</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">addnode</span><span class="params">(self)</span>:</span>                                      <span class="comment">#9</span></span><br><span class="line"><span class="comment"># 设定贪吃蛇从屏幕的右上角开始出现</span></span><br><span class="line">    left,top = (<span class="number">0</span>,<span class="number">0</span>)                                    <span class="comment">#10                     </span></span><br><span class="line">    <span class="keyword">if</span> self.body:</span><br><span class="line">        left,top = (self.body[<span class="number">0</span>].left,self.body[<span class="number">0</span>].top) <span class="comment">#11</span></span><br><span class="line"><span class="comment"># 定义蛇在游戏开始时出现的位置，以及蛇的每一节身体的长宽（单位为分辨率）</span></span><br><span class="line">    node = pygame.Rect(left, top, <span class="number">25</span>, <span class="number">25</span>)               <span class="comment">#12                   </span></span><br><span class="line">    <span class="keyword">if</span> self.dirction == pygame.K_LEFT:                  <span class="comment">#13                    </span></span><br><span class="line">        node.left -= <span class="number">25</span></span><br><span class="line">    <span class="keyword">elif</span> self.dirction == pygame.K_RIGHT:               <span class="comment">#14</span></span><br><span class="line">        node.left += <span class="number">25</span></span><br><span class="line">    <span class="keyword">elif</span> self.dirction == pygame.K_UP:                  <span class="comment">#15</span></span><br><span class="line">        node.top -= <span class="number">25</span></span><br><span class="line">    <span class="keyword">elif</span> self.dirction == pygame.K_DOWN:                <span class="comment">#16</span></span><br><span class="line">        node.top += <span class="number">25</span></span><br><span class="line">    self.body.insert(<span class="number">0</span>,node)                            <span class="comment">#17</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 删除最后一个块</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">delnode</span><span class="params">(self)</span>:</span>                                      <span class="comment">#18</span></span><br><span class="line">    self.body.pop()                                     <span class="comment">#19</span></span><br></pre></td></tr></table></figure>
+
+<p>#9 在这段代码中我们创建了addnode方法，该方法有且self这一个必须参数</p>
+<p>#10 设定贪吃蛇的出现位置在最右上角。left, top在后文代表的意思可以用下面这张图片解释。</p>
+<p><img data-src="/images/Snake/Pygame%E4%B8%ADrect%E5%87%BD%E6%95%B0.png" alt=""></p>
+<p>#11处出现的rect函数中的left, top指的是矩形区域（白色部分）距离x轴和y轴的水平距离和垂直距离。</p>
+<p><strong>Pygame 通过 Rect 对象存储和操作矩形区域，由pygame.Rect(left, top, width, height)命令创建。</strong></p>
+<p>该一整段代码的运行流程：</p>
+<img data-src="/images/Snake/def addnote().png" style="zoom: 200%;" />
+
+<p>在<code>__init__</code>函数中有一个for循环，使addnote()方法按照该流程循环了5次。</p>
+<p>第一次循环并没有执行<code>if self.body：</code>后的语句，因为我们最初定义的<code>self.body</code>是一个空列表。所以第一次循环首先执行<code>node = pygame.Rect(left, top, 25, 25)</code>。这时我们创建了一个在游戏界面最右上角，大小为25*25像素的矩形对象node。因为在<code>__init__</code>函数中我们<code>self.dirction = pygame.K_RIGHT</code>语句使对象向右移动，所以判定向右运动为真，node变量的left参数加25——即向右运动了25像素。这样实现了一个像素块向右的移动。最后的<code>self.body.insert(0,node)</code>命令在self.body列表的插入node变量，并将其放在第一位。</p>
+<p>之后四次循环中，因为<code>self.body</code>列表不再是空列表，所以总是执行第一个if语句后的命令，将参数left，top赋值为<code>self.body</code>列表中的第一位，这样做，使得每次循环之初的node对象总是上一次循环得到的移动过后的像素块，并在此基础上根据运动方向再次移动——这样做实现 贪吃蛇身体的连续，使得贪吃蛇刚出来就是完整的五个25*25像素块</p>
+<p>这样做是不够的，因为随着贪吃蛇的移动，是不断右像素块（图中绿色，颜色可自定义）产生和像素块的消失。在最后的像素块总是最先消失的。也就是<code>self.body[-1]</code>会随着每次移动而删去。</p>
+<p>所以我们需要另外创建一个delnode函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">delnode</span><span class="params">(self)</span>:</span></span><br><span class="line">self.body.pop()</span><br></pre></td></tr></table></figure>
+<p>delnode方法同样仅有self这一必须参数，pop函数可以删去列表中的最后一个元素。</p>
+<p>我们需要同时同刷新率运行addnode和delnode方法。这时，又需要创建一个方法<code>move</code>.在运行addnode增加蛇块的同时运行delnode减少蛇块。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 移动！</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">move</span><span class="params">(self)</span>:</span></span><br><span class="line">    self.addnode()</span><br><span class="line">    self.delnode()</span><br></pre></td></tr></table></figure>
+
+
+
+<p>那么，除非吃到食物（后面会设置），我们以类创建出来的贪吃蛇的蛇块增加速度等于删除速度，最后蛇的长度不变。又因为蛇块总是在动态变化，我们就用程序完成了蛇的移动。</p>
+<p><strong>效果图</strong></p>
+<img data-src="/images/Snake/2.gif" style="zoom:25%;" />
+
+
+
+<h2 id="改变方向-但是左右、上下不能被逆向改变"><a href="#改变方向-但是左右、上下不能被逆向改变" class="headerlink" title="改变方向 但是左右、上下不能被逆向改变"></a>改变方向 但是左右、上下不能被逆向改变</h2><p>但这样是不够的。在经典的贪吃蛇游戏中，蛇是不能逆向运动的。我们需要在蛇左右或上下运动的同时对其运动方向做出限制。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 改变方向 但是左右、上下不能被逆向改变</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">changedirection</span><span class="params">(self,curkey)</span>:</span>                            <span class="comment">#20</span></span><br><span class="line">    LR = [pygame.K_LEFT,pygame.K_RIGHT]                      <span class="comment">#21</span></span><br><span class="line">    UD = [pygame.K_UP,pygame.K_DOWN]                          </span><br><span class="line">    <span class="keyword">if</span> curkey <span class="keyword">in</span> LR+UD:                                      <span class="comment">#22</span></span><br><span class="line">        <span class="keyword">if</span> (curkey <span class="keyword">in</span> LR) <span class="keyword">and</span> (self.dirction <span class="keyword">in</span> LR):         <span class="comment">#23</span></span><br><span class="line">            <span class="keyword">return</span> self.dirction                             <span class="comment">#24</span></span><br><span class="line">        <span class="keyword">if</span> (curkey <span class="keyword">in</span> UD) <span class="keyword">and</span> (self.dirction <span class="keyword">in</span> UD):       </span><br><span class="line">            <span class="keyword">return</span> self.dirction</span><br><span class="line">        self.dirction = curkey                               <span class="comment">#25</span></span><br></pre></td></tr></table></figure>
+
+<p>我的方案是将左右运动和上下运动分开讨论，因为两者的情况是不一样。</p>
+<p>在左右运动时，无论是按<strong>←</strong>还是→键，蛇总是按照原来的方向前进。左右运动时情况类似。</p>
+<p>#21 我们分别创建LR和UD列表代表左右运动和上下运动。</p>
+<p>#20 这时我们需要输入蛇当前的运动方向，所以在定义方法时在self参数后加了curkey参数。</p>
+<p>#23&amp;#24 我们需要判定curkey是否与self.dirction都处于向左或向右运动方向上，如果为真，则返回self.dirction。后面的语句就不会执行了。</p>
+<p>#25 若curkey与当前的self.dirction不冲突，则将curkey的值赋予self.dirction，这样贪吃蛇的方向就发生了改变。</p>
+<h2 id="贪吃蛇的死亡判断"><a href="#贪吃蛇的死亡判断" class="headerlink" title="贪吃蛇的死亡判断"></a>贪吃蛇的死亡判断</h2><p>经典的贪吃蛇中有两种死亡方式，一是碰撞到墙壁（在这里我们用屏幕边界代替），而是头碰到自己的身体。这两者只要满足一个就可以判定为死亡。</p>
+<p>这里先做一个简单的死亡判断函数，对死亡前后的各种对象的设置将会在<code>main</code>函数中进行。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 死亡判断</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isdead</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="comment"># 撞墙</span></span><br><span class="line">    <span class="keyword">if</span> self.body[<span class="number">0</span>].x  <span class="keyword">not</span> <span class="keyword">in</span> range(SCREEN_X): <span class="comment"># 若蛇块不在屏幕范围内，判定死亡为真         </span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">if</span> self.body[<span class="number">0</span>].y  <span class="keyword">not</span> <span class="keyword">in</span> range(SCREEN_Y):</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="comment"># 撞自己</span></span><br><span class="line">    <span class="keyword">if</span> self.body[<span class="number">0</span>] <span class="keyword">in</span> self.body[<span class="number">1</span>:]:          <span class="comment"># 如果撞到自己，判定为死亡         </span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+
+<p>一开始，我们需要在主函数中初始化isdead方法为否，即</p>
+<p><code>isdead = False</code></p>
+<p><code>self.body</code>列表中存储着一些代表蛇块的矩形对象。当任何一个矩形对象超出屏幕范围内时，则返回isdead为真；或者，当代表蛇头的矩形对象(在<code>self.body</code>列表中总是第一个元素)的位置（left和top参数）包含于蛇身（<code>self.body[1:]</code>)时，则返回isdead为真。</p>
+<p>当两个条件都不满足时，返回<code>isdead = False</code></p>
+<h1 id="用类创建一个“食物”模板"><a href="#用类创建一个“食物”模板" class="headerlink" title="用类创建一个“食物”模板"></a>用类创建一个“食物”模板</h1><p>食物所具有的特征就贪吃蛇简单多了，我们需要创建关于食物的类，满足下列的要求：</p>
+<p>1.食物出现的位置随机</p>
+<p>2.食物被贪吃蛇碰到后会更换位置出现在界面上</p>
+<p>3.食物的大小适中（在这里我们固定食物的大小为25*25像素，等于一个蛇块的大小）</p>
+<h2 id="创建一个食物的类"><a href="#创建一个食物的类" class="headerlink" title="创建一个食物的类"></a>创建一个食物的类</h2><h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Food</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span>                                       </span><br><span class="line">        self.rect = pygame.Rect(<span class="number">0</span>,<span class="number">0</span>,<span class="number">25</span>,<span class="number">25</span>)                    <span class="comment"># rect对象是用来存储矩形对象的</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">remove</span><span class="params">(self)</span>:</span>                                         <span class="comment"># 去除食物</span></span><br><span class="line">        self.rect.left=<span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set</span><span class="params">(self)</span>:</span>                                            <span class="comment"># 随机设置食物的出现地点</span></span><br><span class="line">        <span class="keyword">if</span> self.rect.left == <span class="number">0</span>:</span><br><span class="line">            allpos = []                                       <span class="comment"># 26</span></span><br><span class="line">            <span class="comment"># 不靠墙太近 25 ~ SCREEN_X-25 之间fenb</span></span><br><span class="line">            <span class="keyword">for</span> pos <span class="keyword">in</span> range(<span class="number">25</span>,SCREEN_X<span class="number">-25</span>,<span class="number">25</span>): </span><br><span class="line">  <span class="comment"># 将屏幕减小外围25分辨率后的所有位置（以25*25像素块为单位）都添加到allpos列表中</span></span><br><span class="line">                allpos.append(pos)</span><br><span class="line">            self.rect.left = random.choice(allpos)</span><br><span class="line">            self.rect.top  = random.choice(allpos)</span><br><span class="line">            print(self.rect)</span><br></pre></td></tr></table></figure>
+
+<p>我们需要一个刷新食物出现地点的判定标准，当类<code>Food</code>的实例被创建时，python会自动调用<code>__init__</code>函数，这时就应该自动刷新食物出现的地点。当食物被贪吃蛇吃掉时，也应该自动刷新食物出现的地点。</p>
+<p>在这里我选择<code>self.rect.left == 0</code>为真，作为食物刷新的条件。所以在<code>__init__</code>方法中，我将0赋给了<code>self.rect.left</code>,并设定了食物的大小为25*25分辨率。</p>
+<p>在remove方法中，我选择直接赋值，因为食物大小已经设置过了，不需要再次设置。</p>
+<p>之后，很容易想到可以用random函数随机分配食物的位置。</p>
+<p>这时可以选择先构建一个包含所有位置的库（为了降低游戏难度，删除了外围25分辨率），在用choice函数在位置库中随机选取。也可以直接在random函数中选构建所有位置的表达式后一步解决。这里选择较简单的前一种。</p>
+<p><strong>#26</strong> 用for循环将除外围25分辨率的所有位置加入空列表allpos，再用random.choice()方法随机返回。<strong>choice()</strong> 方法返回一个列表，元组或字符串的随机项。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line">random.choice( seq  )</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong>choice()是不能直接访问的，需要导入 random 模块，然后通过 random 静态对象调用该方法。</p>
+<p> seq – 可以是一个列表，元组或字符串。</p>
+<h1 id="实例化类Snack和类Food"><a href="#实例化类Snack和类Food" class="headerlink" title="实例化类Snack和类Food"></a>实例化类Snack和类Food</h1><p><strong>从该分隔线以下代码均在<code>main</code>函数内</strong></p>
+<p><strong>从该分隔线以下代码均在<code>main</code>函数内</strong></p>
+<p><strong>从该分隔线以下代码均在<code>main</code>函数内</strong></p>
+<hr>
+<p>实例化类的语法为<code>instancename = ClassName（parameter1, parameter2, ...)</code></p>
+<p>在python中一般用全小写字母表示实例，与类做出区分。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">snack = Snack()</span><br><span class="line">food = Food()</span><br></pre></td></tr></table></figure>
+
+<p>在pygame中，设定游戏开始有相对固定的一套代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">for</span> event <span class="keyword">in</span> pygame.event.get():           <span class="comment"># 设定游戏开始</span></span><br><span class="line">            <span class="keyword">if</span> event.type == pygame.QUIT:          <span class="comment"># 判定玩家是否退出（点击窗口的X关闭游戏）</span></span><br><span class="line">                pygame.quit()</span><br><span class="line">            <span class="keyword">if</span> event.type == pygame.KEYDOWN:       <span class="comment"># 检查玩家是否按下关键键位，为真则执行if后语句</span></span><br><span class="line">                snake.changedirection(event.key)   <span class="comment"># 玩家按下方向键以后执行改变方向</span></span><br><span class="line">            <span class="comment"># 死后按space重新开始</span></span><br><span class="line">             <span class="keyword">if</span> event.key == pygame.K_SPACE <span class="keyword">and</span> isdead:  </span><br><span class="line">            <span class="comment"># 如果贪吃蛇死亡判定为真，且玩家按了space键则重新开始游戏</span></span><br><span class="line">                    <span class="keyword">return</span> main()</span><br></pre></td></tr></table></figure>
+
+<p>pygame提供了现成的方法检测玩家按下输入关键键位</p>
+<p><strong>pygame.KEYDOWN 按下键盘时所按下的键</strong></p>
+<p><strong>pygame.KEYUP 释放键盘时</strong></p>
+<p><strong>event.key 指的是玩家按下的关键键位</strong></p>
+<h2 id="构建蛇身体"><a href="#构建蛇身体" class="headerlink" title="构建蛇身体"></a>构建蛇身体</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> isdead:                               <span class="comment"># 如果蛇没有死，那么蛇会一直移动</span></span><br><span class="line">    snake.move()</span><br><span class="line"><span class="keyword">for</span> rect <span class="keyword">in</span> snake.body:</span><br><span class="line">    pygame.draw.rect(screen,(<span class="number">20</span>,<span class="number">220</span>,<span class="number">39</span>),rect)  <span class="comment">#27 设置贪吃蛇的颜色（RGB颜色）</span></span><br></pre></td></tr></table></figure>
+
+<p>如果isdead参数为否，则执行snake实例中的move方法。</p>
+<p><strong>#27</strong> rect表示矩形对象, 对snake.body中的每一个矩形对象，用<code>pygame.draw.rect(screen, RGB，shape)</code>绘制矩形（贪吃蛇就是由矩形构成）。 screen表示屏幕界面，RGB用三元元组表示，rect为固定参数。</p>
+<h2 id="加入食物与蛇的互动"><a href="#加入食物与蛇的互动" class="headerlink" title="加入食物与蛇的互动"></a>加入食物与蛇的互动</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 食物处理 / 吃到+50分</span></span><br><span class="line">        <span class="comment"># 当食物rect与蛇头重合,吃掉 -&gt; Snake增加一个Node</span></span><br><span class="line">        <span class="keyword">if</span> food.rect == snake.body[<span class="number">0</span>]:      </span><br><span class="line">            food.remove()                                       <span class="comment"># 移除</span></span><br><span class="line">            snake.addnode()                                     <span class="comment"># 增加蛇的一节身体</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 食物投递</span></span><br><span class="line">        food.set()                                              <span class="comment"># 刷新一个食物</span></span><br><span class="line">        pygame.draw.rect(screen,(<span class="number">136</span>,<span class="number">0</span>,<span class="number">21</span>),food.rect)           <span class="comment"># 绘制矩形对象</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="计算分数并在屏幕上打印文字"><a href="#计算分数并在屏幕上打印文字" class="headerlink" title="计算分数并在屏幕上打印文字"></a>计算分数并在屏幕上打印文字</h1><p>添加语句创建<code>scores</code>变量并赋初值为0</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    pygame.init()                                    <span class="comment">#初始化pygame模块，确保pygame模块完整可用</span></span><br><span class="line">    screen_size = (SCREEN_X,SCREEN_Y)</span><br><span class="line">    screen = pygame.display.set_mode(screen_size)    <span class="comment">#设定游戏窗口的大小（分辨率吧）</span></span><br><span class="line">    pygame.display.set_caption(<span class="string">'Snake'</span>)              <span class="comment">#设定游戏窗口的标题</span></span><br><span class="line">    clock = pygame.time.Clock()                      <span class="comment">#创建一个名字为clock的对象来记录时间</span></span><br><span class="line">    <span class="comment"># 这是添加的语句</span></span><br><span class="line">    scores = <span class="number">0</span>                                       <span class="comment">#初始化分数为0</span></span><br><span class="line">    isdead = <span class="literal">False</span>                                   <span class="comment">#创建死亡判定参数isdead,初始为False</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>构建在屏幕上打印字体的函数</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_text</span><span class="params">(screen, pos, text, color, font_bold = False, font_size = <span class="number">60</span>, font_italic = False)</span>:</span>   </span><br><span class="line">    <span class="comment">#获取系统字体，并设置文字大小                                             </span></span><br><span class="line">    cur_font = pygame.font.SysFont(<span class="string">"宋体"</span>, font_size)  </span><br><span class="line">    <span class="comment">#设置是否加粗属性  </span></span><br><span class="line">    cur_font.set_bold(font_bold)                                           </span><br><span class="line">    <span class="comment">#设置是否斜体属性                                                        </span></span><br><span class="line">    cur_font.set_italic(font_italic)  </span><br><span class="line">    <span class="comment">#设置文字内容  </span></span><br><span class="line">    text_fmt = cur_font.render(text, <span class="number">1</span>, color)                              </span><br><span class="line">    <span class="comment">#绘制文字  </span></span><br><span class="line">    screen.blit(text_fmt, pos)</span><br></pre></td></tr></table></figure>
+
+<p>  代码中方法均为pygame库内置。</p>
+<p><strong>用函数在屏幕上显示分数</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 显示分数文字</span></span><br><span class="line">show_text(screen,(<span class="number">50</span>,<span class="number">500</span>),<span class="string">'Scores: '</span>+str(scores),(<span class="number">223</span>,<span class="number">223</span>,<span class="number">223</span>))</span><br><span class="line"><span class="comment"># The Pygame.display.update() 该方法可重新绘制屏幕 </span></span><br><span class="line">pygame.display.update()           </span><br><span class="line"><span class="comment"># The clock.tick() method 设定一秒内刷新的次数（数值越大，蛇运动的越快）</span></span><br><span class="line">clock.tick(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+<p> <strong>显示死亡文字</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 显示死亡文字</span></span><br><span class="line">isdead = snake.isdead()</span><br><span class="line"><span class="keyword">if</span> isdead:                                    <span class="comment"># 判断贪吃蛇是否死亡</span></span><br><span class="line">    show_text(screen,(<span class="number">100</span>,<span class="number">200</span>),<span class="string">'YOU DEAD!'</span>,(<span class="number">227</span>,<span class="number">29</span>,<span class="number">18</span>),<span class="literal">False</span>,<span class="number">100</span>)</span><br><span class="line">    show_text(screen,(<span class="number">150</span>,<span class="number">260</span>),<span class="string">'press space to try again...'</span>,(<span class="number">0</span>,<span class="number">0</span>,<span class="number">22</span>),<span class="literal">False</span>,<span class="number">30</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="运行和调试"><a href="#运行和调试" class="headerlink" title="运行和调试"></a>运行和调试</h1><p>最后来一个main函数就可以运行游戏了！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">main()</span><br></pre></td></tr></table></figure>
+
+<h1 id="项目源代码地址"><a href="#项目源代码地址" class="headerlink" title="项目源代码地址"></a><a href="[https://github.com/ZhangChunXian/learn-python-by-projects/tree/master/%E9%A1%B9%E7%9B%AE%E6%BA%90%E4%BB%A3%E7%A0%81](https://github.com/ZhangChunXian/learn-python-by-projects/tree/master/项目源代码)"><strong>项目源代码地址</strong></a></h1><p>github.com/ZhangChunXian/learn-python-by-projects/tree/master/项目源代码</p>
+<p><strong>最终效果：</strong></p>
+<p><img data-src="/images/Snake/3.gif" alt=""></p>
+<h1 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h1><p>感谢各位的阅读！你的阅读是我更新的动力源泉。请根据博文质量点击相应的星级。</p>
+<p>这是我第一次做python方面的项目。在尚无基础的情况下上手，我翻阅了一些书籍，还有不少大牛的博客，最终写下了这篇博文。有许多不足，望诸位谅解并指出在评论区，也可以通过邮件告诉我，我将逐一听取。感谢各位在我成长过程中给予的帮助。</p>
+<p>同时也欢迎各位计算机学习者前来交流。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>坚持原创分享，您的支持将鼓励我继续创作!</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/config/mywechatpay.jpg" alt="Be_invisible 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/config/myalipay.jpg" alt="Be_invisible 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Be_invisible
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://zhangchunxian.github.io/posts/python%E5%B0%8F%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98_%E8%B4%AA%E5%90%83%E8%9B%87.url.html" title="贪吃蛇 —— Python 小项目实战">http://zhangchunxian.github.io/posts/python小项目实战_贪吃蛇.url.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" rel="tag"># 游戏开发</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/%E8%AE%B0%E7%AC%94%E8%AE%B0%E7%9A%84%E9%AB%98%E6%95%88%E5%A7%BF%E5%8A%BF%E8%AF%BE%E5%A0%82%E7%AF%87_url.html" rel="prev" title="记笔记的高效姿势课堂篇">
+      <i class="fa fa-chevron-left"></i> 记笔记的高效姿势课堂篇
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/%E7%AE%97%E6%9C%AF%E9%80%BB%E8%BE%91%E5%8D%95%E5%85%83-ALU_url.html" rel="next" title="算术逻辑单元-ALU">
+      算术逻辑单元-ALU <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#贪吃蛇-——-Python-小项目实战"><span class="nav-number">1.</span> <span class="nav-text">贪吃蛇 —— Python 小项目实战</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#前言："><span class="nav-number">2.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#导入贪吃蛇小游戏所需要的库和模块"><span class="nav-number">3.</span> <span class="nav-text">导入贪吃蛇小游戏所需要的库和模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#python导入库和模块"><span class="nav-number">3.1.</span> <span class="nav-text">python导入库和模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导入需要的库"><span class="nav-number">3.2.</span> <span class="nav-text">导入需要的库</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设定贪吃蛇游戏界面的大小"><span class="nav-number">4.</span> <span class="nav-text">设定贪吃蛇游戏界面的大小</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#全局定义"><span class="nav-number">4.1.</span> <span class="nav-text">全局定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设定贪吃蛇游戏界面的大小-1"><span class="nav-number">4.2.</span> <span class="nav-text">设定贪吃蛇游戏界面的大小</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#用类创建一个“贪吃蛇”模板"><span class="nav-number">5.</span> <span class="nav-text">用类创建一个“贪吃蛇”模板</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建一个贪吃蛇的类，并初始化个各种需要的属性"><span class="nav-number">5.1.</span> <span class="nav-text">创建一个贪吃蛇的类，并初始化个各种需要的属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设定贪吃蛇移动时的蛇块变化"><span class="nav-number">5.2.</span> <span class="nav-text">设定贪吃蛇移动时的蛇块变化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改变方向-但是左右、上下不能被逆向改变"><span class="nav-number">5.3.</span> <span class="nav-text">改变方向 但是左右、上下不能被逆向改变</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#贪吃蛇的死亡判断"><span class="nav-number">5.4.</span> <span class="nav-text">贪吃蛇的死亡判断</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#用类创建一个“食物”模板"><span class="nav-number">6.</span> <span class="nav-text">用类创建一个“食物”模板</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建一个食物的类"><span class="nav-number">6.1.</span> <span class="nav-text">创建一个食物的类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化"><span class="nav-number">6.2.</span> <span class="nav-text">初始化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实例化类Snack和类Food"><span class="nav-number">7.</span> <span class="nav-text">实例化类Snack和类Food</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#构建蛇身体"><span class="nav-number">7.1.</span> <span class="nav-text">构建蛇身体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加入食物与蛇的互动"><span class="nav-number">7.2.</span> <span class="nav-text">加入食物与蛇的互动</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#计算分数并在屏幕上打印文字"><span class="nav-number">8.</span> <span class="nav-text">计算分数并在屏幕上打印文字</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运行和调试"><span class="nav-number">9.</span> <span class="nav-text">运行和调试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目源代码地址"><span class="nav-number">10.</span> <span class="nav-text">项目源代码地址</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#写在最后"><span class="nav-number">11.</span> <span class="nav-text">写在最后</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Be_invisible"
+      src="/images/config/myavatar.png">
+  <p class="site-author-name" itemprop="name">Be_invisible</p>
+  <div class="site-description" itemprop="description">Love sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZhangChunXian" title="GitHub → https://github.com/ZhangChunXian" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1836891291@qq.com" title="E-Mail → mailto:1836891291@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://dase.ecnu.edu.cn/" title="http://dase.ecnu.edu.cn/" rel="noopener" target="_blank">华东师范大学数据科学与工程学院</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Be_invisible</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">82k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:44</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.7.2
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5f2d1e5036597eb8" async="async"></script>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id    : 26659,
+      el    : 'wpac-rating',
+      color : 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes : 0,
+          toolbar  : 0,
+          statusbar: 0,
+          pagemode : 'thumbs',
+          view     : 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height   : element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'http://zhangchunxian.github.io/posts/python%E5%B0%8F%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98_%E8%B4%AA%E5%90%83%E8%9B%87.url.html',]
+      });
+      });
+  </script>
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'b186245383615fbfac1a',
+      clientSecret: '181602de35dbbd6cd7f473c1ea60ee20142893b5',
+      repo        : 'ZhangChunXian.github.io',
+      owner       : 'ZhangChunXian',
+      admin       : ['ZhangChunXian'],
+      id          : 'f84bed448794bd4641df1b6297d7d8a1',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1.2,"jsonPath":"https://cdn.jsdelivr.net/npm/live2d-widget-model-koharu@1.0.5/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

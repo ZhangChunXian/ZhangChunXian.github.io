@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/config/favicon-32x32-next.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/config/favicon-16x16-next.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Consolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhangchunxian.github.io","root":"/","scheme":"Mist","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="3.5.1 加载有效地址地址运算指令写法是lea 作为它的助记符，也就是操作码。由于在x86-64位系统中，地址都是64位。所以一般见到的这条地址运算指令，它的这个尾部的数据格式都是以q 作为后缀。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSAPP 3.5 算术运算与逻辑运算">
+<meta property="og:url" content="http://zhangchunxian.github.io/posts/CSAPP_3.5_%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E4%B8%8E%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97_url.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="3.5.1 加载有效地址地址运算指令写法是lea 作为它的助记符，也就是操作码。由于在x86-64位系统中，地址都是64位。所以一般见到的这条地址运算指令，它的这个尾部的数据格式都是以q 作为后缀。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015100818384-1602738181388.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015101734108-1602738207739.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015101748755-1602738236543.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015103556287-1602738257370.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015104631290-1602738277336.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015164049061.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015164449186.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015165930299.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015181444447.png">
+<meta property="article:published_time" content="2020-10-12T06:00:00.000Z">
+<meta property="article:modified_time" content="2020-11-11T02:57:05.399Z">
+<meta property="article:author" content="Be_invisible">
+<meta property="article:tag" content="计算机系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zhangchunxian.github.io/images/image-20201015100818384-1602738181388.png">
+
+<link rel="canonical" href="http://zhangchunxian.github.io/posts/CSAPP_3.5_%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E4%B8%8E%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97_url.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+<script>
+  window.onblur = function() {
+       document.title = 'Σ(っ°Д°;)っ喔哟，崩溃啦!';
+  }
+
+  window.onfocus = function() {
+       document.title = '(o゜▽゜)o☆咦，又好啦!';
+  }
+</script>
+
+    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+  
+
+  <title>CSAPP 3.5 算术运算与逻辑运算 | Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/rss.xml" title="Blog" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">ヾ(≧O≦)〃ao~ welcome to my website</h1>
+      
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">13</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">14</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">30</span></a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/ZhangChunXian" class="github-corner" title="我的Github" aria-label="我的Github" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zhangchunxian.github.io/posts/CSAPP_3.5_%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E4%B8%8E%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97_url.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/config/myavatar.png">
+      <meta itemprop="name" content="Be_invisible">
+      <meta itemprop="description" content="Love sharing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          CSAPP 3.5 算术运算与逻辑运算<a href="https://github.com/ZhangChunXian/ZhangChunXian.github.io/blob/source/source/_posts/_posts/posts/CSAPP3.5.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil"></i></a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-12 14:00:00" itemprop="dateCreated datePublished" datetime="2020-10-12T14:00:00+08:00">2020-10-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%AF%BE/" itemprop="url" rel="index"><span itemprop="name">计算机专业课</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%AF%BE/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">计算机系统</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>11 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="3-5-1-加载有效地址"><a href="#3-5-1-加载有效地址" class="headerlink" title="3.5.1 加载有效地址"></a>3.5.1 加载有效地址</h1><p>地址运算指令写法是lea 作为它的助记符，也就是操作码。由于在x86-64位系统中，地址都是64位。所以一般见到的这条地址运算指令，它的这个尾部的数据格式都是以q 作为后缀。</p>
+<p><img data-src="../../images/image-20201015100818384-1602738181388.png" alt=""></p>
+<a id="more"></a>
+
+<p>lea指令是一个双操作数指令，有源操作数和目标操作数。源操作数通常是一个类似于寻址模式的一个4元组, 该4元组用来进行地址表达式的计算。目标操作数通常是一个寄存器, 用来存放算术运算的地址的结果，存放到寄存器里。</p>
+<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><p><img data-src="../../images/image-20201015101734108-1602738207739.png" alt=""></p>
+<p>地址运算指令，它在设计的初衷的时候，主要是用来去计算像c语言中如<code>p = &amp;x[i]</code>的表达式所对应的一个地址。比如说计算变量x 数组的第 i 的下标所在索引的地址, 赋值给p指针，P存放的是一个地址。计算方法是先算出x 的基地址, 再算出x 中每个元素它的位长, 然后再乘以这个下标i , 得到的就是最后的位置。每个元素的大小, 在高级语言中，通常我们能够见到的就是这四种类型, 就是一字节两字节、四字节或者是八字节。所以在计算的时候, 就是乘以每个数组元素的位长，通常就是这四个数值。</p>
+<p><strong>实例</strong> </p>
+<p><img data-src="../../images/image-20201015101748755-1602738236543.png" alt=""></p>
+<p>在这个具体的这条指令中, D缺省，缺省的时候为D = 0, R<del>b</del>为rdi 寄存器中的值, r<del>i</del>也为rdi 寄存器中的值, S = 2。<br>这样再做一个运算, 是r d i加上r d i 乘以2。和move指令最大的区别是, move指令是把计算后的地址所在的值取出来，放到目标寄存器中。而l e a 指令是把地址算出来, 直接把这个地址赋值给目标的操作数，也就是rax寄存器。换句话说，l e a 指令是不会对内存进行任何访问的。r d i 寄存器是用来存放传入的这个参数x 的。所以这条指令的含义就是x 加上x 乘以2, 然后赋值给r a x 寄存器。所以这个时候r a x 应该是3x。</p>
+<p>接下来执行了一个左移指令, 后面会讲到.</p>
+<p>那么最后得到的就是x 乘以12作为这个函数的返回值. </p>
+<p>在这个实例中, 可以看到本身是一个乘法，一个变量乘以一个常数, 通过编译器转换成汇编语言之后，把它转换成, 1个地址计算指令和1个移位运算指令。因为乘法对于处理器来说，它在计算的时候是一个非常耗时的一个操作, 但是对于基本的运算如加减，基本的移位运算, 它们的运算速度要远远的快于乘法运算的速度. 所以编译器不使用乘法指令去做这样一个x 与常数的相乘, 而是把它转换成很多加法和移位指令的组合。虽然一个乘法指令转换成了两条指令, 但是这两条指令执行的速度, 仍然比一条乘法执行的速度要快的多。所以编译器通常会做这样的一个转换。</p>
+<p>l e a 指令虽然最初在设计的时候, 是做地址计算使用, 但是在编译器实际使用的过程中，因为l e a 指令的特性不做任何内存的访问, l e a 指令通常也被用来去进行一些算术运算, 这也是编译器在编译的时候的一个技巧。而l e a 进行的这个算术运算，可以去模拟一些变量与常数之间的运算, 这也是编译器经常使用的一种技巧。</p>
+<h1 id="3-5-2-双操作数指令"><a href="#3-5-2-双操作数指令" class="headerlink" title="3.5.2 双操作数指令"></a>3.5.2 双操作数指令</h1><p><img data-src="../../images/image-20201015103556287-1602738257370.png" alt=""></p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li>*<em>源操作数和目标操作数相加的结果放到目标操作数里. *</em>由于第二个操作数是目标操作数，所以所有的这些二元操作数的这种指令，最后运算的结果都是放到第二个操作数. 尤其减法这种两个操作数之间是有顺序的运算, 是目标操作数，也就是目标操作数是被减数, 源操作数是减数。减完的结果存到原先被减数所在的位置中去。</li>
+<li><strong>注意区分算数移位和逻辑移位.</strong>  移位指令中间有a, 代表算数移位; 中间有h, 代表逻辑移位.</li>
+<li><strong>源操作数可以是立即数, 寄存器和地址, 目标操作数只能是地址和寄存器.</strong></li>
+<li>在加减乘运算中, 并没有区分有符号运算和无符号运算. 因为加法运算和减法运算本质上是相同的, 加法减法运算和乘法运算对于有符号数和无符号数来讲，在位级别的运算规则也是相似的。</li>
+<li>除法运算分为有符号数除法和无符号除法.</li>
+</ol>
+<h1 id="3-5-3单操作数指令"><a href="#3-5-3单操作数指令" class="headerlink" title="3.5.3单操作数指令"></a>3.5.3单操作数指令</h1><p><img data-src="../../images/image-20201015104631290-1602738277336.png" alt=""></p>
+<p> 看图即可</p>
+<h1 id="3-5-4-算数运算示例"><a href="#3-5-4-算数运算示例" class="headerlink" title="3.5.4 算数运算示例"></a>3.5.4 算数运算示例</h1><p><img data-src="../../images/image-20201015164049061.png" alt=""></p>
+<p>左面是进行了一些复杂表达式的运算，最后把运算的结果rval变量作为返回值返回。<br>传入的参数有3个参数，x, y, z ,通过编译器可以将这段高级语言的语句翻译成汇编语言的指令. </p>
+<p><img data-src="../../images/image-20201015164449186.png" alt=""></p>
+<p>用颜色对高级语言中的表达式进行了一个划分, 通过颜色来去确认对应颜色的高级语言的语句。</p>
+<p>第一条指令是将x 和y 的值相加，存在变量t1中。x 存放在r d i 寄存器中。<br>也就是函数的第一个参数是存放在rdi寄存器中的, 函数的第二个参数是存放在rsi寄存器中,函数的第三个参数是存放在rdx寄存器中。函数的参数的顺序和寄存器之间是由某种固定关系的。在x86的linux操作系统下啊，第一个参数，第二个参数和第三个参数会固定的映射到这三个寄存器中。</p>
+<p>第一个指令是x 和y 相加, 把结果存在t1 变量中，它所对应的汇编指令是使用了一个地址计算指令rdi和r s i 相加, 存放到了rax 里。</p>
+<p>为什么在这儿要用地址计算指令, 而不使用标准的算术运算指令add呢? 用add的效果似乎和这个效果是一样的。一个最主要的原因是add指令, 是两操作数的指令, 也就是在运算之后，必然结果会覆盖掉其中一个操作数的值。表达式中后边的运算, 原来的参数x 的值也要参与其他的运算, 原来参数y 的值也要参与其他的运算。所以如果把第一个x +y 这个指令语句转换成add 指令的话，那么必然x 和y 的值有一个值要被破坏。如果不希望它被破坏，那么我们就需要再用一条move指令把某个被破坏的值提前备份出来。这样就变成了move和add两条指令才能完成第一条语句的工作。而地址预算指令可以在多个寄存器之间完成运算, r d i 的值和r s i 的值相加之后，是会存放到r a x 寄存器中, 这样相当于在这个运算的过程中，既做了加法, 同时把加法的结果又放到了一个新的 寄存器中，不破坏原寄存器的值。使用这样一条指令，相当于使用了一条move指令和另一条add指令。这个是编译器的一个设计巧妙的地方。</p>
+<p>第二条语句是把z 和t1 相加存放到第t2中，z的值存放在rdx寄存器中, rax 里边存放的是t1 的值, 相加完了之后存放到rax 寄存器中。那么这个时候rax 寄存器中存放的就已经是t2的值了。t1的变量就已经不存在了。就这点是否合理而言, 可以从左边的语句来分析一下。t1变量最后一次使用就是在第二句, 也就是说后面不使用t1 这个变量。因此在第二句将t1变量覆盖掉是合理的。这体现了编译器的另外一个功能, 就是在寄存器的使用之间进行调度, 合理的去使用寄存器。</p>
+<p><img data-src="../../images/image-20201015165930299.png" alt=""></p>
+<p>紫色的这两条语句对应的是y 乘以48赋值给t4变量。编译器并没有继续执行t 3的这条语句，而是执行了t 4。y 乘以48和我们之前讲到的地址运算的那个例子相似。它是通过两条指令, 从而替换掉了乘法运算指令, 使得计算加速。</p>
+<p>首先做的是r s i 加上r s i 乘以2。这个过程就是实现了y乘以3。y 乘以3的结果存放到rdx寄存器中。r d x 计算器之前存放的是z 的值, 但是在t 2这条指令之后，再也不会使用到z 这个变量, 所以r d x 寄存器器可以回收被重新利用。下面一行指令做的是将r d x 寄存器左移4位，相当于乘以二的四次方, 等于乘以16。y乘以3，再乘以16就等于y 乘以48。因此，这条指令通过这样一个两条汇编指令就可以实现。</p>
+<p>下一条指令在做的实际上是这第三句t3的语句和第五句t5的指令. x加4, 结果作为t3，然后和t4相加。也就是说，在高级语言中的两条语句, 可能对应到汇编语言中只有一条指令。具体的做法是r d i存放的是, x 的值, r d x 存放的是刚才运算的结果，也就是t 4的值。<br>S缺省就等于1，所以就是x 加上t 4。外面还有D=4，所以是x+t4+4, 等于t 3和t5这两条语句在汇编语言中做了一个合并。因为t3是中间变量可以回收, 所以在这里编译器会把这两条指令, 合并合并成一条地址计算指令就可以得到结果。r c x 计寄存器最终存放的是t 5的结果。</p>
+<p>最后t 2要和t 5做一个乘法, 因为t 2是变量，t 5也是一个变量, 所以这样两个变量相乘，是没有办法把它当成是一个变量，当成一个常数，它进行一个分解。所以在这里不得不使用一个惩罚指令来完成。因为惩罚指令是极其耗时的。而在这里没有办法用其他的方法去降低这时间上的开销。</p>
+<p>r c x 存放的是t 5的值，r x 存放的是t 2的值, 两个相乘的结果放到r a x 寄存器中。<br>这里在c 语言中, 返回值是r va l . 而在汇编值令中呢，调用的过程返回的时候, 就是使用rax寄存器来去保存返回值。这个是在汇编语言中的一个固定的用法，也就是<strong>r a x 计算器作为返回值的存储。</strong></p>
+<h2 id="特征"><a href="#特征" class="headerlink" title="特征"></a>特征</h2><p>第一个特征就是<strong>c 语言中的语句顺序和编译后生成的汇编指令的顺序不一定是完全一样的</strong>。也就是指令在执行过程中顺序并不是c 语言中的逻辑顺序, 但最终运行结果是相同的, 编译器在这个过程中可能会打乱顺序。</p>
+<p>第二点<strong>c 语言和汇编指令之间并不是一个一对一的关系。</strong><br>某些c 语言的表达式的计算可能映射到汇编语言会被映射成多条指令才能完成, 比如说t 4这个例子会被映射成两条汇编指令。在c 语言中，也有可能多条语句都会映射到某一个指令上, 比如说计算t 3和t5, 虽然在c 语言中是两条语句, 但实际上它对应的是一条汇编指令。</p>
+<p>最后一点, <strong>寄存器中进行运算，要比在内存中读取数据进行运算性能要快得多, 编译器会优先把所有的局部变量放在寄存器中。</strong> 如果我们将这样的一个c 语言的语句直接写成return(x+y+z)×((x+4+y×48)), 最终得到的最终的汇编语言指令是相同的。虽然在计算中使用了很多临时变量, 但是这些局部变量不一定需要在内存中存储。在这个例子中，用了6个临时变量。但是这6个临时变量都是存放在寄存器中。换句话说, 这六个变量不消耗内存。这也就是说不要建立一个固定的认识认为声明了变量就会浪费系统内存, 这个概念是错误的。因为我们的编译器已经足够的聪明，足够的智能, 它可以通过合理的去分配寄存器，让这些局部变量优先存储到寄存器中。</p>
+<p>另外一点, <strong>不要以为写了这样一个表达式直接去替代这样一个函数的结果，就可以实现对程序的优化。这种认识是完全错误的，虽然语句少了, 但是代码最后执行的效率是一样的。</strong>千万不要以为在编程的时候，少用一个局部变量，或者把表达式写的极其复杂，就变成了对程序做了某种优化。实际上这种认识是完全错误的。从这个例子中可以看到，其实我更推荐于我们例子上的这种写法。为什么？因为在例子中，语句多的写法更便于阅读, 更便于其他的人再去阅读你的代码的时候，更容易的去了解这个表达式的具体含义。<br>如果表达式计算的每个步骤，它都是有相应的物理意义或者是现实意义的话，我们可以用一些特殊的变量命名表示出这种目的意义，这样就会很清晰的看懂这个表达式。但是如果你把表达式压缩到表达式非常少, 这可能对于代码的阅读来讲是会很困难。</p>
+<p>换句话说, 语句多的写法和语句少的写法，最后的效果和效率都是一样的。那么哪一种更好呢？当然是对于用户可读性更强的这个代码, 效果会更好。</p>
+<h1 id="3-5-5-逻辑运算示例"><a href="#3-5-5-逻辑运算示例" class="headerlink" title="3.5.5 逻辑运算示例"></a>3.5.5 逻辑运算示例</h1><p>看一个以位的逻辑运算为主的一个例子。</p>
+<p><img data-src="../../images/image-20201015181444447.png" alt=""></p>
+<p>这里面主要使用到了异或(^), 右移(&gt;&gt;), 这个右移主要是算术右移, 因为t1和这个常量17都是有符号数。在C语言语句中还用到了左移和减法, 但是在生成的汇编语言表达式中并没有左移和减法运算。之后还用到了位与运算。rdi 存放的是参数x , rsi 存放的是参数y </p>
+<p>第一步是把rdi 复制到rax 中。第二步, rsi和rax 进行一个异或，异或的结果存放在rax。此时rax寄存器中存放的是 <code>x^y</code>, 即t1的值. 第三步把rax 存储的变量进行算数右移17位 , a 表示算数二表示右移, 对应于C语言的第二个语句. 得到的结果为t2, 因为t1在后面的语句中不会再使用, 第二个语句运行的结果可以存放在rax寄存器中.</p>
+<p>第三步, c语言语句的第三步计算mask在汇编代码中没有体现, 因为mask 的结果本身是一堆常量来去进行的计算, 在这个表达式中不涉及任何的变量, 这也就意味着不管在什么情况下，mask 应该都是一个固定的值。在这条语句执行之后。因此这样的一个左移和减法的计算过程，实际上是由编译器在编译阶段就已经完成计算。计算完mask的十进制为 8185. 第四步, 对t2和mask进行一个位运算得到rval. </p>
+<p><strong>常量与常量之间的运算是在编译器完成的，而不是在运行的时候进行的计算。</strong>这样运行的时候少掉了很多指令, 就增加了运行时的速度。</p>
+<p>最后还有一点, 需要注意的是编译器编译出来发现and助记符后缀为l, l表示这是一个32位的指令。运算双方t2和mask都是64位的变量, 但是这里却是用了一个32位的指令.</p>
+<blockquote>
+<p>背景知识;</p>
+<p>在x86-64位处理器上，如果执行一个32位的指令，意味着最后操作的目标寄存器的高32位会被清0。<br>        深层次的说，这是64位处理器，在设计数据通路的时候, 就是用的这种方法去兼容的32位的指令。</p>
+</blockquote>
+<p>这里的原因如下,  mask 虽然是一个long型(在64位系统中为8字节)的变量, 但是它的高32位的运算结果必然为0。因为整数常量在不做任何说明或增加后缀的时候, 都是以int 型的有符号数常量存在的。所以一个常量运算的结果本身是一个int型 的常量。如果把它赋值给了一个long型的变量。那么在这个过程中会发生一个位扩展。位扩展的时候，由于它是一个正数，所以它高32位在扩展的时候必然为0。高32位为零的mask变量与t2进行位与运算, 结果必定高32位全为0. 也就是说rval的值体现在低32位上.</p>
+<p>在and执行32位指令后, 将最终的结果存储到了eax寄存器. 而eax寄存器就是rax寄存器在低32位上的一个别名, 最终返回的还是rax寄存器中的值.</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>坚持原创分享，您的支持将鼓励我继续创作!</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/config/mywechatpay.jpg" alt="Be_invisible 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/config/myalipay.jpg" alt="Be_invisible 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Be_invisible
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://zhangchunxian.github.io/posts/CSAPP_3.5_%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E4%B8%8E%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97_url.html" title="CSAPP 3.5 算术运算与逻辑运算">http://zhangchunxian.github.io/posts/CSAPP_3.5_算术运算与逻辑运算_url.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" rel="tag"># 计算机系统</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/CSAPP_3_7_%E6%8E%A7%E5%88%B6(%E4%B8%8A)_url.html" rel="prev" title="CSAPP 3.7 控制(上)">
+      <i class="fa fa-chevron-left"></i> CSAPP 3.7 控制(上)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/CSAPP_3_7_%E6%95%B0%E7%BB%84%E7%9A%84%E5%88%86%E9%85%8D%E4%B8%8E%E8%AE%BF%E9%97%AE_url.html" rel="next" title="CSAPP_3.8_数组的分配与访问">
+      CSAPP_3.8_数组的分配与访问 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#3-5-1-加载有效地址"><span class="nav-number">1.</span> <span class="nav-text">3.5.1 加载有效地址</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本用法"><span class="nav-number">1.1.</span> <span class="nav-text">基本用法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-5-2-双操作数指令"><span class="nav-number">2.</span> <span class="nav-text">3.5.2 双操作数指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">2.1.</span> <span class="nav-text">注意事项</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-5-3单操作数指令"><span class="nav-number">3.</span> <span class="nav-text">3.5.3单操作数指令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-5-4-算数运算示例"><span class="nav-number">4.</span> <span class="nav-text">3.5.4 算数运算示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#特征"><span class="nav-number">4.1.</span> <span class="nav-text">特征</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-5-5-逻辑运算示例"><span class="nav-number">5.</span> <span class="nav-text">3.5.5 逻辑运算示例</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Be_invisible"
+      src="/images/config/myavatar.png">
+  <p class="site-author-name" itemprop="name">Be_invisible</p>
+  <div class="site-description" itemprop="description">Love sharing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZhangChunXian" title="GitHub → https://github.com/ZhangChunXian" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1836891291@qq.com" title="E-Mail → mailto:1836891291@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://dase.ecnu.edu.cn/" title="http://dase.ecnu.edu.cn/" rel="noopener" target="_blank">华东师范大学数据科学与工程学院</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Be_invisible</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">82k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:44</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.7.2
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5f2d1e5036597eb8" async="async"></script>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id    : 26659,
+      el    : 'wpac-rating',
+      color : 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes : 0,
+          toolbar  : 0,
+          statusbar: 0,
+          pagemode : 'thumbs',
+          view     : 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height   : element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'http://zhangchunxian.github.io/posts/CSAPP_3.5_%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E4%B8%8E%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97_url.html',]
+      });
+      });
+  </script>
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'b186245383615fbfac1a',
+      clientSecret: '181602de35dbbd6cd7f473c1ea60ee20142893b5',
+      repo        : 'ZhangChunXian.github.io',
+      owner       : 'ZhangChunXian',
+      admin       : ['ZhangChunXian'],
+      id          : '5b3db94b701f9213f053836548ee732c',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1.2,"jsonPath":"https://cdn.jsdelivr.net/npm/live2d-widget-model-koharu@1.0.5/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
