@@ -1,3 +1,15 @@
+---
+title: Hexo + Github Pages博客配置总结 
+url: lab09
+date: 2023-05-10 22:22:22
+tags:
+  - 校内课程
+categories:
+  - 校内课程
+---
+
+
+
 # Hexo + Github Pages博客配置总结
 
 # 博客主题及其选择原因
