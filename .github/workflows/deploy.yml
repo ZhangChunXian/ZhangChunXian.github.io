@@ -1,0 +1,80 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Hexo Blog CI
+
+on:
+  push:
+    branches: [ source ]
+    paths-ignore:
+      - README.md
+
+env:
+  # Git用户信息
+  GIT_USERNAME: ZhangChunXian
+  GIT_EMAIL: 1836891291@qq.com
+  REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+  # 主题配置
+  THEME_REPO: next-theme/hexo-theme-next
+  THEME_VERSION: v8.13.1
+  THEME_PATH: themes/next
+  THEME_CONFIG_REPO: ${{ secrets.CONFIG_REPO }}
+  THEME_CONFIG_NAME: _config.next.yml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          ref: source
+      - name: Checkout theme repo
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ env.THEME_REPO }}
+          ref: ${{ env.THEME_VERSION }}
+          path: ${{ env.THEME_PATH }}
+      - name: Node.js ${{ matrix.node-version }} Use
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Node.js modules Cache
+        uses: actions/cache@v2
+        with:
+          # path: node_modules # https://github.com/actions/cache/blob/9ab95382c899bf0953a0c6c1374373fc40456ffe/examples.md#node---npm
+          path: ~/.npm
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+      - name: Config
+        run: |
+          git config --global user.name "${{ env.GIT_USERNAME }}"
+          git config --global user.email "${{ env.GIT_EMAIL }}"
+          # git clone ${{ env.THEME_CONFIG_REPO }} config && cp config/${{ env.THEME_CONFIG_NAME }} ${{ env.THEME_CONFIG_NAME }}
+          sed -i "s/REPO_TOKEN/${{ env.REPO_TOKEN }}/" _config.yml
+      - name: Hexo Install dependencies
+        run: |
+          yarn global add hexo-cli
+          yarn add hexo-generator-searchdb
+          yarn add hexo-word-counter
+          yarn add hexo-related-popular-posts
+          yarn add hexo-generator-feed
+          yarn add hexo-symbols-count-time
+          yarn add hexo-generator-sitemap
+          yarn add hexo-generator-baidu-sitemap
+          yarn add hexo-deployer-git
+          yarn add hexo-helper-live2d
+          yarn add js-yaml@latest # https://github.com/hexojs/hexo/issues/4917#issuecomment-1193351742
+          yarn add hexo-asset-img 
+          yarn add hexo-filter-plantuml
+          yarn add theme-next/next-util
+          yarn add highlight.js
+          yarn
+      - name: Hexo deploy
+        run: |
+          yarn run hexo clean
+          yarn run hexo g
+          yarn run hexo d
