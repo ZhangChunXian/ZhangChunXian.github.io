@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/config/favicon-32x32-next.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/config/favicon-16x16-next.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CConsolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhangchunxian.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"style":null,"show_result":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言：这篇博文是我学习Computer Systems: A Programmer’s Perspective这本书整理的笔记，同时参考了B站@刘迪望和@九曲阑干等up主的翻译和原创视频，力求尽我所能将这本神书的笔记写到最好。 2-1 信息的存储">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSAPP 2.1 信息的存储">
+<meta property="og:url" content="http://zhangchunxian.github.io/posts/CSAPP_2_1_%E4%BF%A1%E6%81%AF%E7%9A%84%E5%AD%98%E5%82%A8_url.html">
+<meta property="og:site_name" content="ZhangChunXian">
+<meta property="og:description" content="前言：这篇博文是我学习Computer Systems: A Programmer’s Perspective这本书整理的笔记，同时参考了B站@刘迪望和@九曲阑干等up主的翻译和原创视频，力求尽我所能将这本神书的笔记写到最好。 2-1 信息的存储">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201005195903725.png">
+<meta property="article:published_time" content="2020-10-04T03:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-12T06:59:47.695Z">
+<meta property="article:author" content="ZhangChunXian">
+<meta property="article:tag" content="计算机系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zhangchunxian.github.io/images/image-20201005195903725.png">
+
+
+<link rel="canonical" href="http://zhangchunxian.github.io/posts/CSAPP_2_1_%E4%BF%A1%E6%81%AF%E7%9A%84%E5%AD%98%E5%82%A8_url.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://zhangchunxian.github.io/posts/CSAPP_2_1_%E4%BF%A1%E6%81%AF%E7%9A%84%E5%AD%98%E5%82%A8_url.html","path":"posts/CSAPP_2_1_信息的存储_url.html","title":"CSAPP 2.1 信息的存储"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CSAPP 2.1 信息的存储 | ZhangChunXian</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/rss.xml" title="ZhangChunXian" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ZhangChunXian</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">ZhangChunXian</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">15</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">16</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">32</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E4%BF%A1%E6%81%AF%E7%9A%84%E5%AD%98%E5%82%A8"><span class="nav-number">1.</span> <span class="nav-text">2-1 信息的存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BF%A1%E6%81%AF%E5%AD%98%E5%82%A8"><span class="nav-number">2.</span> <span class="nav-text">1. 信息存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E8%8A%82%EF%BC%88Byte%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">字节（Byte）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E9%95%BF%EF%BC%88word-size%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">字长（word size）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E9%92%88"><span class="nav-number">2.3.</span> <span class="nav-text">指针</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-4-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E8%A1%A8%E7%A4%BA"><span class="nav-number">3.</span> <span class="nav-text">2.1.4 字符串的表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-8-C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97"><span class="nav-number">4.</span> <span class="nav-text">2.1.8 C语言中的逻辑运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-9-C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E7%A7%BB%E4%BD%8D%E6%93%8D%E4%BD%9C"><span class="nav-number">5.</span> <span class="nav-text">2.1.9 C语言中的移位操作</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ZhangChunXian"
+      src="/images/config/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ZhangChunXian</p>
+  <div class="site-description" itemprop="description">ZhangChunXian</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZhangChunXian" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ZhangChunXian" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1836891291@qq.com" title="E-Mail → mailto:1836891291@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="link fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://dase.ecnu.edu.cn/" title="http:&#x2F;&#x2F;dase.ecnu.edu.cn" rel="noopener" target="_blank">华东师范大学数据科学与工程学院</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/ZhangChunXian" class="github-corner" title="我的Github" aria-label="我的Github" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zhangchunxian.github.io/posts/CSAPP_2_1_%E4%BF%A1%E6%81%AF%E7%9A%84%E5%AD%98%E5%82%A8_url.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/config/avatar.jpg">
+      <meta itemprop="name" content="ZhangChunXian">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZhangChunXian">
+      <meta itemprop="description" content="ZhangChunXian">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CSAPP 2.1 信息的存储 | ZhangChunXian">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CSAPP 2.1 信息的存储<a href="https://github.com/ZhangChunXian/ZhangChunXian.github.io/blob/source/source/_posts/_posts/posts/CSAPP2-1Informaton_Storage.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-10-04 11:00:00" itemprop="dateCreated datePublished" datetime="2020-10-04T11:00:00+08:00">2020-10-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%AF%BE/" itemprop="url" rel="index"><span itemprop="name">计算机专业课</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%AF%BE/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">计算机系统</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>前言：这篇博文是我学习<em>Computer Systems: A Programmer’s Perspective</em>这本书整理的笔记，同时参考了B站@刘迪望和@九曲阑干等up主的翻译和原创视频，力求尽我所能将这本神书的笔记写到最好。</p>
+<h2 id="2-1-信息的存储"><a href="#2-1-信息的存储" class="headerlink" title="2-1 信息的存储"></a>2-1 信息的存储</h2><span id="more"></span>
+
+<h2 id="1-信息存储"><a href="#1-信息存储" class="headerlink" title="1. 信息存储"></a>1. 信息存储</h2><p>通常情况下，程序将内存视为一个非常大的数组，数组的元素由一个个字节(<code>Byte</code>)表示，每个字节都有一个唯一的数字来表示，我们称之为地址（address）。这些所有地址的集合就称为虚拟地址空间（Virtual Address Space）。</p>
+<h3 id="字节（Byte）"><a href="#字节（Byte）" class="headerlink" title="字节（Byte）"></a>字节（Byte）</h3><p>一个字节是由8个位（bit）组成，在二进制表示法中，每一个值可能由两种状态，0或者1。当这8个位全为零时，表示一个字节的最小值。当这8个位全为1时，表示最大值(大多数情况下)。如果用十进制来表示，那么一个字节的取值范围就在0~255（包含0和255）之间。我们把这种按照一位一位表示数据的方式称为位模式。</p>
+<p>我们引入16进制来表示位模式，对于十六进制，是由0-9和A-F来表示16个可能的值。在C语言中，十六进制是以0x开头的，这个X可大写可小写，字母部分同样部分大小写。</p>
+<h3 id="字长（word-size）"><a href="#字长（word-size）" class="headerlink" title="字长（word size）"></a>字长（word size）</h3><p>任何一个机器都有一个“字长”，字长是地址的名义长度。</p>
+<p>地址指向计算机中指定字节的位置，相邻字的地址相差4（32位机器）或 8（64位机器）。</p>
+<p><img data-src="/../../images/image-20201005195903725.png" alt="image-20201005195903725"></p>
+<p>字长决定了虚拟地址空间的上限。对于一个字长位w位的机器，虚拟地址的范围时0~2的w次放减1。近些年，高性能服务器，个人电脑以及智能手机已经完成了从32位字长到64位字长的迁移。对于32位（32字长）的机器，虚拟地址空间最大位4GB，而64位的机器，虚拟地址空间最大位2^32^*4GB（16EB）。在迁移过程中，64位的机器做了向后兼容，因此位32位机器编译的程序也可以运行在64位机器上。通过特定命令可以在64位机器上编译生成32位机器上运行的程序。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 32bit program</span></span></span><br><span class="line"><span class="meta prompt_">linux&gt; </span><span class="language-bash">gcc -m32 -o hello32 hello.c</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 64bit program</span></span></span><br><span class="line"><span class="meta prompt_">linux&gt; </span><span class="language-bash">gcc -m64 -o hello64 hello.c</span></span><br></pre></td></tr></table></figure>
+
+<p>hello32可以在32位和64位机器上均可运行，但hello64只能运行在64位的机器上。</p>
+<p>对于32位和64位程序，主要的区别还是在于程序是如何编译的，而不是运行机器的类型。</p>
+<p>C语言中，支持整数和浮点数多种数据格式。</p>
+<table>
+<thead>
+<tr>
+<th>C declaration</th>
+<th></th>
+<th>Bytes</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>signed</td>
+<td>unsigned</td>
+<td>32-bit</td>
+<td>64-bit</td>
+</tr>
+<tr>
+<td>[signed]char</td>
+<td>unsigned char</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>short</td>
+<td>unsigned short</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>int</td>
+<td>unsigned int</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>long</td>
+<td>unsigned long</td>
+<td>4</td>
+<td>8</td>
+</tr>
+<tr>
+<td>int32_t</td>
+<td>uint32_t</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>int64_t</td>
+<td>uint64_t</td>
+<td>8</td>
+<td>8</td>
+</tr>
+<tr>
+<td>char *</td>
+<td></td>
+<td>4</td>
+<td>8</td>
+</tr>
+<tr>
+<td>float</td>
+<td></td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>double</td>
+<td></td>
+<td>8</td>
+<td>8</td>
+</tr>
+</tbody></table>
+<p><strong>以上表格内容需牢记</strong></p>
+<p>对于我们需要存储的数据，我们需要搞清楚该数据的地址是什么，以及数据在内存中如何排布的。</p>
+<p>通过在不同的系统上运行字节打印程序，可以打印输出程序对象的字节表示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">unsigned</span> <span class="type">char</span> *byte_pointer;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">show_bytes</span><span class="params">(byte_pointer start, <span class="type">int</span> len)</span>&#123;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; len; i++)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%.2x&quot;</span>, start[i]);</span><br><span class="line">   	<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">show_int</span><span class="params">(<span class="type">int</span> x)</span>&#123;</span><br><span class="line">    <span class="comment">// byte_pointer 强制类型转换告诉编译器，程序应该把这个指针看成指向一个字节的序列，而不是这个对象原始的数据类型。</span></span><br><span class="line">    show_bytes((byte_pointer) &amp;x, <span class="keyword">sizeof</span>(x));	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Result</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">Machine</th>
+<th>Value</th>
+<th>Type</th>
+<th>Byte(hex)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Linux 32</td>
+<td>12,345</td>
+<td>int</td>
+<td>39 30 00 00</td>
+</tr>
+<tr>
+<td align="center">Windows</td>
+<td>12,345</td>
+<td>int</td>
+<td>39 30 00 00</td>
+</tr>
+<tr>
+<td align="center">Sun</td>
+<td>12,345</td>
+<td>int</td>
+<td>00 00 30 39</td>
+</tr>
+<tr>
+<td align="center">Linux 64</td>
+<td>12,345</td>
+<td>int</td>
+<td>39 30 00 00</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="center">Machine</th>
+<th>Value</th>
+<th>Type</th>
+<th>Byte(hex)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Linux 32</td>
+<td>12,345.0</td>
+<td>float</td>
+<td>00 e4 40 46</td>
+</tr>
+<tr>
+<td align="center">Windows</td>
+<td>12,345.0</td>
+<td>float</td>
+<td>00 e4 40 46</td>
+</tr>
+<tr>
+<td align="center">Sun</td>
+<td>12,345.0</td>
+<td>float</td>
+<td>46 40 e4 00</td>
+</tr>
+<tr>
+<td align="center">Linux 64</td>
+<td>12,345.0</td>
+<td>float</td>
+<td>00 e4 40 46</td>
+</tr>
+<tr>
+<td align="center">虽然整型和浮点数都是对数值12345进行编码，但是他们却有着完全不同的字节模式</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="center">Machine</th>
+<th>Value</th>
+<th>Type</th>
+<th align="center">Byte(hex)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Linux 32</td>
+<td>&amp; ival</td>
+<td>int*</td>
+<td align="center">e4 f9 ff bf</td>
+</tr>
+<tr>
+<td align="center">Windows</td>
+<td>&amp; ival</td>
+<td>int*</td>
+<td align="center">b4 cc 22 00</td>
+</tr>
+<tr>
+<td align="center">Sun</td>
+<td>&amp; ival</td>
+<td>int*</td>
+<td align="center">ef ff fa 0c</td>
+</tr>
+<tr>
+<td align="center">Linux 64</td>
+<td>% ival</td>
+<td>int*</td>
+<td align="center">b8 11 e5 ff ff 7f 00 00</td>
+</tr>
+</tbody></table>
+<h3 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h3><h2 id="2-1-4-字符串的表示"><a href="#2-1-4-字符串的表示" class="headerlink" title="2.1.4 字符串的表示"></a>2.1.4 字符串的表示</h2><p>C中的字符串是由null结尾的一组字符。每个字符都按照某种标准的编码方式表示，最常见的编码标准是ASCII码。</p>
+<p>如对照ASCII表，字符串“123456”由16进制 <strong>31 32 33 34 35 00</strong>表示。（在十六进制中用 <strong>0x00</strong> 表示  <code>NULL</code>）。只要是采用了ASCII码的编码标准的计算机系统，字符串的表示方式都是一样的，在这一点上字符数据比二进制数据更加具有独立性。</p>
+<p>在C语言中<code>strlen</code>函数计算字符串的长度时忽略最后结尾的NULL，返回<code>size_t</code> (the unsigned integer type)类型的值。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> a[<span class="number">20</span>]=<span class="string">&quot;Program&quot;</span>;</span><br><span class="line">    <span class="type">char</span> b[<span class="number">20</span>]=&#123;<span class="string">&#x27;P&#x27;</span>,<span class="string">&#x27;r&#x27;</span>,<span class="string">&#x27;o&#x27;</span>,<span class="string">&#x27;g&#x27;</span>,<span class="string">&#x27;r&#x27;</span>,<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;m&#x27;</span>,<span class="string">&#x27;\0&#x27;</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// using the %zu format specifier to print size_t</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Length of string a = %zu \n&quot;</span>,<span class="built_in">strlen</span>(a));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Length of string b = %zu \n&quot;</span>,<span class="built_in">strlen</span>(b));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Output</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Length of <span class="built_in">string</span> a = <span class="number">7</span></span><br><span class="line">Length of <span class="built_in">string</span> b = <span class="number">7</span></span><br></pre></td></tr></table></figure>
+
+<p>由于每种数据类型的编码规则都是不同的，所以二进制代码在不同的硬件或者操作系统上一般都是互不兼容的。ASCII码的广泛应用，使不同公司制作的计算机，能相互交换数据。但它有个限制：它是为英语设计的。</p>
+<p>幸运的是，一个字节有八位，可以表示256个不同的值。ASCII码仅仅规定了前128个二进制数的字符表示，因此第128位到255位字符就被空缺出来，给各个国家自己规定标准的编码方式。这些保留下来给每个国家自己安排 准，在一个国家的电脑上打开另一个国家的语言的文档，不可避免的会出现乱码问题。</p>
+<p>随着计算机在亚洲兴起，这种做法彻底失效了。比如汉语这样的语言有成千上万的字符，根本没有办法用8位来表示所有的字符。</p>
+<p>所以Unicode诞生了，统一了所有编码的标准。最常见的Unicode是16位的，有超过一百万个位置，对每个语言的每个字符都够了，甚至还有多余的位置存放数学符号以及Emoji。</p>
+<p>就像ASCII用二进制来表示字母一样，其他格式，比如MP3或者GIF，用二进制编码声音/颜色，表示照片，电影和音乐。</p>
+<h2 id="2-1-8-C语言中的逻辑运算"><a href="#2-1-8-C语言中的逻辑运算" class="headerlink" title="2.1.8 C语言中的逻辑运算"></a>2.1.8 C语言中的逻辑运算</h2><p>C语言中的逻辑运算符有<code>||</code>, <code>&amp;&amp;</code> 和 <code>!</code>,对应于逻辑操作中的 <code>OR</code>, <code>AND</code>, <code>NOT</code>。<strong>注意不要将逻辑运算符与位运算符<code>|</code>, <code>&amp;</code>, <code> ^</code> 弄混，它们的操作是截然不同的。</strong></p>
+<p>C语言的逻辑运算符一个重要的特点是，如果在前一个参数就能判断结果表达的真假，那么后面的参数将不做考虑，无论它们有效与否。</p>
+<p>例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a &amp;&amp; <span class="number">5</span>/b</span><br></pre></td></tr></table></figure>
+
+<p>若参数a为假，则整个表达式的真值可以确认为假，那么参数 5/b的真值将不做考虑，即使b的值为零，即5/b本身为无效表达式，都不会导致编译器报错。</p>
+<h2 id="2-1-9-C语言中的移位操作"><a href="#2-1-9-C语言中的移位操作" class="headerlink" title="2.1.9 C语言中的移位操作"></a>2.1.9 C语言中的移位操作</h2><p>C语言的逻辑位移分为左移和右移。其中右移操作分为两种，算术右移和逻辑右移。</p>
+<p>算数右移以0来填充左边的由右移而来的k个空位。</p>
+<p>逻辑右移以最高位(The most significant bit, 即二进制中权重最大的那个位)来填充由右移而来的k个空位。即若最高位为0，则以0来填充由右移而来的k个空位。同理，若最高位为1，则以1来填充右移而来的k个空位。</p>
+<p>具体如下表格所示</p>
+<table>
+<thead>
+<tr>
+<th align="center">Operation</th>
+<th align="center">Value 1</th>
+<th align="center">Value 2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Argument x</td>
+<td align="center">[01100011]</td>
+<td align="center">[10010101]</td>
+</tr>
+<tr>
+<td align="center">x &gt;&gt; 4 (logical)</td>
+<td align="center">[00000110]</td>
+<td align="center">[00001001]</td>
+</tr>
+<tr>
+<td align="center">x &gt;&gt; 4 (arithmetic)</td>
+<td align="center">[<strong>0000</strong>0110]</td>
+<td align="center">[<strong>1111</strong>1001]</td>
+</tr>
+</tbody></table>
+<p>几乎所有的编译器和机器都<strong>以算术右移作为有符号数右移的方式</strong>。另一方面，对于无符号整数，<strong>执行的右移操作一定为逻辑右移</strong>。</p>
+<p>1、什么样的数据类型可以直接移位</p>
+<p>char、short、int、long、unsigned char、unsigned short、unsigned int、unsigned long都可以进行移位操作，而double、float、bool、long double则不可以进行移位操作。</p>
+<p><strong>注意事项</strong></p>
+<ol>
+<li><p>在C中移位的数量最好不要超过数据本身的位数，如果超过了数据本身的位数，那么将会对移位数量进行取模操作，以数据本身的位数为除数取模。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> lval = <span class="number">0xFEDCBA98</span> &lt;&lt; <span class="number">32</span>;	<span class="comment">// int 类型变量有32位。</span></span><br><span class="line"><span class="type">int</span> aval = <span class="number">0xFEDCBA98</span> &gt;&gt; <span class="number">36</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// output</span></span><br><span class="line">lval <span class="number">0xFEDCBA98</span> <span class="comment">// 逻辑左移0位</span></span><br><span class="line">aval <span class="number">0xFFEDCB49</span> <span class="comment">// 逻辑右移4位</span></span><br></pre></td></tr></table></figure></li>
+<li><p>位移运算符的优先级小于算术运算符，如 <code>1&lt;&lt;2 + 3&lt;&lt;4</code>表达式中实际运算顺序为 <code>1 &lt;&lt; (2+3) &lt;&lt; 4</code>。其实不用记住这么多优先级，<strong>当不清楚运算优先级时，加括号就对了！</strong></p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>坚持原创分享，您的支持将鼓励我继续创作!</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/config/wechatpay.jpg" alt="ZhangChunXian 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/config/alipay.jpg" alt="ZhangChunXian 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>ZhangChunXian
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://zhangchunxian.github.io/posts/CSAPP_2_1_%E4%BF%A1%E6%81%AF%E7%9A%84%E5%AD%98%E5%82%A8_url.html" title="CSAPP 2.1 信息的存储">http://zhangchunxian.github.io/posts/CSAPP_2_1_信息的存储_url.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" rel="tag"># 计算机系统</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/git_foundatoin_url.html" rel="prev" title="Git 基础回顾">
+                  <i class="fa fa-chevron-left"></i> Git 基础回顾
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/CSAPP_2_3_%E6%95%B4%E6%95%B0%E7%9A%84%E8%BF%90%E7%AE%97_url.html" rel="next" title="CSAPP 2.3 整数的运算">
+                  CSAPP 2.3 整数的运算 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">皖ICP备 2020015666 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZhangChunXian</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">62k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:45</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":false,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"ignores":null,"url":"http://zhangchunxian.github.io/posts/CSAPP_2_1_%E4%BF%A1%E6%81%AF%E7%9A%84%E5%AD%98%E5%82%A8_url.html"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1.2,"jsonPath":"https://unpkg.com/live2d-widget-model-haruto@1.0.5/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

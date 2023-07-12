@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/config/favicon-32x32-next.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/config/favicon-16x16-next.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CConsolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhangchunxian.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"style":null,"show_result":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="3.4.1 数据访问指令 数据访问指令, 它的助记符是move。通过这个名称，可以看出来，它实际上进行的是在源操作数以及目标操作数之间移动数据。虽然它的助记符是move, 但是更确切的去描述的话，可以理解为, 它是将源操作数中的数据复制到目标的位置，也就是源操作数中的数据是不会发生改变的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSAPP 3.4 数据访问">
+<meta property="og:url" content="http://zhangchunxian.github.io/posts/CSAPP_3_4%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E6%8C%87%E4%BB%A4_url.html">
+<meta property="og:site_name" content="ZhangChunXian">
+<meta property="og:description" content="3.4.1 数据访问指令 数据访问指令, 它的助记符是move。通过这个名称，可以看出来，它实际上进行的是在源操作数以及目标操作数之间移动数据。虽然它的助记符是move, 但是更确切的去描述的话，可以理解为, 它是将源操作数中的数据复制到目标的位置，也就是源操作数中的数据是不会发生改变的。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015082522584-1602737646018.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015082751288-1602737692203.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015083236038.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015083802875-1602737794950.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015084014208-1602737814639.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015084519071-1602737851348.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015085120154-1602737875466.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015085433948.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015085433948-1602737904577.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015091100840-1602737988337.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015092446296-1602738014275.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015093309854-1602738037965.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015093512664-1602738060240.png">
+<meta property="article:published_time" content="2020-10-10T02:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-12T06:59:47.695Z">
+<meta property="article:author" content="ZhangChunXian">
+<meta property="article:tag" content="计算机系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zhangchunxian.github.io/images/image-20201015082522584-1602737646018.png">
+
+
+<link rel="canonical" href="http://zhangchunxian.github.io/posts/CSAPP_3_4%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E6%8C%87%E4%BB%A4_url.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://zhangchunxian.github.io/posts/CSAPP_3_4%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E6%8C%87%E4%BB%A4_url.html","path":"posts/CSAPP_3_4数据访问指令_url.html","title":"CSAPP 3.4 数据访问"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CSAPP 3.4 数据访问 | ZhangChunXian</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/rss.xml" title="ZhangChunXian" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ZhangChunXian</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">ZhangChunXian</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">15</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">16</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">32</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#3-4-1-%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E6%8C%87%E4%BB%A4"><span class="nav-number">1.</span> <span class="nav-text">3.4.1 数据访问指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%95%B0%E7%9A%84%E5%BD%A2%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">操作数的形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#move%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C%E6%95%B0%E7%9A%84%E7%BB%84%E5%90%88"><span class="nav-number">1.2.</span> <span class="nav-text">move指令操作数的组合</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-4-2%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E6%8C%87%E4%BB%A4%E5%AE%9E%E4%BE%8B"><span class="nav-number">2.</span> <span class="nav-text">3.4.2数据访问指令实例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-4-3-%E5%AF%BB%E5%9D%80%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">3.4.3 寻址模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E5%85%A8%E5%AF%BB%E5%9D%80%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.1.</span> <span class="nav-text">完全寻址模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E5%85%A8%E5%AF%BB%E5%9D%80%E6%A8%A1%E5%BC%8F%E7%89%B9%E4%BE%8B"><span class="nav-number">3.1.1.</span> <span class="nav-text">完全寻址模式特例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B"><span class="nav-number">3.1.2.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-4-4-%E6%93%8D%E4%BD%9C%E7%A0%81%E7%9A%84%E5%90%8E%E7%BC%80"><span class="nav-number">4.</span> <span class="nav-text">3.4.4 操作码的后缀</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ZhangChunXian"
+      src="/images/config/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ZhangChunXian</p>
+  <div class="site-description" itemprop="description">ZhangChunXian</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZhangChunXian" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ZhangChunXian" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1836891291@qq.com" title="E-Mail → mailto:1836891291@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="link fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://dase.ecnu.edu.cn/" title="http:&#x2F;&#x2F;dase.ecnu.edu.cn" rel="noopener" target="_blank">华东师范大学数据科学与工程学院</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/ZhangChunXian" class="github-corner" title="我的Github" aria-label="我的Github" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zhangchunxian.github.io/posts/CSAPP_3_4%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E6%8C%87%E4%BB%A4_url.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/config/avatar.jpg">
+      <meta itemprop="name" content="ZhangChunXian">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZhangChunXian">
+      <meta itemprop="description" content="ZhangChunXian">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CSAPP 3.4 数据访问 | ZhangChunXian">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CSAPP 3.4 数据访问<a href="https://github.com/ZhangChunXian/ZhangChunXian.github.io/blob/source/source/_posts/_posts/posts/CSAPP3.4.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-10-10 10:00:00" itemprop="dateCreated datePublished" datetime="2020-10-10T10:00:00+08:00">2020-10-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%AF%BE/" itemprop="url" rel="index"><span itemprop="name">计算机专业课</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%AF%BE/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">计算机系统</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="3-4-1-数据访问指令"><a href="#3-4-1-数据访问指令" class="headerlink" title="3.4.1 数据访问指令"></a>3.4.1 数据访问指令</h1><p><img data-src="/../../images/image-20201015082522584-1602737646018.png"></p>
+<p>数据访问指令, 它的助记符是move。通过这个名称，可以看出来，它实际上进行的是在源操作数以及目标操作数之间移动数据。虽然它的助记符是move, 但是更确切的去描述的话，可以理解为, 它是将源操作数中的数据复制到目标的位置，也就是源操作数中的数据是不会发生改变的。</p>
+<span id="more"></span>
+
+<h2 id="操作数的形式"><a href="#操作数的形式" class="headerlink" title="操作数的形式"></a>操作数的形式</h2><p><img data-src="/../../images/image-20201015082751288-1602737692203.png"></p>
+<p>对于操作数, 有三种形式。</p>
+<p>第一种形式叫做立即数。立即数通常是一个常数的整数类型, 比如0x400, 是一个十六进制数, 或者是-533。对于-533, 进行一个数据移动实际存到目标位置的数据是-533所对应的补码值, 对应的补码值的位长是由操作数中所携带的数据格式信息所确定的。在这个例子中, 操作码是moveq , q 所表示的信息是八字节，也就是64位。所以如果用moveq 去对这个立即数输出操作, 目标操作数所在的位置应该是-533的一个64bit的补码形式, 最后存储到目标操作数的位置.</p>
+<p>立即数与c 语言的常数是类似的，但是在立即数中, 它需要增加一个前缀$(dollar) 符号去描述，这是一个常数。对于立即数操作，可以有1字节、2字节、4字节, 8字节四种操作方式, 这主要取决于操作码的最后一位。也就是, 操作码的最后一个字母, 用来去描述这一次操作的数据位长。</p>
+<p><img data-src="/../../images/image-20201015083236038.png"></p>
+<p>第二种类型叫做寄存器类型。寄存器也可以作为move指令的操作数存在。16个通用寄存器中的任意一个都可以作为操作数。除了64位的16个通用寄存器之外，在这些寄存器中的低32位或者低16位、低八位或者是第八位到第15位，也可以通过move指令去操作, move指令操作的数据位长是由它所决定。</p>
+<p><img data-src="/../../images/image-20201015083802875-1602737794950.png"></p>
+<p>在64位的指令中, r a x, r13前面都有百分号, 这些都是一个合法的操作书. 所有的通用寄存器都可以采用这种方式去做操作。但要注意的是r s p 寄存器, 一般在编写汇编语言程序的时候, 不能把它当做一个普通的寄存器去使用。因为r s p 寄存器有特殊的用途，r s p 寄存器在汇编语言中用于存放程序运行时栈的栈顶数据的地址的。其它的寄存器在某些应用场景下也有一些特殊的用途。</p>
+<p><img data-src="/../../images/image-20201015084014208-1602737814639.png"></p>
+<p>move指令的第三类操作数是内存。move指令可以通过访问内存的某个地址的方式，从内存中加载数据，或者是把数据存放到内存中。</p>
+<p>最简单的一个例子。<code>(%rax)</code>, 它用来描述的是rax 中存放的数据，实际上是一个地址。那么加上括号也就是去访问对应rax 所在地址的数据。这点非常像c 语言中的指针类型指针表示一个地址, 通过在指针前面增加星号，意味着是对这个地址中的数据进行访问. 在汇编语言中是使用括号中间加寄存器的方式也可以进行访问。</p>
+<h2 id="move指令操作数的组合"><a href="#move指令操作数的组合" class="headerlink" title="move指令操作数的组合"></a>move指令操作数的组合</h2><p>move指令以及三类的操作数，它们之间有一些固定的组合关系。具体如图所示</p>
+<p><img data-src="/../../images/image-20201015084519071-1602737851348.png"></p>
+<p>注意事项:</p>
+<p><strong>1. 立即数只能作为源操作数出现，不能作为目标操作数出现.</strong> 因为我们无法给一个常量进行赋值。</p>
+<p>2  <strong>如果源操作数为内存的某个地址的话, 目标操作数必须为寄存器。</strong>move指令是不支持直接将一片内存地址所指向的数据赋值给另一个内存地址. 因为在冯诺依曼体系结构中，处理器是整个计算机的核心, 所有的指令都要通过处理器来去完成, 也就意味着在这个过程中是需要有处理器参与的。如果将一片内存中的数据赋值给到另一片内存中，意味着绕过了处理器。所以在x86的指令中，不提供这样的指令。</p>
+<p>如果想在两片内存之间搬运数据，需要以寄存器作为中间媒介进行过渡, 也就是先从内存中, 把数据加载到寄存器里, 然后再通过寄存器把数据放到另外一片内存中。</p>
+<h1 id="3-4-2数据访问指令实例"><a href="#3-4-2数据访问指令实例" class="headerlink" title="3.4.2数据访问指令实例"></a>3.4.2数据访问指令实例</h1><p><img data-src="/../../images/image-20201015085120154-1602737875466.png"></p>
+<p>左边是c 语言的源码。它实现了一个两个内存区域之间的数据交换, 也就是传入的x p 指针所指向的long形数据和yp指针所指向的long形数据进行了一个交换。在c 语言中定义了两个临时变量，用来暂时存储xp 数据的值和yp 数据的值. 然后分别把这个值交换位置存储回x p 和y p 。这也就实现了两个指针所指向地址数据的交换。</p>
+<p><img data-src="/../../images/image-20201015085433948.png"></p>
+<p><img data-src="/../../images/image-20201015085433948-1602737904577.png"></p>
+<h1 id="3-4-3-寻址模式"><a href="#3-4-3-寻址模式" class="headerlink" title="3.4.3 寻址模式"></a>3.4.3 寻址模式</h1><h2 id="完全寻址模式"><a href="#完全寻址模式" class="headerlink" title="完全寻址模式"></a>完全寻址模式</h2><p><img data-src="/../../images/image-20201015091100840-1602737988337.png"></p>
+<p>在x86汇编指令中, 对于内存寻址的方式是非常灵活的. 一个完全内存寻址方式可以采用这样的一个4元组来去表示。<br>                                                       <strong>D(R<sub>b</sub>, R<sub>i</sub>, S)</strong></p>
+<p>D是一个偏移量, 它是一个基于内存地址的偏移量，可能是1字节两字节、4字节或者8字节的一个常数。D是一个有符号数. R<del>b</del> 表示内存的基地址, 它是任意的一个整数都可以去描述。R<del>i</del> 叫做索引寄存器, R<del>i</del>寄存器。除了rsp寄存器不能作为R<del>i</del>去表示, 其它的寄存器都可以在R<del>i</del>的位置所表示。</p>
+<p>S是表示大小, 它只能是1, 2, 4, 8这几个常数中的一个。因为在高级语言处理数据类型的时候, 基本数据类型的位长, 只有这样的四个值。</p>
+<p>该4元组遵循下列规则完成完全寻址模式. </p>
+<p>​                                        <strong>Mem[Reg[R<del>b</del>] + S * Reg[R<del>i</del>] + D]</strong></p>
+<p> 把R<del>b</del>寄存器中的一个值, 加上R<del>i</del>寄存器中的值乘以S, 再加上D 。利用这样一个运算算出来的值，作为实际内存的访问地址, 从内存的这个地址中去访问数据。这是一个非常灵活的寻址方式. 在这里可控的有两个可变的东西，一个是R<del>b</del>寄存器，一个是R<del>i</del>寄存器。</p>
+<h3 id="完全寻址模式特例"><a href="#完全寻址模式特例" class="headerlink" title="完全寻址模式特例"></a>完全寻址模式特例</h3><p>完全寻址模式有一些特例</p>
+<p><img data-src="/../../images/image-20201015092446296-1602738014275.png"></p>
+<p>进一步的去理解这样的一个完全寻址模式。它和对于数组中的某个下标所在元素进行地址计算的时候的选址非常类似。可以理解为R<del>b</del>是数组的首元素地址, 可以把R<del>i</del>理解为数组的下标。那么想访问R<del>i</del>这个下标的元素，这个元素的地址在哪？就是数组的首地址，加上数组的下标乘以数组中每一个元素的数据位长就可以得到。因为完全寻址模式通过这样的一个灵活的寻址，可以在处理器中很好的去支持数组的访问。通过增加了一个偏移量D, 它可以对于结构体的支持可以实现的更好。</p>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p><img data-src="/../../images/image-20201015093309854-1602738037965.png"></p>
+<p>需要注意的是, 使用move指令去做访问的时候, 采用这样的内存寻址方式, 不是将这样的一个数值赋值给目标操作数, 而是将这个地址所指向的内存中的数据复制给目标操作数。</p>
+<h1 id="3-4-4-操作码的后缀"><a href="#3-4-4-操作码的后缀" class="headerlink" title="3.4.4 操作码的后缀"></a>3.4.4 操作码的后缀</h1><p><img data-src="/../../images/image-20201015093512664-1602738060240.png"></p>
+<p>数据传输指令，它的助记符是move。在实际应用中，move等指令后面通常包含一个后缀。</p>
+<p>对于单字节, 它的后缀表示为d . 双字节, 又叫做字,是word 的首字母, 所以被称为w. double word 叫做双字，实际上是四字节, 对应的操作后缀是l Quadword 表示叫4字，也就是8个字节, 它的后缀是q 。注意一个地址，它的类型也是Quadword, 因为一个地址也是64位的，所以对地址做操作的时候，也是要用q 后缀. 单精度浮点数，它的后缀是ss,  双精度浮点数，它的后缀是sd 。</p>
+<p>在<code>AT&amp;T</code> 汇编语言中, 所有的指令助记符后面都会跟有这样的一个后缀用来去描述当前指令所操作的数据的位长.</p>
+<p>后缀决定了源操作数和目标操作数的位长. 比如说我们用的是moveb, ，注意后面的两个操作数, 也必须是一字节的两个寄存器。</p>
+<p>如果使用move指令, 进行内存访问的时候, 根据后缀决定了我们从内存对应的地址到底访问几个字节的数据, 也就是从那move操作内存的时候，不是只访问那个地址的一个字节的数据。那个地址只是起始地址. 访问几个字节, 是由这个后缀来去决定的。</p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>坚持原创分享，您的支持将鼓励我继续创作!</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/config/wechatpay.jpg" alt="ZhangChunXian 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/config/alipay.jpg" alt="ZhangChunXian 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>ZhangChunXian
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://zhangchunxian.github.io/posts/CSAPP_3_4%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E6%8C%87%E4%BB%A4_url.html" title="CSAPP 3.4 数据访问">http://zhangchunxian.github.io/posts/CSAPP_3_4数据访问指令_url.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" rel="tag"># 计算机系统</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/CSAPP_3.3_x86%E5%AF%84%E5%AD%98%E5%99%A8%E4%B8%AD%E5%86%85%E5%AD%98%E7%9A%84%E7%BB%84%E7%BB%87_url.html" rel="prev" title="CSAPP 3.3 x86寄存器中内存的组织">
+                  <i class="fa fa-chevron-left"></i> CSAPP 3.3 x86寄存器中内存的组织
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/CSAPP_3.6_%E6%8E%A7%E5%88%B6%E7%BB%93%E6%9E%84(%E4%B8%8B)_url.html" rel="next" title="CSAPP 3.6 控制结构(下)">
+                  CSAPP 3.6 控制结构(下) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">皖ICP备 2020015666 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZhangChunXian</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">62k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:45</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":false,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"ignores":null,"url":"http://zhangchunxian.github.io/posts/CSAPP_3_4%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E6%8C%87%E4%BB%A4_url.html"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1.2,"jsonPath":"https://unpkg.com/live2d-widget-model-haruto@1.0.5/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

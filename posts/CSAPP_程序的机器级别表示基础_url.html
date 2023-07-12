@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/config/favicon-32x32-next.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/config/favicon-16x16-next.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CConsolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhangchunxian.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"style":null,"show_result":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="程序的机器级别表示：基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSAPP 程序的机器级别表示基础">
+<meta property="og:url" content="http://zhangchunxian.github.io/posts/CSAPP_%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E5%88%AB%E8%A1%A8%E7%A4%BA%E5%9F%BA%E7%A1%80_url.html">
+<meta property="og:site_name" content="ZhangChunXian">
+<meta property="og:description" content="程序的机器级别表示：基础">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20200929142625325-1601949350254.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/bc4fgr6WeEOPw5i.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20200929200544859.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20200929183022928.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/IMG_1095(20200929-184140).JPG">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20200929183022928-1601949386047.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201006130849519.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201006133443721.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/IMG_1098(20201006-135031).JPG">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/IMG_1099(20201006-140309).JPG">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201006153832873.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201006163553131.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201006164033124.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201006164236498.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201006183926488.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201006185602512.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201006195213558.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201006210920968.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201006212009656.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201006212208668.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201007094151811.png">
+<meta property="article:published_time" content="2020-10-06T12:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-12T06:59:47.695Z">
+<meta property="article:author" content="ZhangChunXian">
+<meta property="article:tag" content="计算机系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zhangchunxian.github.io/images/image-20200929142625325-1601949350254.png">
+
+
+<link rel="canonical" href="http://zhangchunxian.github.io/posts/CSAPP_%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E5%88%AB%E8%A1%A8%E7%A4%BA%E5%9F%BA%E7%A1%80_url.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://zhangchunxian.github.io/posts/CSAPP_%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E5%88%AB%E8%A1%A8%E7%A4%BA%E5%9F%BA%E7%A1%80_url.html","path":"posts/CSAPP_程序的机器级别表示基础_url.html","title":"CSAPP 程序的机器级别表示基础"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CSAPP 程序的机器级别表示基础 | ZhangChunXian</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/rss.xml" title="ZhangChunXian" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ZhangChunXian</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">ZhangChunXian</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">15</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">16</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">32</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E5%88%AB%E8%A1%A8%E7%A4%BA%EF%BC%9A%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">程序的机器级别表示：基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E5%8E%86%E5%8F%B2%E5%B1%95%E6%9C%9B"><span class="nav-number">1.1.</span> <span class="nav-text">3.1 历史展望</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Inter-x86-Processors"><span class="nav-number">1.1.1.</span> <span class="nav-text">Inter x86 Processors</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E7%A8%8B%E5%BA%8F%E7%BC%96%E7%A0%81"><span class="nav-number">1.2.</span> <span class="nav-text">3.2 程序编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-1%E6%9C%BA%E5%99%A8%E7%BA%A7%E4%BB%A3%E7%A0%81"><span class="nav-number">1.2.1.</span> <span class="nav-text">3.2.1机器级代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-2-%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.2.2.</span> <span class="nav-text">3.2.2 代码示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-3-%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.2.3 汇编语言格式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.3.</span> <span class="nav-text">3.3 数据格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-%E8%AE%BF%E9%97%AE%E4%BF%A1%E6%81%AF"><span class="nav-number">1.4.</span> <span class="nav-text">3.4 访问信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-1-%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8C%87%E7%A4%BA%E7%AC%A6"><span class="nav-number">1.4.1.</span> <span class="nav-text">3.4.1 操作数指示符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E6%8C%87%E4%BB%A4"><span class="nav-number">1.4.2.</span> <span class="nav-text">数据访问指令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Moving-data"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">Moving data</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%95%B0%E7%A7%8D%E7%B1%BB"><span class="nav-number">1.4.2.1.1.</span> <span class="nav-text">操作数种类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#move%E6%8C%87%E4%BB%A4%E7%BB%84%E5%90%88"><span class="nav-number">1.4.2.1.2.</span> <span class="nav-text">move指令组合</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#move%E6%8C%87%E4%BB%A4%E5%AE%9E%E4%BE%8B"><span class="nav-number">1.4.2.1.3.</span> <span class="nav-text">move指令实例</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%8C%E5%85%A8%E5%86%85%E5%AD%98%E5%AF%BB%E5%9D%80%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">完全内存寻址模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E6%8C%87%E4%BB%A4"><span class="nav-number">1.4.3.</span> <span class="nav-text">算术运算指令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%B0%E5%9D%80%E8%BF%90%E7%AE%97%E6%8C%87%E4%BB%A4"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">地址运算指令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-2-%E5%8F%8C%E6%93%8D%E4%BD%9C%E6%95%B0"><span class="nav-number">1.4.4.</span> <span class="nav-text">3.5.2 双操作数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-3-%E5%8D%95%E8%BF%90%E7%AE%97%E6%93%8D%E4%BD%9C%E6%95%B0"><span class="nav-number">1.4.5.</span> <span class="nav-text">3.5.3 单运算操作数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-5-%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.4.6.</span> <span class="nav-text">3.5.5 逻辑运算示例</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ZhangChunXian"
+      src="/images/config/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ZhangChunXian</p>
+  <div class="site-description" itemprop="description">ZhangChunXian</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZhangChunXian" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ZhangChunXian" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1836891291@qq.com" title="E-Mail → mailto:1836891291@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="link fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://dase.ecnu.edu.cn/" title="http:&#x2F;&#x2F;dase.ecnu.edu.cn" rel="noopener" target="_blank">华东师范大学数据科学与工程学院</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/ZhangChunXian" class="github-corner" title="我的Github" aria-label="我的Github" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zhangchunxian.github.io/posts/CSAPP_%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E5%88%AB%E8%A1%A8%E7%A4%BA%E5%9F%BA%E7%A1%80_url.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/config/avatar.jpg">
+      <meta itemprop="name" content="ZhangChunXian">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZhangChunXian">
+      <meta itemprop="description" content="ZhangChunXian">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CSAPP 程序的机器级别表示基础 | ZhangChunXian">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CSAPP 程序的机器级别表示基础<a href="https://github.com/ZhangChunXian/ZhangChunXian.github.io/blob/source/source/_posts/_posts/posts/Machine-Level_Representaton_of_Programs.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-10-06 20:00:00" itemprop="dateCreated datePublished" datetime="2020-10-06T20:00:00+08:00">2020-10-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%AF%BE/" itemprop="url" rel="index"><span itemprop="name">计算机专业课</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%AF%BE/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">计算机系统</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>18 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="程序的机器级别表示：基础"><a href="#程序的机器级别表示：基础" class="headerlink" title="程序的机器级别表示：基础"></a>程序的机器级别表示：基础</h1><span id="more"></span>
+
+<p>该章开始就是<strong>整本书，整个课程的真正核心部分</strong>，我们将深入学习机器级别编程，关心计算机为了运行我们的程序，所执行的一串独立的指令。<strong>以汇编语言为媒介，去理解高级语言的种种行为。</strong></p>
+<p>实际上有两种形式的机器程序，一个是在计算机上运行的实际目标代码，它们是一串字节，编码处理器执行的指令。由于实际目标代码难以理解，我们利用汇编代码等去理解其含义，这是没有问题的，因为汇编代码与实际目标代码有一对一的映射关系。不同于以前程序员们直接编写汇编代码，现在汇编代码的生成由编译器负责.</p>
+<p>但是汇编语言仍然对程序员来说至关重要，作为一个桥梁，它将你的程序和这些代码实际在机器上运行的形式连接起来——汇编代码就是它们的中间形式。该课程不会写很多的汇编代码，取而代之的是阅读由C语言编译器GCC生成的汇编语言，理解编译器产生结果与输入它的内容的联系。</p>
+<p><strong>本课程针对是英特尔64位版本的指令集（<code>x86-64</code>）</strong></p>
+<h2 id="3-1-历史展望"><a href="#3-1-历史展望" class="headerlink" title="3.1 历史展望"></a>3.1 历史展望</h2><h3 id="Inter-x86-Processors"><a href="#Inter-x86-Processors" class="headerlink" title="Inter x86 Processors"></a>Inter x86 Processors</h3><p>x86对于英特尔处理器来说是一个口头的称谓，因为第一个芯片被称为8086，随后推出了8286，8386等等，共同点是都有86，所有人们只称它为x86。</p>
+<p>x86有时汇编称为<code>CISC</code>(<code>Complex Instruction Set Computer</code>), 即复杂指令集.</p>
+<h2 id="3-2-程序编码"><a href="#3-2-程序编码" class="headerlink" title="3.2 程序编码"></a>3.2 程序编码</h2><p>假设我们把一个C程序写成两个文件<code>p1.c</code>和<code>p2.c</code>。我们可以用一条<code>Unix</code>命令（<code>Linux</code>系统下）来编译它们。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">linux&gt; </span><span class="language-bash">gcc -Og -o p p1.c p2.c</span></span><br></pre></td></tr></table></figure>
+
+<p><code>gcc</code>命令代表的是C语言编译器<code>GCC</code>，<code>-Og</code>选项指示编译器应用某种程度的优化，从而产生遵循原始C代码的整体结构且更易于理解的机器代码。调用更高层次的优化，会提高程序的运行效率，但会使得生成的机器代码更加难以理解。</p>
+<p><code>gcc</code>命令调用整个程序序列，将源代码转换为可执行代码。首先，C语言预处理器（<code>preprocessor</code>）对源代码进行拓展，包括<code>#include</code>命令指定的任何文件（通常为头文件如<code>stdio.h</code>和<code>#define</code>声明指定的任何宏定义。)<code>.c</code>后缀文件经过预处理器后得到<code>.i</code>后缀文件，如这里会产生<code>p1.i</code>和<code>p2.i</code>文件。<code>.i</code>后缀文件仍然是文本文件。第二步，编译器(<code>complier</code>）将<code>.i</code>后缀文件翻译为<code>.s</code>后缀文件，它们是源文件的汇编码版本。之后，汇编程序（<code>assembler</code>）将汇编码转换为二进制机器码文件<code>p1.o</code>和<code>p2.o</code>。此时<code>p1.o</code>和<code>p2.0</code>虽然是二进制文件，但是还不能执行。最后，链接器（<code>linker</code>）将这两个二进制机器码文件和实现库函数的代码（例如<code>printf</code>）合并，并生成可执行代码文件<code>p</code>（由命令行指令<code>-o p</code>所确定）。</p>
+<p>流程图如下</p>
+<p><img data-src="/../../images/image-20200929142625325-1601949350254.png"></p>
+<h3 id="3-2-1机器级代码"><a href="#3-2-1机器级代码" class="headerlink" title="3.2.1机器级代码"></a>3.2.1机器级代码</h3><p>计算机系统采用了几种不同的抽象形式，通过使用了更简单的抽象模型来隐藏实现的细节。其中两个对机器级别的编程来说十分重要。</p>
+<p>第一个是机器级程序的格式和行为是由指令集结构（<code>instruction set architecture </code> or <code>ISA</code>)定义的。大部分的指令集，包括<code>x86-64</code>，描述程序的行为，就好像程序是按顺序执行的，每条指令都是在前一个指令结束时开始。而真实情况是，处理器硬件要复杂的多，它们会同时执行许多指令，同时也采用了保障措施，以确保整体行为符合指令集规定的顺序。</p>
+<p>第二，在机器级程序中使用的内存地址被称做”虚拟地址“（<code>visual addresses</code>）。它提供了看上去像一个巨大的字节数组的内存模型。而内存系统的真实运行模式包含了硬件的多重内存结构和操作系统软件。这会在<code>CS:APP</code>第九章中展开具体讨论。</p>
+<p>编译器大部分的工作都是完全遵循编译顺序的，它将表达在由C语言提供的相对抽象（对机器而言）的运行模型中的程序转换为处理器能够执行的非常基础的指令。而汇编代码在表达上非常接近机器码。相对于机器码中的二进制形式，汇编码采用是一种更可读的文本形式。<strong>理解汇编代码本身以及它和最初的C语言代码的联系</strong>是深入理解计算机执行程序的关键步骤。</p>
+<p><code>x86-64</code>指令集的机器码与最初的C语言代码差别很大。处理器的状态对于C程序员来说通常是隐藏的，仅有部分状态时可见的</p>
+<ul>
+<li><p>程序计数器（<code>program counter</code> or <code>PC</code>, 在<code>x86-64</code>指令集下被称为<code>%rip</code>寄存器)存储下一条要执行的指令在内存中的地址。</p>
+</li>
+<li><p>寄存器文件包含16个用来存储64位值的已命名区域。这些寄存器能够存储地址（对应与C语言中的指针）或者整数数据。一些寄存器被用来记载程序状态的关键部分，其他则用来容纳暂存数据。</p>
+</li>
+<li><p>条件代码寄存器保存最近执行的算术或逻辑指令的状态信息。它们是用来实现数据流中的条件变化，在实现<code>if</code>和<code>while</code>表达式的操作中，它们是必不可少的。</p>
+</li>
+<li><p>向量寄存器能容纳一个或多个整数或者浮点数。</p>
+<p>x86-64架构寄存器一览</p>
+<p><img data-src="/../../images/bc4fgr6WeEOPw5i.png"></p>
+</li>
+</ul>
+<p>机器代码将内存简单的看作一个巨大的可寻址字节数组。C语言中的数据类型，无论是单个数据类型还是聚合数据类型（如<code>array</code>和<code>struct</code>），标量还是向量数据类型，无符号还是有符号数据类型，在机器代码看来都是单个字节或者字节的集合。</p>
+<p>程序所需要的内存，包括对应的可执行机器代码，一些操作系统所需要的信息，一个用于管理过程调用和返回的运行时间堆和用户自主分配的内存空间（比如用<code>malloc</code>函数申请的内存空间）。正如前面所提到的，程序内存使用虚拟地址来寻址。在任意给定的时间里，只有虚拟内存中限定的子范围才是有效的。例如，<code>x86-64</code>虚拟地址用64位表示。在64位机器目前的实施来看，前面的16位必须设置成0，这样做才有可能在<code>64TB</code>范围内指定一个字节。</p>
+<p><img data-src="/../../images/image-20200929200544859.png"></p>
+<p>操作系统管理这些虚拟地址空间，将虚拟地址翻译为在真正的处理器内存中值的物理内存。</p>
+<p>一个单一的机器指令，只能执行一个非常基础的操作。编译器必须要产生这些指令的序列去实现程序的种种功能。</p>
+<h3 id="3-2-2-代码示例"><a href="#3-2-2-代码示例" class="headerlink" title="3.2.2 代码示例"></a>3.2.2 代码示例</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">long</span> <span class="title function_">mult2</span><span class="params">(<span class="type">long</span>, <span class="type">long</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">multstore</span><span class="params">(<span class="type">long</span> x, <span class="type">long</span> y, <span class="type">long</span> *dest)</span>&#123;</span><br><span class="line">    <span class="type">long</span> t = mult(x, y);</span><br><span class="line">    *dest = t</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们在命令行中用<code>-S</code>来查看由C语言编译器产生的汇编代码。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">linux&gt; </span><span class="language-bash">gcc -Og -S mstore.c</span></span><br></pre></td></tr></table></figure>
+
+<p>GCC编译器运行，产生汇编文件<code>mstore.s</code>后不再继续执行下一步操作。</p>
+<p>汇编文件会包含各种各样的声明，包括以下几行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">multstore:</span><br><span class="line">	pushq %rbx</span><br><span class="line">	movq %rdx, %rbx</span><br><span class="line">	call mult2</span><br><span class="line">	movq %rax, (%rbx)</span><br><span class="line">	popq %rbx</span><br><span class="line">	ret</span><br></pre></td></tr></table></figure>
+
+<p>在代码中每个缩进行都对应一条机器指令。比如说<code>pushq</code>表明寄存器中的内容<code>%rbx</code>应该被推送到程序栈中。所有关于本地变量名或数据类型的信息都已被删除。</p>
+<p>如果我们用<code>-c</code>命令，GCC会编译+处理代码。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">linux&gt; </span><span class="language-bash">gcc -Og -c mstore.c</span></span><br></pre></td></tr></table></figure>
+
+<p>这会产生二进制格式文件<code>mstore.o</code>，因此不能被直接查看。在<code>mstore.o</code>文件1,368字节的文件中有这样的一个14字节的十六进制文字序列</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">53 48 89 d3 e8 00 00 00 00 48 89 03 5b c3</span><br></pre></td></tr></table></figure>
+
+<p>这些代码对应于前面列出的汇编指令。从中我们得出，<strong>机器执行的程序只是一个编码一系列指令的字节序列。</strong>机器对源代码几乎一无所知。</p>
+<p>为了看到机器代码文件的内容，我们需要用到一类名为<strong>反编译器</strong>（<code>disassemblers</code>的程序。这些程序从机器代码中生成类似于汇编的格式。<code>Linux</code>系统中的<code>OBJDUMP</code>能实现这一功能。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">liunx&gt; </span><span class="language-bash">objdump -d mstore.o</span></span><br></pre></td></tr></table></figure>
+
+<p>反编译结果如下图所示</p>
+<p><img data-src="/../../images/image-20200929183022928.png" alt="image-20200929183022928">一些机器代码和它的反编译表示的特征值得说明一下</p>
+<ul>
+<li><p><code>x86-64</code>指令长度为1到15个字节。指令编码的设计使常用的指令和操作数较少的指令比不常用的指令或操作数较多的指令所需的字节数更少。</p>
+</li>
+<li><p>指令格式的设计使是这样的，从一个给定的起始位置开始，有一个唯一的字节解码成机器指令。例如，只有指令<code>pushq %rbx</code>可以从字节值53开始。</p>
+</li>
+<li><p>反编译程序纯粹根据机器码文件中的字节序列来确定汇编代码。它不需要访问程序的源代码或汇编码版本。</p>
+</li>
+<li><p>反编译程序对指令使用了与gcc生成的汇编代码稍有不同的命名方式。</p>
+<p>产生实际可运行代码需要在对象代码文件集上运行一个链接器。这些对象代码文件中必须包含主函数<code>main</code>。</p>
+<p>假设在文件<code>main.c</code>中有如下代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">multstore</span><span class="params">(<span class="type">long</span>, <span class="type">long</span>, <span class="type">long</span> *)</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">long</span> d;</span><br><span class="line">    multstore(<span class="number">2</span>, <span class="number">3</span>, &amp;d);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;2 * 3 --&gt; %ld\n&quot;</span>, d);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">long</span> <span class="title function_">mult2</span><span class="params">(<span class="type">long</span> a, <span class="type">long</span> b)</span>&#123;</span><br><span class="line">    <span class="type">long</span> s = a * b;</span><br><span class="line">    <span class="keyword">return</span> s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>Linux</code>命令行中，我们用如下的命令就可以生成可执行文件<code>prog</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">linux&gt; </span><span class="language-bash">gccc -Og -o prog main.c mstore.c</span></span><br></pre></td></tr></table></figure>
+
+<p><code>prog</code>文件增长到8,655个字节，因为它不仅包含了我们为该过程提供的机器码，还有用来与操作系统互动，开始和终止这段代码的程序。</p>
+<p>我们来反编译下<code>prog</code>文件。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">linux&gt; </span><span class="language-bash">objdump -d prog</span></span><br></pre></td></tr></table></figure>
+
+<p>反编译器会提取各种代码序列，包含以下内容。</p>
+</li>
+</ul>
+<p><img data-src="/../../images/IMG_1095(20200929-184140).JPG" alt="IMG_1095(20200929-184140)"></p>
+<p>这个代码与之前<code>mstore.c</code>文件反编译得到的几乎一致。</p>
+<p><code>mstore.c</code>反编译结果（部分）</p>
+<p><img data-src="/../../images/image-20200929183022928-1601949386047.png" alt="image-20200929183022928-1601949386047"></p>
+<p>一个重要的不同是在左边列出的地址不同。链接器已将该代码的位置转移到不同的地址范围。第二个不同是链接器已经填好了调用函数<code>mult2</code>时<code>callq</code>指令应该使用的地址。链接器的任务之一用为函数调用匹配这些函数可执行代码的位置。最后一个不同是我们会在前一个反编译结果中看到两行额外的代码（代码行8，9）。尽管它们出现在return 指令的后面，但是实际上对程序没有任何影响。它们的作用是占位，使代码到达16个字节的长度，使下一段代码在内存系统性能上有更好的放置位置。</p>
+<p>机器指令例子</p>
+<p><img data-src="/../../images/image-20201006130849519.png" alt="image-20201006130849519"></p>
+<h3 id="3-2-3-汇编语言格式"><a href="#3-2-3-汇编语言格式" class="headerlink" title="3.2.3 汇编语言格式"></a>3.2.3 汇编语言格式</h3><p>本课程采用的是<code>AT&amp;T</code>格式汇编语言。格式为：</p>
+<p><img data-src="/../../images/image-20201006133443721.png" alt="image-20201006133443721"></p>
+<p>标号是可选的，标号用来显示右边的指令在内存中的位置，不会生成机器指令。</p>
+<p>操作码是必选的，操作码用来说明当前指令所进行的行为，例如加减乘除等算术运算。</p>
+<p>操作数的个数可以是0个，1个或者两个，两个操作书之间用逗号分隔。操作数的作用是说明当前指令所操作的数据对象。控制指令等不需要操作数。操作数1是源操作数，操作数2是目标操作数。</p>
+<p>带解释的汇编语言程序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">void multstore(long x, long y, long *dest)</span><br><span class="line"> // x in %rdi, y in %rsi, dest in %rdx</span><br><span class="line"> multstore:</span><br><span class="line">	pushq %rbx					# Save %rbx</span><br><span class="line">	moveq %rdx, %rbx			# Copy dest to %rbx</span><br><span class="line">	call mult2					# Call mult(x, y)</span><br><span class="line">	movq %rax, (%rbx)			# Store result at *dest</span><br><span class="line">	popq %rbx					# Restore %rbx</span><br><span class="line">	ret 						# return</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-3-数据格式"><a href="#3-3-数据格式" class="headerlink" title="3.3 数据格式"></a>3.3 数据格式</h2><p>由于历史上曾经从16位结构转换到32位架构，Intel用“word”指16字节的数据类型。因此32位数据类型被乘坐“double words”，以此类推。</p>
+<p><img data-src="/../../images/IMG_1098(20201006-135031).JPG" alt="IMG_1098(20201006-135031)"></p>
+<center>x86-64指令集中C语言数据类型的大小</center>
+
+<p>操作码后必须跟上前缀(<code>Assembly-code suffix</code>), 使用什么数据类型，后面的操作数就必须跟该数据类型一样的位数的寄存器。</p>
+<h2 id="3-4-访问信息"><a href="#3-4-访问信息" class="headerlink" title="3.4 访问信息"></a>3.4 访问信息</h2><p>一个x86-64指令集下的CPU包含一组16个存储64位值的通用寄存器(<code>general-purpose register</code>)。这些寄存器用来存储整数和指针数据。它们的名字以<code>%r</code>开头，但是由于历史原因，之后的名称命令规则就不同了。<img data-src="/../../images/IMG_1099(20201006-140309).JPG" alt="IMG_1099(20201006-140309)"></p>
+<center> 处理器中的16个寄存器</center>
+
+
+<p>最初的8086处理器有8个16位寄存器，即从<code>%ax</code>到<code>%bq</code>。</p>
+<p>随着32位的拓展，寄存器扩充到了32位，即图中从<code>%eax</code>到<code>%ebq</code>。</p>
+<p>之后有拓展到了64位，于是寄存器扩充到了64位，即图中从<code>%rax</code>到<code>%rbq</code>。此外，8个新的寄存器也被添加进来，它们有了新的命名规则，即从<code>%r8</code>到<code>%r15</code>。</p>
+<p>汇编语言操作这些寄存器的时候，是以这些寄存器的名称作为操作数进行操作的。 </p>
+<p>对于这些寄存器的低32位，在汇编语言中可以使用特殊的名称进行直接访问。对于<code>%rax</code>到<code>%rbq</code>，是以<code>%eax</code>到<code>%ebq</code>进行访问，对于<code>%r8</code>到<code>%r15</code>，是以<code>%r8d</code>到<code>%15d</code>进行访问的。</p>
+<p>不同的寄存器在程序中担任不同的角色。</p>
+<p>其中最特殊的是栈指针，即<code>%rsp</code>， 用来存放栈顶指针。</p>
+<h3 id="3-4-1-操作数指示符"><a href="#3-4-1-操作数指示符" class="headerlink" title="3.4.1 操作数指示符"></a>3.4.1 操作数指示符</h3><h3 id="数据访问指令"><a href="#数据访问指令" class="headerlink" title="数据访问指令"></a>数据访问指令</h3><h4 id="Moving-data"><a href="#Moving-data" class="headerlink" title="Moving data"></a>Moving data</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">movq Source, Dest		# 移动64位数据</span><br></pre></td></tr></table></figure>
+
+<h5 id="操作数种类"><a href="#操作数种类" class="headerlink" title="操作数种类"></a>操作数种类</h5><ol>
+<li> 立即数(<code>Immediate</code>)</li>
+</ol>
+<p>   通常是一个为常数的整数类型，例如 <code>$0x400</code>, <code>$-533</code>。</p>
+<p>   与C语言常数类似，但额外添加了<code>$</code>前缀。</p>
+<p>   有1, 2, 4和8字节三种编码方式，具体取决于操作码的最后一个字母，该字母用来描述该次操作所涉及的数据位长。</p>
+<ol start="2">
+<li><p>寄存器(Register)</p>
+<p>16个通用寄存器都可以作为操作数</p>
+<p>例如：<code>%rax</code>, <code>%r13</code></p>
+<p><code>%rsp</code>有特殊用途，用于存放栈顶数据地址。</p>
+</li>
+<li><p>内存(<code>Memory</code>)</p>
+<p>move指令可以通过访问内存中某个地址，从内存中加载数据或者存放数据。</p>
+<p>例如：(%rax) 用来描述 （）里存放的数据实际上是一个地址,加上括号，就是去访问<code>%rax</code>所在地址的数据。</p>
+</li>
+</ol>
+<h5 id="move指令组合"><a href="#move指令组合" class="headerlink" title="move指令组合"></a>move指令组合</h5><p><img data-src="/../../images/image-20201006153832873.png" alt="image-20201006153832873"></p>
+<h5 id="move指令实例"><a href="#move指令实例" class="headerlink" title="move指令实例"></a>move指令实例</h5><p><img data-src="/../../images/image-20201006163553131.png" alt="image-20201006163553131"></p>
+<p><code>ret</code>代表是C语言中的过程返回操作，类似<code>return</code>。</p>
+<p>函数调用前</p>
+<p><img data-src="/../../images/image-20201006164033124.png" alt="image-20201006164033124"></p>
+<p>函数调用后</p>
+<p><img data-src="/../../images/image-20201006164236498.png" alt="image-20201006164236498"></p>
+<h4 id="完全内存寻址模式"><a href="#完全内存寻址模式" class="headerlink" title="完全内存寻址模式"></a>完全内存寻址模式</h4><p>在x86汇编指令中，内存寻址是十分灵活的。</p>
+<p><img data-src="/../../images/image-20201006183926488.png" alt="image-20201006183926488"></p>
+<p>D(R<del>b</del>, R<del>i</del>, S) 四元组</p>
+<p>D: 基于内存地址的偏移量，有符号数.是1，2，4，8字节的一个常数。</p>
+<p>R<del>b</del>：表示内存的基地址：可以是所有的16个寄存器。</p>
+<p>R<del>i</del>:  索引寄存器：除了<code>%rsp</code>，其他寄存器都能表示R<del>i</del>。</p>
+<p>S:  表示大小。1，2，4，8中的一个. 因为高级语言处理数据类型时，基本数据类型的宽度只有1，2，4，8字节。</p>
+<p>Mem[Reg[R<del>b</del>]+S×Reg[R<del>i</del>]+D]: R<del>b</del>寄存器中的值 + R<del>i</del>寄存器中的值×S + D，<strong>运算值作为实际内存的访问地址。</strong></p>
+<p>特例：</p>
+<ol>
+<li><p>某些元素可以不出现在表达式中，如</p>
+<p>(R<del>b</del>, R<del>i</del>)                Mem[ Reg[R<del>b</del>] + Reg[R<del>i</del>] ] 此时 D = 0， S = 1</p>
+<p>D(R<del>b</del>, R<del>i</del>)                Mem[ Reg[R<del>b</del>] + Reg[R<del>i</del>] + D] 此时  S = 1</p>
+<p>(R<del>b</del>, R<del>i</del>, S)                Mem[ Reg[R<del>b</del>] + S * Reg[R<del>i</del>] ] 此时 D = 0</p>
+</li>
+</ol>
+<p><strong>实例</strong></p>
+<p><img data-src="/../../images/image-20201006185602512.png" alt="image-20201006185602512"></p>
+<p>采用完全内存寻址模式，不是将最后代表”Address“的数值赋值给目标操作数。而是将这个地址所指向的内存中的数据赋值给内存操作数。</p>
+<h3 id="算术运算指令"><a href="#算术运算指令" class="headerlink" title="算术运算指令"></a>算术运算指令</h3><h4 id="地址运算指令"><a href="#地址运算指令" class="headerlink" title="地址运算指令"></a>地址运算指令</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">leaq Src, Dst			# lea为操作码，q为后缀</span><br></pre></td></tr></table></figure>
+
+<p>Src, 源操作数，通常是一个类似于寻址模式的四元组，类似于D(R<del>b</del>, R<del>i</del>， S)。四元组用来进行地址表达式的计算。</p>
+<p>Dst，目标操作数，通常是一个寄存器，用来存放算术运算的地址的结果。</p>
+<p>地址运算指令用来运算无内存引用的地址计算</p>
+<p>比如 p = &amp;x[i]。计算数组x的下标为i的元素所在索引的地址并赋值给指针p。是直接赋值地址。<strong>lea指令不会对内存进行任何访问。</strong> </p>
+<p>计算方法： 算出x的基地址，在算出x中每个元素的大小并乘以下标i得到最后的位置。</p>
+<p><img data-src="/../../images/image-20201006195213558.png" alt="image-20201006195213558"></p>
+<p>%rdi寄存器用来存放传入的long x，</p>
+<p>此外，lea指令也可以用作算术运算。</p>
+<h3 id="3-5-2-双操作数"><a href="#3-5-2-双操作数" class="headerlink" title="3.5.2 双操作数"></a>3.5.2 双操作数</h3><p><strong>一些算术操作指令</strong></p>
+<p><img data-src="/../../images/image-20201006210920968.png" alt="image-20201006210920968"></p>
+<p>目标操作数只能是内存或者寄存器，不能是立即数。源操作数三者都可以。</p>
+<p>为什么不区分无符号和有符号整数运算？</p>
+<p>加法运算对二者在位级别上的运算一致，乘法减法也是如此</p>
+<p>除法运算分为有符号数除法和无符号数除法。</p>
+<h3 id="3-5-3-单运算操作数"><a href="#3-5-3-单运算操作数" class="headerlink" title="3.5.3 单运算操作数"></a>3.5.3 单运算操作数</h3><p><img data-src="/../../images/image-20201006212009656.png" alt="image-20201006212009656"></p>
+<p>实例</p>
+<p><img data-src="/../../images/image-20201006212208668.png" alt="image-20201006212208668"></p>
+<p>在汇编语言中，由<code>rax</code>寄存器存储最终的返回值。并由<code>ret</code>指令返回。</p>
+<p>从中我们发现的现象：</p>
+<ol>
+<li><p>指令和C语言源代码的顺序可能不同。</p>
+</li>
+<li><p>一些表达式需要多个指令去完成。</p>
+</li>
+<li><p>一些指令可以包含多个表达式。</p>
+</li>
+<li><p>局部（临时）变量不一定要在内存中存储。声明了变量也不一定浪费内存。因为将变量放在寄存器中运算速度远远大于将变量放在内存中，编译器会优先把局部变量放在寄存器中。因此，多用局部变量或者表达式不一定会增加程序运行时间。</p>
+</li>
+</ol>
+<h3 id="3-5-5-逻辑运算示例"><a href="#3-5-5-逻辑运算示例" class="headerlink" title="3.5.5 逻辑运算示例"></a>3.5.5 逻辑运算示例</h3><p>在x86-64处理器上，如果运行一个32位指令，意味着最后操作的目标寄存器的高32位会被清0。</p>
+<p><img data-src="/../../images/image-20201007094151811.png" alt="image-20201007094151811"></p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>坚持原创分享，您的支持将鼓励我继续创作!</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/config/wechatpay.jpg" alt="ZhangChunXian 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/config/alipay.jpg" alt="ZhangChunXian 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>ZhangChunXian
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://zhangchunxian.github.io/posts/CSAPP_%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E5%88%AB%E8%A1%A8%E7%A4%BA%E5%9F%BA%E7%A1%80_url.html" title="CSAPP 程序的机器级别表示基础">http://zhangchunxian.github.io/posts/CSAPP_程序的机器级别表示基础_url.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" rel="tag"># 计算机系统</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/CSAPP_2_3_%E6%95%B4%E6%95%B0%E7%9A%84%E8%BF%90%E7%AE%97_url.html" rel="prev" title="CSAPP 2.3 整数的运算">
+                  <i class="fa fa-chevron-left"></i> CSAPP 2.3 整数的运算
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/CSAPP_3.3_x86%E5%AF%84%E5%AD%98%E5%99%A8%E4%B8%AD%E5%86%85%E5%AD%98%E7%9A%84%E7%BB%84%E7%BB%87_url.html" rel="next" title="CSAPP 3.3 x86寄存器中内存的组织">
+                  CSAPP 3.3 x86寄存器中内存的组织 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">皖ICP备 2020015666 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZhangChunXian</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">62k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:45</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":false,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"ignores":null,"url":"http://zhangchunxian.github.io/posts/CSAPP_%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E5%88%AB%E8%A1%A8%E7%A4%BA%E5%9F%BA%E7%A1%80_url.html"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1.2,"jsonPath":"https://unpkg.com/live2d-widget-model-haruto@1.0.5/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

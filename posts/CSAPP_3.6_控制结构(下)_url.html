@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/config/favicon-32x32-next.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/config/favicon-16x16-next.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CConsolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhangchunxian.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"style":null,"show_result":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="3.6.5 使用跳转指令实现条件分支这节探讨C语言if else 语句在使用汇编指令表示是采用什么样的方式去表示  这有一个c 源的代码片段, 它定义了一个函数。这个函数的目标是计算了x 减y 的绝对值, 传入了两个参数x 和y , 如果x 大于y,  就用x 减去y , 否则就用y 减去x 。其实就是去算x 减y 的绝对值, 这样的一个程序，我们通过上面的这样一个指令，把它翻译成汇编指令。 1g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSAPP 3.6 控制结构(下)">
+<meta property="og:url" content="http://zhangchunxian.github.io/posts/CSAPP_3.6_%E6%8E%A7%E5%88%B6%E7%BB%93%E6%9E%84(%E4%B8%8B)_url.html">
+<meta property="og:site_name" content="ZhangChunXian">
+<meta property="og:description" content="3.6.5 使用跳转指令实现条件分支这节探讨C语言if else 语句在使用汇编指令表示是采用什么样的方式去表示  这有一个c 源的代码片段, 它定义了一个函数。这个函数的目标是计算了x 减y 的绝对值, 传入了两个参数x 和y , 如果x 大于y,  就用x 减去y , 否则就用y 减去x 。其实就是去算x 减y 的绝对值, 这样的一个程序，我们通过上面的这样一个指令，把它翻译成汇编指令。 1g">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015205526690.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015210226351.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015210442197.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015210751884.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015211202045.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015211648837.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015212036490.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015212512469.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015212812282.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015213209975.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015213304490.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015213324421.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015213421900.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015213530857.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015213618699.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015213815083.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015213934995.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015214033525.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201015214146556.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201016095956782.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201016100421674.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201016101709718.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201016104201079.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201016104524068.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201016120257181.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201016121022303.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201016121558504.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201016122543333.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201016122757174.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201016123010908.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201016123655875.png">
+<meta property="article:published_time" content="2020-10-10T10:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-12T06:59:47.695Z">
+<meta property="article:author" content="ZhangChunXian">
+<meta property="article:tag" content="计算机系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zhangchunxian.github.io/images/image-20201015205526690.png">
+
+
+<link rel="canonical" href="http://zhangchunxian.github.io/posts/CSAPP_3.6_%E6%8E%A7%E5%88%B6%E7%BB%93%E6%9E%84(%E4%B8%8B)_url.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://zhangchunxian.github.io/posts/CSAPP_3.6_%E6%8E%A7%E5%88%B6%E7%BB%93%E6%9E%84(%E4%B8%8B)_url.html","path":"posts/CSAPP_3.6_控制结构(下)_url.html","title":"CSAPP 3.6 控制结构(下)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CSAPP 3.6 控制结构(下) | ZhangChunXian</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/rss.xml" title="ZhangChunXian" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ZhangChunXian</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">ZhangChunXian</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">15</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">16</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">32</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#3-6-5-%E4%BD%BF%E7%94%A8%E8%B7%B3%E8%BD%AC%E6%8C%87%E4%BB%A4%E5%AE%9E%E7%8E%B0%E6%9D%A1%E4%BB%B6%E5%88%86%E6%94%AF"><span class="nav-number">1.</span> <span class="nav-text">3.6.5 使用跳转指令实现条件分支</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-6-6-%E4%BD%BF%E7%94%A8%E6%9D%A1%E4%BB%B6%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E8%AF%AD%E5%8F%A5%E5%AE%9E%E7%8E%B0%E6%9D%A1%E4%BB%B6%E5%88%86%E6%94%AF"><span class="nav-number">2.</span> <span class="nav-text">3.6.6 使用条件数据传输语句实现条件分支</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E9%80%82%E7%94%A8%E4%B8%8E%E6%9D%A1%E4%BB%B6%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E6%8C%87%E4%BB%A4%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="nav-number">2.1.</span> <span class="nav-text">不适用与条件数据传输指令的场景</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-6-7-1-do-while%E5%BE%AA%E7%8E%AF"><span class="nav-number">3.</span> <span class="nav-text">3.6.7 (1) do-while循环</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-6-7-2-while%E5%BE%AA%E7%8E%AF"><span class="nav-number">4.</span> <span class="nav-text">3.6.7(2) while循环</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-6-7-for%E5%BE%AA%E7%8E%AF"><span class="nav-number">5.</span> <span class="nav-text">3.6.7 for循环</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-6-8-1-switch-%E8%AF%AD%E5%8F%A5%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E5%AE%9E%E7%8E%B0"><span class="nav-number">6.</span> <span class="nav-text">3.6.8(1) switch 语句的机器级实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E8%B7%B3%E8%BD%AC%E8%A1%A8%E7%9A%84switch%E8%AF%AD%E5%8F%A5%E5%AE%9E%E7%8E%B0"><span class="nav-number">6.1.</span> <span class="nav-text">基于跳转表的switch语句实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-6-8-2-%E9%97%B4%E6%8E%A5%E8%B7%B3%E8%BD%AC"><span class="nav-number">7.</span> <span class="nav-text">3.6.8 (2) 间接跳转</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%B4%E6%8E%A5%E8%B7%B3%E8%BD%AC%E4%B8%8E%E7%9B%B4%E6%8E%A5%E8%B7%B3%E8%BD%AC"><span class="nav-number">7.1.</span> <span class="nav-text">间接跳转与直接跳转</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-6-8-3-switch%E8%AF%AD%E5%8F%A5%E7%A4%BA%E4%BE%8B%E5%88%86%E6%9E%90"><span class="nav-number">8.</span> <span class="nav-text">3.6.8(3) switch语句示例分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%89break%E8%AF%AD%E5%8F%A5%E7%9A%84%E6%83%85%E5%BD%A2"><span class="nav-number">8.1.</span> <span class="nav-text">有break语句的情形</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%90%BD%E4%B8%8B-Fall-Through-%E7%9A%84%E6%83%85%E5%BD%A2"><span class="nav-number">8.2.</span> <span class="nav-text">落下(Fall-Through)的情形</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B1%E7%94%A8%E6%A0%87%E7%AD%BE%E7%9A%84%E6%83%85%E5%BD%A2"><span class="nav-number">8.3.</span> <span class="nav-text">共用标签的情形</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-6-8-4-%E5%AF%B9switch%E7%9A%84%E8%BF%9B%E4%B8%80%E6%AD%A5%E6%8E%A2%E8%AE%A8"><span class="nav-number">9.</span> <span class="nav-text">3.6.8(4) 对switch的进一步探讨</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE%E8%A1%A8%E7%9A%84%E5%B1%80%E9%99%90"><span class="nav-number">9.1.</span> <span class="nav-text">查找表的局限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">9.2.</span> <span class="nav-text">解决方法</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ZhangChunXian"
+      src="/images/config/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ZhangChunXian</p>
+  <div class="site-description" itemprop="description">ZhangChunXian</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZhangChunXian" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ZhangChunXian" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1836891291@qq.com" title="E-Mail → mailto:1836891291@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="link fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://dase.ecnu.edu.cn/" title="http:&#x2F;&#x2F;dase.ecnu.edu.cn" rel="noopener" target="_blank">华东师范大学数据科学与工程学院</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/ZhangChunXian" class="github-corner" title="我的Github" aria-label="我的Github" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zhangchunxian.github.io/posts/CSAPP_3.6_%E6%8E%A7%E5%88%B6%E7%BB%93%E6%9E%84(%E4%B8%8B)_url.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/config/avatar.jpg">
+      <meta itemprop="name" content="ZhangChunXian">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZhangChunXian">
+      <meta itemprop="description" content="ZhangChunXian">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CSAPP 3.6 控制结构(下) | ZhangChunXian">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CSAPP 3.6 控制结构(下)<a href="https://github.com/ZhangChunXian/ZhangChunXian.github.io/blob/source/source/_posts/_posts/posts/CSAPP3.6_next.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-10-10 18:00:00" itemprop="dateCreated datePublished" datetime="2020-10-10T18:00:00+08:00">2020-10-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%AF%BE/" itemprop="url" rel="index"><span itemprop="name">计算机专业课</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%AF%BE/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">计算机系统</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>18 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="3-6-5-使用跳转指令实现条件分支"><a href="#3-6-5-使用跳转指令实现条件分支" class="headerlink" title="3.6.5 使用跳转指令实现条件分支"></a>3.6.5 使用跳转指令实现条件分支</h1><p>这节探讨C语言if else 语句在使用汇编指令表示是采用什么样的方式去表示</p>
+<p><img data-src="/../../images/image-20201015205526690.png" alt="image-20201015205526690"></p>
+<p>这有一个c 源的代码片段, 它定义了一个函数。这个函数的目标是计算了x 减y 的绝对值, 传入了两个参数x 和y , 如果x 大于y,  就用x 减去y , 否则就用y 减去x 。其实就是去算x 减y 的绝对值, 这样的一个程序，我们通过上面的这样一个指令，把它翻译成汇编指令。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -0g -S -fno-if-conversion control.c</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>rdi存放的是x的变量，rsi存放的是y 的变量，rax存放的是返回结果.进入这个函数之后，首先把x 和y 做了一个比较。如果x小于等于y 则跳转到.L4. 跳转到L4的时候做了一件事, 把rsi也就是y放到了iax中, 然后用rax 减去x 的值, 然后差放到rax 里, 函数返回。<br>如果不是小于等于，那么就是把x 的值放到rax里, 然后用r ax 去减去y 的值，最后结果存到rax 里，然后过程返回。</p>
+<p>如果使用了一个c 语言的goto语句的版本，可以让我们更清晰的去看到条件跳转语句在刚才的汇编语言中的这个跳转分支的过程发挥了一个什么样的作用。</p>
+<p><img data-src="/../../images/image-20201015210226351.png" alt="image-20201015210226351"></p>
+<p>当然在c 语言中还有一种可以实现简单的条件分支的方法, 就是采用表达式中的三目运算符。</p>
+<p><img data-src="/../../images/image-20201015210442197.png" alt="image-20201015210442197"></p>
+<h1 id="3-6-6-使用条件数据传输语句实现条件分支"><a href="#3-6-6-使用条件数据传输语句实现条件分支" class="headerlink" title="3.6.6 使用条件数据传输语句实现条件分支"></a>3.6.6 使用条件数据传输语句实现条件分支</h1><p>介绍另一种实现高级语言条件分支语句的形式, 就是使用条件数据传输语句来去实现。</p>
+<p><img data-src="/../../images/image-20201015210751884.png" alt="image-20201015210751884"></p>
+<p>条件数据传输语句其实也可以认为是一个条件赋值语句。它本质上是实现了这样的一个过程, 就是根据条件码的具体状态来决定是否把源操作数中的值, 赋值到目标操作数中。<br>这个过程和传统的move指令非常相似, 只不过是他在move之前需要判断一下条件码。<br>如果条件码不符合要求，相当于这条指令什么都不做，继续向下执行。如果符合要求就进行复制, 这就是条件数据传输指令的基本功能。</p>
+<p>为什么我们还需要引入条件数据传输指令？这是因为条件跳转指令本身具有很大性能上的问题。这个其实涉及到我们处理器体系结构中一个非常重要的技术，叫做流水线技术。现代处理器中都包含着流水线, 流水线技术可以实现对于指令执行的加速, 而且这种加速的效果是非常可观的。但是对于流水线来讲，它需要进行指令的预取, 通常的一个预取策略就是顺序取值。如果遇到跳转指令，那么对于流水线来讲会具有更大的挑战。因为流水线无法判断当前这个语句是否真正进行跳转, 尤其是条件跳转，因为还没有计算出条件的结果，所以流水线没有办法去计算到底是否完成跳转。所以这样就引发了一个问题，就是条件跳转语句其实对于流水线的指令预取是具有破坏性的。因此, 跳转语句本身对于流水线来讲会构成巨大的性能上的挑战, 但是条件数据传输语句将不会出现这种情况, 因为条件数据传输语句不需要实现跳转。</p>
+<p><img data-src="/../../images/image-20201015211202045.png" alt="image-20201015211202045"></p>
+<p>比如说前面我们谈到的这个三目运算符的例子。如果使用的是条件跳转语句，那么就会分成两个语句块。当不满足条件的时候，会跳入else 这个语句块会执行, 这样就会出现一个跳转。那如果要是采用条件数据传输语句，它怎么去执行的呢？它会首先把then的这个表达式和else 的这个表达式都提前计算出来, 接下来去判断一下是否满足条件。<br>如果满足条件就不进行条件数据传输语句进行复制。如果不满足条件，就把else的结果赋值给最终的结果。注意标红色的这样的一条语句, 在汇编语言指令中使用一条条件，数据传输指令就可以达到这样的一个效果。所以从宏观上看, 这个汇编指令本身都是顺序执行的, 不存在分支和跳转, 这样呢就可以对流水线进行一个优化。使用条件数据传输语句虽然会在前面增加了一些计算量, 但是由于他对流水线进行了优化, 所以流水线性能的优化要高于前期计算所消耗的代价, 所以整体上的优化效果仍然是明显的。</p>
+<p>下面来看一个例子</p>
+<p><img data-src="/../../images/image-20201015211648837.png" alt="image-20201015211648837"></p>
+<p>计算机会把x 减y 的值计算出来，放到rax 寄存器里。把y-x 的值计算出来，放到rdx 计算器里, 然后它再去比较x 和y 之间的大小。cmovle就是一个条件数据传输指令, 它和条件跳转指令的后缀和set 这一组指令的后缀的用法是相同的。它的意思是如果前面的这个比较是小于等于的话，会把rdx 赋值到rax寄存器中。如果要是大于rax 寄存器的值，保持原状也就是说这条指令不做任何的工作。这样我们看在整个的这个过程中，就消除了分支跳转, 对流水线进行了优化。</p>
+<h2 id="不适用与条件数据传输指令的场景"><a href="#不适用与条件数据传输指令的场景" class="headerlink" title="不适用与条件数据传输指令的场景"></a>不适用与条件数据传输指令的场景</h2><p><img data-src="/../../images/image-20201015212036490.png" alt="image-20201015212036490"></p>
+<ol>
+<li>两个表达式计算量都非常大, 这时计算开销要远大于对流水线的优化</li>
+<li>表达式具有一些临界的风险情况.</li>
+<li>计算中会出现一些副作用. 如两个表达式冲突时.</li>
+</ol>
+<h1 id="3-6-7-1-do-while循环"><a href="#3-6-7-1-do-while循环" class="headerlink" title="3.6.7 (1) do-while循环"></a>3.6.7 (1) do-while循环</h1><p><img data-src="/../../images/image-20201015212512469.png" alt="image-20201015212512469"></p>
+<p>在通过之前条件分支的讨论可以知道。在汇编指令中, 条件跳转, 等价于c 语言中的一个if 的条件判断加goto语句。</p>
+<p><img data-src="/../../images/image-20201015212812282.png" alt="image-20201015212812282"></p>
+<ol>
+<li>位移操作数只有1位的时候, 唯一一个操作数为目标操作数, 移位量为1.</li>
+<li>rep指令是一个字符串操作指令, 这里相当于在goto和ret之间插入一个空指令, 作用是优化x86处理器的流水线功能.</li>
+</ol>
+<p><img data-src="/../../images/image-20201015213209975.png" alt="image-20201015213209975"></p>
+<h1 id="3-6-7-2-while循环"><a href="#3-6-7-2-while循环" class="headerlink" title="3.6.7(2) while循环"></a>3.6.7(2) while循环</h1><p>看图就可以了.</p>
+<p><img data-src="/../../images/image-20201015213304490.png" alt="image-20201015213304490"></p>
+<p><img data-src="/../../images/image-20201015213324421.png" alt="image-20201015213324421"></p>
+<p>使用<code>-o1</code>编译选项.</p>
+<p><img data-src="/../../images/image-20201015213421900.png" alt="image-20201015213421900"></p>
+<p><img data-src="/../../images/image-20201015213530857.png" alt="image-20201015213530857"></p>
+<h1 id="3-6-7-for循环"><a href="#3-6-7-for循环" class="headerlink" title="3.6.7 for循环"></a>3.6.7 for循环</h1><p><img data-src="/../../images/image-20201015213618699.png" alt="image-20201015213618699"></p>
+<p>将for循环改造成while循环</p>
+<p><img data-src="/../../images/image-20201015213815083.png" alt="image-20201015213815083"></p>
+<p>将for循环转化成等价的while循环</p>
+<p><img data-src="/../../images/image-20201015213934995.png" alt="image-20201015213934995"></p>
+<p><img data-src="/../../images/image-20201015214033525.png" alt="image-20201015214033525"></p>
+<p>优化后</p>
+<p><img data-src="/../../images/image-20201015214146556.png" alt="image-20201015214146556"></p>
+<h1 id="3-6-8-1-switch-语句的机器级实现"><a href="#3-6-8-1-switch-语句的机器级实现" class="headerlink" title="3.6.8(1) switch 语句的机器级实现"></a>3.6.8(1) switch 语句的机器级实现</h1><p>switch 语句可以实现的所有功能都可以被条件分支语句，也就是类似于if else , if 的一种形式来表达。既然switch 语句有它的等价表示方式, 为什么在高级语言中还定义switch 这样的一种特殊的语法呢？这是有特殊原因的。</p>
+<p><img data-src="/../../images/image-20201016095956782.png" alt="image-20201016095956782"></p>
+<h2 id="基于跳转表的switch语句实现"><a href="#基于跳转表的switch语句实现" class="headerlink" title="基于跳转表的switch语句实现"></a>基于跳转表的switch语句实现</h2><p>switch是语句在机器级实现的时候，主要是基于了一个跳转表的数据结构来实现。具体如下</p>
+<p>Jump Table是一个数组, 数组中的每一个元素都是一个地址。这个地址指向的是对应的case 语句块的起始地址。switch语句在工作的时候是根据变量的值去跳转表中找到对应位置的元素, 从对应位置的元素中，将某个数组元素的值也就是跳转的目标地址取出来, 然后执行一条跳转语句，跳转到真正目标入口的语句块的起始地址位置上。</p>
+<p><img data-src="/../../images/image-20201016100421674.png" alt="image-20201016100421674"></p>
+<p>和if else语句相比, switch语句有一个非常大的优势, 就是在整个这个过程不管跳转到哪一个目标语句块, 它所花费的时间都是固定的, 也就是说它的时间复杂度是一个常数类型。</p>
+<p>而if else 语句, 如果想执行if else 语句的最后一个语句块, 必须是先做了前n 个语句块的判断之后, 才能够执行。这就说明if else语句查找到目标并进入目标语句块进行执行的时间复杂度是n 。</p>
+<p>switch语句利用跳转表这样一个结构，将时间复杂度转换为常数。所以, switch语句的变量必须是整数. 因为只有这个变量是整数，它才能作为查找表的下标, 去进行查表的这样的一个操作。</p>
+<h1 id="3-6-8-2-间接跳转"><a href="#3-6-8-2-间接跳转" class="headerlink" title="3.6.8 (2) 间接跳转"></a>3.6.8 (2) 间接跳转</h1><p><img data-src="/../../images/image-20201016101709718.png" alt="image-20201016101709718"></p>
+<p>变量的判断主要使用了一个判断的指令cmp去判断rdi和6的大小, 6是一个立即数。接下来用ja指令去进行跳转, ja 是用于无符号数大于的判断。<br>但是x 是一个有符号数。为什么要使用一个无符号数的指令去做判断？因为在case 语句中, 有效范围是从0到6范围内。大于6和小于0的数都会进入到default 这样的一个语句块里,那如果将rdi 的范围换算成无符号数的话，可以认为rdi 就是一个小于等于6的一个无符号数, 因为在有符号数转换成无符号数的时候，负数会被转换成大的一个正数。所以通过ja 这样一条指令，就既可以排除掉小于零的数也可以排除掉大于六的数字。如果是大于6, 指定跳转到某个固定的位置, 否则执行间接跳转。</p>
+<h2 id="间接跳转与直接跳转"><a href="#间接跳转与直接跳转" class="headerlink" title="间接跳转与直接跳转"></a>间接跳转与直接跳转</h2><p><img data-src="/../../images/image-20201016104201079.png" alt="image-20201016104201079"></p>
+<p>可以根据跳转目标的不同, 将跳转划分成两种类型, 一类叫做<strong>直接跳转</strong>。直接跳转就是在去做跳转的时候,  跳转的目标是一个确定的位置, 那么这种跳转就叫做直接跳转。比如下图中的jmp .L8, 不管在什么情况下，只要执行这条跳转语句，只要它发生了跳转，它就一定会跳转到某个确定的位置。</p>
+<p><img data-src="/../../images/image-20201016104524068.png" alt="image-20201016104524068"></p>
+<p>另外一种就是<strong>跳转到某个不确定位置的跳转叫做间接跳转</strong>。不确定的位置并不是计算机不知道跳转的确定位置, 而是在执行到这条指令之前是无法提前预知的。地址是基于某个变量去计算出来的。在这里面上图中的<code>jmp *.L4(, %rdi, 8)</code>就是一个间接跳转。这个间接跳转是基于rdi 中的值来去计算出跳转的具体目标。<br>后边这一部分<code>(, %rdi, 8)</code>可以认为就是寻址方式的那个4元组, 就是的D(R<del>b</del>, R<del>i</del>, S)。<br>L4是一个地址, 是跳转表的地址，跳转表是在编译器编译的时候为我们生成的一个固定的只读数据, 就是在内存中分配出一个区域，这个区域不可被修改。但是它内部的变量已经初始化。<br>跳转表的起始地址的标号是L4, 每个数据的数据宽度是八字节, 对应的每个数据的值在后面也定义了就是对应的标签, 标签就是一个地址, 地址本质上也是一种类型的数据。<br>在L4的这个表中,一共包含着7个元素, 7个元素，每个元素都对应着一个标签，也就是都对应着一个地址, 这个地址就是x 等于0的跳转到x 等于6的跳转的目标地址。</p>
+<p>rdi和8决定了rdi ，就是这个查找表要访问的下标. 8表示查找表中每个元素的大小, 可以看到这个查找的地址就是L4为起始地址,  加上下标乘以元素大小的偏移量所查到的就是对应这个r d i 的这个下标的地址。最后前面有一个<code>*</code>是把这个地址中的数据取出来作为跳转语句的目标地址。比如说rdi是1, 最后计算后的地址就是L4中的第1个元素的起始地址。<br>从它中间取出来的值就是L3, 跳转语句就是跳转到L3这个标签所指向的位置。</p>
+<p>因为这个查找表只有7个元素，所以它只是支持x也就是rdi变量, 从0到6范围内的变化, 小于零和大于6都会跳到某个默认的位置上去, 这个默认的位置就是对应的default . </p>
+<h1 id="3-6-8-3-switch语句示例分析"><a href="#3-6-8-3-switch语句示例分析" class="headerlink" title="3.6.8(3) switch语句示例分析"></a>3.6.8(3) switch语句示例分析</h1><p>跳转表和case语句块的映射关系</p>
+<p><img data-src="/../../images/image-20201016120257181.png" alt="image-20201016120257181"><br>在整个的这个条件变量里, 0和4是没有所对应的case语句块的, 所以0和4都指向了default 这个语句块, 除此之外，其他的跳转表中的值都是指向了对应的语句块的位置, 可以看到的是x=5和x=6的时候，它指向的语句块都是L7这个语句块, 所以case5和case6它有相同的语句块的处理。</p>
+<p><img data-src="/../../images/image-20201016121022303.png" alt="image-20201016121022303"></p>
+<h2 id="有break语句的情形"><a href="#有break语句的情形" class="headerlink" title="有break语句的情形"></a>有break语句的情形</h2><p>当x=1的时候，会跳转到L3这个语句块里. 在L3这个语句块里, 它首先把rsi复制给rax, rsi中存放的是参数y的值。第二部做了一个乘法y*z, 结果存到rax 中。由于在函数中，w 是作为最后的返回值出现的, 所以switch语句后也不出现对任何w的处理, L3在计算完成后，由于有break语句，它也不会再执行其他的语句, 调用了过程返回指令导致函数返回。</p>
+<p><img data-src="/../../images/image-20201016121558504.png" alt="image-20201016121558504"></p>
+<h2 id="落下-Fall-Through-的情形"><a href="#落下-Fall-Through-的情形" class="headerlink" title="落下(Fall-Through)的情形"></a>落下(<code>Fall-Through</code>)的情形</h2><p>case2中, 首先会做一个 <code>y/z</code> 的操作, 完成之后，它会继续执行到case3的语句, 做w+=z的操作.在之前可以看到, 对于把w赋初值为1(<code>long w=1</code>), 在进入switch语句之前。<br>并没有进行, 原因是并不是所有的语句块都需要有把w赋值为1的这样一个操作, 比如说case2这个语句块就不需要对w赋初值, 因为在case 2这个语句块中为w 再一次做赋值。所以w 等于1这个赋值并不是在所有的语句块中都需要。</p>
+<p>所以w 等于1是不会在switch 语句之前去做这样一个复制的。因为这样做会浪费指令, 导致程序性能的下降。w=1赋值是按需出现的。比如说在case3的时候, 计算w+=z时，之前是需要w先去赋初值的。所以它在这个位置case 3的时候，才会去先把w赋值成一。<br>但是case2的时候，由于它不需要赋初值，所以给<code>w=y/z</code>之后，紧接着就需要跳转到merge语句块,  因此在case3中需要分成两个语句块。</p>
+<p>case2完成后会跳转到merge, case3完成后也会顺序执行到merge语句块,</p>
+<p>下图为case3和case2 在一起的汇编代码</p>
+<p><img data-src="/../../images/image-20201016122543333.png" alt="image-20201016122543333"></p>
+<h2 id="共用标签的情形"><a href="#共用标签的情形" class="headerlink" title="共用标签的情形"></a>共用标签的情形</h2><p><img data-src="/../../images/image-20201016122757174.png" alt="image-20201016122757174"></p>
+<h1 id="3-6-8-4-对switch的进一步探讨"><a href="#3-6-8-4-对switch的进一步探讨" class="headerlink" title="3.6.8(4) 对switch的进一步探讨"></a>3.6.8(4) 对switch的进一步探讨</h1><h2 id="查找表的局限"><a href="#查找表的局限" class="headerlink" title="查找表的局限"></a>查找表的局限</h2><p>switch 语句使用查找表去进行实现的时候, 会有非常大的一个性能上的提升。但是查找表本身也具有一定的局限性。</p>
+<p>前面例子中所有的case 语句中值都比较小, 是从0到6这样的一个范围内, 那如果case 语句中的值都比较大的时候怎么办呢？如果仍然是从零作为查找表的起始地址到10006。作为一个结束的这样的一个元素。这个查找表的规模就会变得非常大, 而且10000之前的这些查找表中的地址存储的都是相同的，标签都是指向default 。这样就会变得没有意义, 使得查找表大量的数据存储的，实际上都是没有意义的数据, 或者说查找表在所引起的空间复杂度的提高所得到的这个效果要远远大于性能上的提升。</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p><img data-src="/../../images/image-20201016123010908.png" alt="image-20201016123010908"></p>
+<p>第一种解决方法, 是观察一下case 语句它在数轴上的取值是不是相对密集的。如果相对密集比如说上面这个例子是从1万到10006, 它在数轴上仍然相对密集, 只不过是它相对于0, 有了一个整体的偏移。编译器会首先去减去一个固定的偏移量, 使得最后case 语句的这些值处在从零开始的每个某个很小的范围的区间内。这样仍然可以去很有效率做查找。在这个例子中，它是从10000到10006, 可以把它近似成为把x 减去10000，然后继续把减完的这个结果和6去比较，因为它就变成了一个从0到6的这样一个范围, 然后接下来仍然可以使用间接跳转去进行查表来去实现。</p>
+<p>那如果在数轴上排列不密集呢?</p>
+<p><img data-src="/../../images/image-20201016123655875.png" alt="image-20201016123655875"></p>
+<p>更普遍的一种情况处理起来就更加的复杂了, 就是数据的范围是很大。值很大, 而且这些数据在数轴上分布的不密集, 即这些数值在数轴上的分布非常稀疏。</p>
+<p>这个时候switch语句通过编译器去实现的时候，就不是以查找表的方式来去实现了。<br>而是以二分搜索的方式来去实现。二分搜索，这是一个数据结构中提供的概念。由于我们的case 语句都是一些孤立的值, 这些值编译器可以给他们进行排序，进行一个二分搜索，或者叫做二分查找。编译后的结果近似等价于这样的一个if else 语句的一个嵌套的过程。<br>注意这个是if 语句中间嵌套if else , else一句话中间再嵌套if else 。使用二分搜索的方式,<br>去查找对应的语句块的时间复杂度是log<del>2</del>n。如果采用if else if ,期望的时间复杂度是n 也就是一个线性时间复杂度。</p>
+<p>即使对于case 中的值比较稀疏的这样的一个情况, 编译器仍然可以提供比较高的查找效率。而这个查找要比简单的，if else if 的这样的一种查找要快。<br>所以说这就是switch语句它仍然存在的价值。所以switch 语句是基于值进行查找的。<br>所以可以进行一定程度的优化。编译器足够的聪明，足够的智能, 可以根据不同case 语句的值对整个switch语句进行不同程度的优化. 在C语言c++语言中。在高级语言中，如果有switch 这样的语法,基本实现都是类似的。</p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>坚持原创分享，您的支持将鼓励我继续创作!</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/config/wechatpay.jpg" alt="ZhangChunXian 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/config/alipay.jpg" alt="ZhangChunXian 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>ZhangChunXian
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://zhangchunxian.github.io/posts/CSAPP_3.6_%E6%8E%A7%E5%88%B6%E7%BB%93%E6%9E%84(%E4%B8%8B)_url.html" title="CSAPP 3.6 控制结构(下)">http://zhangchunxian.github.io/posts/CSAPP_3.6_控制结构(下)_url.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" rel="tag"># 计算机系统</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/CSAPP_3_4%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E6%8C%87%E4%BB%A4_url.html" rel="prev" title="CSAPP 3.4 数据访问">
+                  <i class="fa fa-chevron-left"></i> CSAPP 3.4 数据访问
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/CSAPP_3.6_%E6%8E%A7%E5%88%B6%E7%BB%93%E6%9E%84(%E4%B8%8A)_url.html" rel="next" title="CSAPP 3.6 控制结构(上)">
+                  CSAPP 3.6 控制结构(上) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">皖ICP备 2020015666 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZhangChunXian</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">62k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:45</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":false,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"ignores":null,"url":"http://zhangchunxian.github.io/posts/CSAPP_3.6_%E6%8E%A7%E5%88%B6%E7%BB%93%E6%9E%84(%E4%B8%8B)_url.html"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1.2,"jsonPath":"https://unpkg.com/live2d-widget-model-haruto@1.0.5/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

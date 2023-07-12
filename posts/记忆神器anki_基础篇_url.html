@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/config/favicon-32x32-next.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/config/favicon-16x16-next.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CConsolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhangchunxian.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"style":null,"show_result":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="记忆神器anki——基础篇为了更好的阅读，请注意本文结构的思维导图   情境： 你学习中有木有这样的烦恼？背东西背的慢，记不住，感觉知识不进脑子。   好不容易记住知识，可自己好像一眨眼就忘了   有没用这样一款软件，背东西背不会就一直复现，背完了又可以科学复习，还能自己定制需要背诵的内容？最好呢，还能白嫖！！反正我知道你心动了，不如就介绍一下本文的主角——anki。  正文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记忆神器anki——基础篇">
+<meta property="og:url" content="http://zhangchunxian.github.io/posts/%E8%AE%B0%E5%BF%86%E7%A5%9E%E5%99%A8anki_%E5%9F%BA%E7%A1%80%E7%AF%87_url.html">
+<meta property="og:site_name" content="ZhangChunXian">
+<meta property="og:description" content="记忆神器anki——基础篇为了更好的阅读，请注意本文结构的思维导图   情境： 你学习中有木有这样的烦恼？背东西背的慢，记不住，感觉知识不进脑子。   好不容易记住知识，可自己好像一眨眼就忘了   有没用这样一款软件，背东西背不会就一直复现，背完了又可以科学复习，还能自己定制需要背诵的内容？最好呢，还能白嫖！！反正我知道你心动了，不如就介绍一下本文的主角——anki。  正文">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/50.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/%E7%9F%A5%E8%AF%86%E4%B8%8D%E8%BF%9B%E8%84%91%E5%AD%90.jpg">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/%E9%A9%AC%E5%86%AC%E6%A2%85.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/%E7%99%BD%E5%AB%96.jpg">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/anki.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/ankiinstall.PNG">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/8.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/9.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/13.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/10.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/11.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/%E5%81%8F%E5%A5%BD%E8%AE%BE%E7%BD%AE.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/12.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/14.png">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/17.png">
+<meta property="article:published_time" content="2020-08-05T04:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-12T06:59:47.695Z">
+<meta property="article:author" content="ZhangChunXian">
+<meta property="article:tag" content="软件应用">
+<meta property="article:tag" content="效率">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zhangchunxian.github.io/images/50.png">
+
+
+<link rel="canonical" href="http://zhangchunxian.github.io/posts/%E8%AE%B0%E5%BF%86%E7%A5%9E%E5%99%A8anki_%E5%9F%BA%E7%A1%80%E7%AF%87_url.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://zhangchunxian.github.io/posts/%E8%AE%B0%E5%BF%86%E7%A5%9E%E5%99%A8anki_%E5%9F%BA%E7%A1%80%E7%AF%87_url.html","path":"posts/记忆神器anki_基础篇_url.html","title":"记忆神器anki——基础篇"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>记忆神器anki——基础篇 | ZhangChunXian</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/rss.xml" title="ZhangChunXian" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ZhangChunXian</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">ZhangChunXian</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">15</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">16</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">32</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%B0%E5%BF%86%E7%A5%9E%E5%99%A8anki%E2%80%94%E2%80%94%E5%9F%BA%E7%A1%80%E7%AF%87"><span class="nav-number">1.</span> <span class="nav-text">记忆神器anki——基础篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%83%85%E5%A2%83%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">情境：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#anki%E7%9A%84%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD"><span class="nav-number">2.1.</span> <span class="nav-text">anki的基础功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E9%93%BE%E6%8E%A5%E5%92%8C%E5%9C%B0%E5%9D%80%EF%BC%9A"><span class="nav-number">2.2.</span> <span class="nav-text">下载链接和地址：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iPadOS%E7%B3%BB%E7%BB%9F%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89anki%E4%BD%BF%E7%94%A8%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B"><span class="nav-number">2.3.</span> <span class="nav-text">iPadOS系统（移动端）anki使用基础教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96anki%E5%BA%94%E7%94%A8%EF%BC%9A%E6%89%93%E5%BC%80App-Store-%EF%BC%8C%E8%BE%93%E5%85%A5%E5%85%B3%E9%94%AE%E8%AF%8Danki%EF%BC%8C%E6%89%BE%E5%88%B0%E5%BA%94%E7%94%A8AnkiMobile-Flashcards%EF%BC%8C%E4%B8%8B%E8%BD%BD%E3%80%82"><span class="nav-number">2.3.1.</span> <span class="nav-text">获取anki应用：打开App Store ，输入关键词anki，找到应用AnkiMobile Flashcards，下载。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%BC%80anki-%E4%B8%BB%E7%95%8C%E9%9D%A2%E4%BB%8B%E7%BB%8D%E5%A6%82%E4%B8%8B"><span class="nav-number">2.3.2.</span> <span class="nav-text">打开anki,主界面介绍如下</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#anki%E5%AF%BC%E5%85%A5%E7%89%8C%E7%BB%84%E5%B9%B6%E5%BC%80%E5%A7%8B%E5%A4%8D%E4%B9%A0"><span class="nav-number">2.4.</span> <span class="nav-text">anki导入牌组并开始复习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E4%B9%A0%E5%81%8F%E5%A5%BD%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.5.</span> <span class="nav-text">复习偏好设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.5.1.</span> <span class="nav-text">基础设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E4%B9%A0%E5%8D%A1%E7%89%87%E5%86%85%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.5.2.</span> <span class="nav-text">复习卡片内设置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mac%E7%AB%AF%EF%BC%88%E6%A1%8C%E9%9D%A2%E7%AB%AF%EF%BC%89anki%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B"><span class="nav-number">2.6.</span> <span class="nav-text">Mac端（桌面端）anki使用教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%85%E8%A6%81%E8%AF%B4%E6%98%8E%EF%BC%9A1-%E5%A6%82%E6%9E%9C%E4%BD%A0%E8%A7%89%E5%BE%97%E8%BF%99%E4%B8%AA%E8%BD%AF%E4%BB%B6%E9%9A%BE%E7%94%A8%EF%BC%88%E5%8F%AF%E8%83%BD%E8%BF%98%E6%9C%89%E7%95%8C%E9%9D%A2%E4%B8%91%EF%BC%89%EF%BC%8C%E8%BF%99%E5%B0%B1%E5%AF%B9%E4%BA%86%E3%80%82%E8%BF%99%E4%B8%AA%E8%BD%AF%E4%BB%B6%E7%9A%84%E7%89%B9%E7%82%B9%E5%B0%B1%E6%98%AF%E7%A1%AC%E6%A0%B8%EF%BC%8C%E6%93%8D%E4%BD%9C%E5%AF%B9%E6%96%B0%E6%89%8B%E4%B8%8D%E5%8F%8B%E5%A5%BD%EF%BC%8C%E9%9C%80%E8%A6%81%E4%BB%98%E5%87%BA%E4%B8%80%E5%AE%9A%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%88%90%E6%9C%AC%E3%80%82%E4%BD%86%E6%98%AF%EF%BC%8C%E6%88%91%E9%83%91%E9%87%8D%E5%A3%B0%E6%98%8E%EF%BC%9A"><span class="nav-number">2.6.1.</span> <span class="nav-text">必要说明：1.如果你觉得这个软件难用（可能还有界面丑），这就对了。这个软件的特点就是硬核，操作对新手不友好，需要付出一定的学习成本。但是，我郑重声明：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%BF%E6%97%B6%E9%97%B4%E4%BD%BF%E7%94%A8%E7%9A%84%E8%AF%9D%EF%BC%8C%E5%B9%B3%E6%9D%BF%E4%BD%93%E9%AA%8C%E6%9C%80%E4%BD%B3%E3%80%82"><span class="nav-number">2.6.2.</span> <span class="nav-text">长时间使用的话，平板体验最佳。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#anki%E6%9B%B4%E5%A4%9A%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%81anki%E5%AE%98%E7%BD%91%EF%BC%8C%E6%9C%AC%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%9C%AA%E6%9D%A5%E4%B9%9F%E4%BC%9A%E6%9B%B4%E6%96%B0%E3%80%82"><span class="nav-number">2.6.3.</span> <span class="nav-text">anki更多进阶用法详见anki官网，本人博客未来也会更新。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB"><span class="nav-number">2.7.</span> <span class="nav-text">资源分享</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E4%BD%BF%E7%94%A8%E6%84%9F%E5%8F%97"><span class="nav-number">2.8.</span> <span class="nav-text">个人使用感受</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-number">2.8.1.</span> <span class="nav-text">优点:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9%EF%BC%9A"><span class="nav-number">2.8.2.</span> <span class="nav-text">缺点：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">友情链接：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%B0%E5%BF%86%E7%A5%9E%E5%99%A8anki%E2%80%94%E2%80%94%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89-%E5%BE%85%E6%9B%B4%E6%96%B0"><span class="nav-number">3.1.</span> <span class="nav-text">记忆神器anki——进阶教程（一）(待更新)</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ZhangChunXian"
+      src="/images/config/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ZhangChunXian</p>
+  <div class="site-description" itemprop="description">ZhangChunXian</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZhangChunXian" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ZhangChunXian" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1836891291@qq.com" title="E-Mail → mailto:1836891291@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="link fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://dase.ecnu.edu.cn/" title="http:&#x2F;&#x2F;dase.ecnu.edu.cn" rel="noopener" target="_blank">华东师范大学数据科学与工程学院</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/ZhangChunXian" class="github-corner" title="我的Github" aria-label="我的Github" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zhangchunxian.github.io/posts/%E8%AE%B0%E5%BF%86%E7%A5%9E%E5%99%A8anki_%E5%9F%BA%E7%A1%80%E7%AF%87_url.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/config/avatar.jpg">
+      <meta itemprop="name" content="ZhangChunXian">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZhangChunXian">
+      <meta itemprop="description" content="ZhangChunXian">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="记忆神器anki——基础篇 | ZhangChunXian">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          记忆神器anki——基础篇<a href="https://github.com/ZhangChunXian/ZhangChunXian.github.io/blob/source/source/_posts/_posts/posts/anki.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-08-05 12:00:00" itemprop="dateCreated datePublished" datetime="2020-08-05T12:00:00+08:00">2020-08-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%BA%94%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">软件应用</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%BA%94%E7%94%A8/%E6%95%88%E7%8E%87/" itemprop="url" rel="index"><span itemprop="name">效率</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="记忆神器anki——基础篇"><a href="#记忆神器anki——基础篇" class="headerlink" title="记忆神器anki——基础篇"></a>记忆神器anki——基础篇</h1><p><em><strong>为了更好的阅读，请注意本文结构的思维导图</strong></em></p>
+<img data-src="/images/50.png" style="zoom: 33%;" />
+
+<h2 id="情境："><a href="#情境：" class="headerlink" title="情境："></a>情境：</h2><p> 你学习中有木有这样的烦恼？背东西背的慢，记不住，感觉知识不进脑子。</p>
+<img data-src="/images/知识不进脑子.jpg" style="zoom:50%;" />
+
+<p>好不容易记住知识，可自己好像一眨眼就忘了</p>
+<img data-src="/images/马冬梅.png" style="zoom:50%;" />
+
+<p>有没用这样一款软件，背东西背不会就一直复现，背完了又可以科学复习，还能自己定制需要背诵的内容？最好呢，还能白嫖！！反正我知道你心动了，不如就介绍一下本文的主角——anki。</p>
+<p><img data-src="/images/%E7%99%BD%E5%AB%96.jpg"></p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><span id="more"></span>
+
+<h2 id="anki的基础功能"><a href="#anki的基础功能" class="headerlink" title="anki的基础功能"></a>anki的基础功能</h2><p>anki的基础功能就是提供知识卡片的实时自定义复习——自定义复习知识的频率，数量和时间。这一切都是软件自动去部署，分配的。前期导入知识卡片后，使用者只需关注知识本身——复习计划什么的交给软件。</p>
+<p> 举个例子,今天新学50个单词，设定复习时间为一天后，再第二天设定时刻后，这50个单词将在你背诵时再次出现，实现重复记忆。这些是软件自动去完成的。</p>
+<img data-src="/images/anki.png"  />
+
+<h2 id="下载链接和地址："><a href="#下载链接和地址：" class="headerlink" title="下载链接和地址："></a>下载链接和地址：</h2><p><strong><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1Sho5nVWuFybaZdKkxHIRbA">安卓系统anki安装包</a>       提取码:yoe3(放弃在自己手机内置应用商店寻找吧，国内应用商店里没有这个app）</strong></p>
+<p><a target="_blank" rel="noopener" href="https://apps.ankiweb.net/"><strong>Windows和mac系统版本下载地址</strong></a></p>
+<h2 id="iPadOS系统（移动端）anki使用基础教程"><a href="#iPadOS系统（移动端）anki使用基础教程" class="headerlink" title="iPadOS系统（移动端）anki使用基础教程"></a>iPadOS系统（移动端）anki使用基础教程</h2><h3 id="获取anki应用：打开App-Store-，输入关键词anki，找到应用AnkiMobile-Flashcards，下载。"><a href="#获取anki应用：打开App-Store-，输入关键词anki，找到应用AnkiMobile-Flashcards，下载。" class="headerlink" title="获取anki应用：打开App Store ，输入关键词anki，找到应用AnkiMobile Flashcards，下载。"></a>获取anki应用：打开App Store ，输入关键词anki，找到应用AnkiMobile Flashcards，下载。</h3><img data-src="/images/ankiinstall.PNG" style="zoom: 33%;" />
+
+<p><strong>1.在App Store中有多个应用包含关键词anki,请认准上图APP。</strong></p>
+<p><strong>2.iOS是anki在所有系统中唯一需要付费的版本，付费163元，可用共享账号方式免费获取。</strong></p>
+<h3 id="打开anki-主界面介绍如下"><a href="#打开anki-主界面介绍如下" class="headerlink" title="打开anki,主界面介绍如下"></a>打开anki,主界面介绍如下</h3><img data-src="/images/8.png" style="zoom: 33%;" />
+
+<p>1.官网链接：点击进入anki官网</p>
+<p>2.学习记录：以图表和数据形式记录anki使用记录</p>
+<p>3.卡片浏览器：以关键词搜索所有卡片</p>
+<img data-src="/images/9.png" style="zoom: 25%;" />
+
+<p> 4.偏好设置：设置复习的频率，时间，数量等</p>
+<p> 5.同步：登录ankiweb账号后在各系统之间进行同步。</p>
+<p> 6.卡片与牌组：卡片是anki中的基本复习单位，牌组（卡组）是特定卡片的集合。</p>
+<h2 id="anki导入牌组并开始复习"><a href="#anki导入牌组并开始复习" class="headerlink" title="anki导入牌组并开始复习"></a>anki导入牌组并开始复习</h2><p> 1.将牌组上传到iPad，选择用其他应用打开，拷贝到anki。</p>
+<ol start="2">
+<li>按住牌组名向右移动，选择重命名或删除牌组。</li>
+</ol>
+<p><img data-src="/images/13.png"><strong>小技巧：在命名中 加入 :: 设置多级菜单牌组</strong></p>
+<p>​               <strong>一级牌组::二级牌组</strong></p>
+<p> 2.点击相应牌组，进入复习界面。anki的卡片分为背面和正面（可以自主设置）</p>
+<p><em>卡片背面</em></p>
+<img data-src="/images/10.png" style="zoom:33%;" />
+
+<p><em>卡片正面</em></p>
+<img data-src="/images/11.png" style="zoom:33%;" />
+
+<p> 3.点击屏幕即可切换反面到正面，选择复习时间间隔后即可跳转到下一张卡片。现在，可以开始你的anki初体验了！</p>
+<h2 id="复习偏好设置"><a href="#复习偏好设置" class="headerlink" title="复习偏好设置"></a>复习偏好设置</h2><h3 id="基础设置"><a href="#基础设置" class="headerlink" title="基础设置"></a>基础设置</h3><img data-src="/images/偏好设置.png" style="zoom: 33%;" />
+
+<h3 id="复习卡片内设置"><a href="#复习卡片内设置" class="headerlink" title="复习卡片内设置"></a>复习卡片内设置</h3><img data-src="/images/12.png" style="zoom: 33%;" />
+
+<h2 id="Mac端（桌面端）anki使用教程"><a href="#Mac端（桌面端）anki使用教程" class="headerlink" title="Mac端（桌面端）anki使用教程"></a>Mac端（桌面端）anki使用教程</h2><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/28335314">知乎 高冷冷：Anki怎么用？</a></p>
+<h3 id="必要说明：1-如果你觉得这个软件难用（可能还有界面丑），这就对了。这个软件的特点就是硬核，操作对新手不友好，需要付出一定的学习成本。但是，我郑重声明："><a href="#必要说明：1-如果你觉得这个软件难用（可能还有界面丑），这就对了。这个软件的特点就是硬核，操作对新手不友好，需要付出一定的学习成本。但是，我郑重声明：" class="headerlink" title="必要说明：1.如果你觉得这个软件难用（可能还有界面丑），这就对了。这个软件的特点就是硬核，操作对新手不友好，需要付出一定的学习成本。但是，我郑重声明："></a>必要说明：1.如果你觉得这个软件难用（可能还有界面丑），这就对了。这个软件的特点就是硬核，操作对新手不友好，需要付出一定的学习成本。但是，我郑重声明：</h3><p>  <em><strong>利用这个软件在学习上提高的效益远大于学习它的时间成本。</strong></em></p>
+<p><em><strong>利用这个软件在学习上提高的效益远大于学习它的时间成本。</strong></em></p>
+<p><em><strong>利用这个软件在学习上提高的效益远大于学习它的时间成本。</strong></em></p>
+<h3 id="长时间使用的话，平板体验最佳。"><a href="#长时间使用的话，平板体验最佳。" class="headerlink" title="长时间使用的话，平板体验最佳。"></a>长时间使用的话，平板体验最佳。</h3><h3 id="anki更多进阶用法详见anki官网，本人博客未来也会更新。"><a href="#anki更多进阶用法详见anki官网，本人博客未来也会更新。" class="headerlink" title="anki更多进阶用法详见anki官网，本人博客未来也会更新。"></a>anki更多进阶用法详见anki官网，本人博客未来也会更新。</h3><h2 id="资源分享"><a href="#资源分享" class="headerlink" title="资源分享"></a>资源分享</h2><p><a target="_blank" rel="noopener" href="https://ankiweb.net/shared/decks/">公开anki牌组（网络）</a></p>
+<p>个人（就系我辣）定制系列：</p>
+<p>[个人定制六级考研重点词汇3000]（有一些卡片重复，建议背诵去除）</p>
+<p>[个人定制考研单词6000词正序版]</p>
+<p>[个人定制考研单词5000词正序版]（六千改良版，去掉开头1000个单词）</p>
+<p>[插班生四选一选择题集错]</p>
+<p>[插班生强化系列重点单词和词组]（有一些卡片重复，建议背诵时去除）</p>
+<p>[插班生英语阅读句型和句式]</p>
+<p>[插班生英语翻译指导]</p>
+<p><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/19f8q1P6LdMmQKUgxzbfioQ">资源地址</a>        提取码：w2u6</p>
+<p><strong>可能问题</strong></p>
+<ol>
+<li><p>牌组的字体样式不对，如字体样式单一，颜色单一</p>
+<p>考研单词5000词正确样式为</p>
+<p><img data-src="/images/14.png"></p>
+<p><strong>解决方法</strong>：</p>
+<p>利用anki的wordquery插件在pc或mac上自制牌组后同步到移动端：</p>
+<p>wordquery插件的使用方法见下面链接：</p>
+<p>anki高阶用法：利用wordquery插件实现模板化自动化制作卡片（待更新）</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1qW411a7fZ">wordquery网络教学视频链接</a></p>
+<p><a target="_blank" rel="noopener" href="https://finalion.github.io/WordQuery/guide-cn.html">wordquery官方文档</a></p>
+</li>
+</ol>
+<h2 id="个人使用感受"><a href="#个人使用感受" class="headerlink" title="个人使用感受"></a>个人使用感受</h2><h3 id="优点"><a href="#优点" class="headerlink" title="优点:"></a>优点:</h3><ol>
+<li>利用anki科学的复习机制和自动化部署复习卡片，如果肯花时间并坚持下来，短期记忆转化为长期记忆，记忆效果好。</li>
+</ol>
+<p>2.正确评估自己，塑造危机感。因为anki都有数据记录，能明确知道，自己的学习进度和速度。</p>
+<ol start="3">
+<li>软件开源，高度自由。相对于墨墨背单词等同样拥有复习机制的应用来说，anki的自由度更高，可以自己定制牌组的样式，内容，复习机制等方方面面。</li>
+</ol>
+<p>4.全平台同步，系统之间数据互相流通。比如我通常在pc端做好卡片同步到iPad上去背诵。</p>
+<p> 5.插件多，用法多样。anki拥有大量的插件，可以满足不同人群的不同功能。没有想要的插件的话，大佬可以自己DIY一个～(￣▽￣～)(～￣▽￣)～</p>
+<ol start="6">
+<li>除iOS外其他系统均免费下载~，白嫖党的胜利ヾ(≧∇≦*)ゝ</li>
+</ol>
+<h3 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h3><ol>
+<li><p>软件入门难，选项多，操作较复杂。（教程多 B站&amp;知乎）</p>
+</li>
+<li><p>前期需要摸索适合自己的复习机制，复习频繁了会加大工作量，复习不够又记不住。（anki默认的复习机制适合大多数人）</p>
+</li>
+<li><p>无官方牌组文件，所有牌组都要自己获取。（网上有很多资源）</p>
+</li>
+<li><p>软件没有沉没机制，未复习卡片会一天天累加，需要日日清。比如我大一暑假一个月没有用anki,待复习卡片数量暴涨到6000多。当然，直接删除牌组就什么事都木有了。</p>
+</li>
+<li><p>因服务器在国外，anki的同步较慢，且同步失败率较高，这个时候重新同步就好了。</p>
+</li>
+</ol>
+<p><em><em>贴一张自己的使用记录φ(≧ω≦</em>)♪</em>*</p>
+<img data-src="/images/17.png" style="zoom:50%;" />
+
+<p> <strong>用了几个月，累计复习80000次卡片，效果还不错(p≧w≦q)，等到了十万就换十万上去n(<em>≧▽≦</em>)n</strong></p>
+<h1 id="友情链接："><a href="#友情链接：" class="headerlink" title="友情链接："></a>友情链接：</h1><h2 id="记忆神器anki——进阶教程（一）-待更新"><a href="#记忆神器anki——进阶教程（一）-待更新" class="headerlink" title="记忆神器anki——进阶教程（一）(待更新)"></a>记忆神器anki——进阶教程（一）(待更新)</h2><ul>
+<li> 如果有错误或者是改进的意见，请在下方评论区畅所欲言。笔者第一次做个人博客，没有经验，写作也还有些欠</li>
+<li>如果你觉得对你有帮助，请动一动你可爱的小手给我打几颗星，不要下次一定好不好？</li>
+<li>(￣▽￣)～■干杯□～(￣▽￣)</li>
+<li>最后的最后，如果可以，请到我的GitHub主页给我点个star小星星吧( <em>￣▽￣)((≧︶≦</em>)</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>坚持原创分享，您的支持将鼓励我继续创作!</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/config/wechatpay.jpg" alt="ZhangChunXian 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/config/alipay.jpg" alt="ZhangChunXian 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>ZhangChunXian
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://zhangchunxian.github.io/posts/%E8%AE%B0%E5%BF%86%E7%A5%9E%E5%99%A8anki_%E5%9F%BA%E7%A1%80%E7%AF%87_url.html" title="记忆神器anki——基础篇">http://zhangchunxian.github.io/posts/记忆神器anki_基础篇_url.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%BA%94%E7%94%A8/" rel="tag"># 软件应用</a>
+              <a href="/tags/%E6%95%88%E7%8E%87/" rel="tag"># 效率</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/%E6%8F%92%E7%8F%AD%E7%94%9F%E8%80%83%E8%AF%95_%E6%96%B9%E6%B3%95_url.html" rel="prev" title="方法">
+                  <i class="fa fa-chevron-left"></i> 方法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/python%E5%B0%8F%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98_%E8%B4%AA%E5%90%83%E8%9B%87.url.html" rel="next" title="贪吃蛇 —— Python 小项目实战">
+                  贪吃蛇 —— Python 小项目实战 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">皖ICP备 2020015666 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZhangChunXian</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">62k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:45</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":false,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"ignores":null,"url":"http://zhangchunxian.github.io/posts/%E8%AE%B0%E5%BF%86%E7%A5%9E%E5%99%A8anki_%E5%9F%BA%E7%A1%80%E7%AF%87_url.html"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1.2,"jsonPath":"https://unpkg.com/live2d-widget-model-haruto@1.0.5/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

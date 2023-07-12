@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/config/favicon-32x32-next.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/config/favicon-16x16-next.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CConsolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhangchunxian.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"style":null,"show_result":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="2.3 整数的运算">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSAPP 2.3 整数的运算">
+<meta property="og:url" content="http://zhangchunxian.github.io/posts/CSAPP_2_3_%E6%95%B4%E6%95%B0%E7%9A%84%E8%BF%90%E7%AE%97_url.html">
+<meta property="og:site_name" content="ZhangChunXian">
+<meta property="og:description" content="2.3 整数的运算">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/IMG_1097(20201005-104026).JPG">
+<meta property="og:image" content="http://zhangchunxian.github.io/images/image-20201005185835285.png">
+<meta property="article:published_time" content="2020-10-05T10:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-12T06:59:47.695Z">
+<meta property="article:author" content="ZhangChunXian">
+<meta property="article:tag" content="计算机系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zhangchunxian.github.io/images/IMG_1097(20201005-104026).JPG">
+
+
+<link rel="canonical" href="http://zhangchunxian.github.io/posts/CSAPP_2_3_%E6%95%B4%E6%95%B0%E7%9A%84%E8%BF%90%E7%AE%97_url.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://zhangchunxian.github.io/posts/CSAPP_2_3_%E6%95%B4%E6%95%B0%E7%9A%84%E8%BF%90%E7%AE%97_url.html","path":"posts/CSAPP_2_3_整数的运算_url.html","title":"CSAPP 2.3 整数的运算"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CSAPP 2.3 整数的运算 | ZhangChunXian</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/rss.xml" title="ZhangChunXian" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ZhangChunXian</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">ZhangChunXian</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">15</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">16</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">32</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2-3-%E6%95%B4%E6%95%B0%E7%9A%84%E8%BF%90%E7%AE%97"><span class="nav-number">1.</span> <span class="nav-text">2.3 整数的运算</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-1-%E6%97%A0%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0%E7%9A%84%E5%8A%A0%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">2.3.1 无符号整数的加法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-2-%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0%EF%BC%88%E8%A1%A5%E7%A0%81%EF%BC%89%E7%9A%84%E5%8A%A0%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">2.3.2 有符号整数（补码）的加法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-3-%E8%A1%A5%E7%A0%81%E7%9A%84%E9%9D%9E"><span class="nav-number">1.3.</span> <span class="nav-text">2.3.3 补码的非</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B1%82%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%AD%A3%E6%95%B0%E7%9A%84%E7%9B%B8%E5%8F%8D%E6%95%B0"><span class="nav-number">1.3.1.</span> <span class="nav-text">求有符号正数的相反数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-4-%E6%97%A0%E7%AC%A6%E5%8F%B7%E6%95%B0%E4%B9%98%E6%B3%95"><span class="nav-number">1.4.</span> <span class="nav-text">2.3.4 无符号数乘法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-5-%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B0%E4%B9%98%E6%B3%95"><span class="nav-number">1.5.</span> <span class="nav-text">2.3.5 有符号数乘法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-6-%E5%B8%B8%E6%95%B0%E7%9A%84%E4%B9%98%E9%99%A4%E6%B3%95"><span class="nav-number">1.6.</span> <span class="nav-text">2.3.6 常数的乘除法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E7%A7%BB%E4%BD%8D%E5%AE%9E%E7%8E%B0%E2%80%9C%E4%B9%98%E4%BB%A52%E7%9A%84%E5%B9%82%E2%80%9C"><span class="nav-number">1.6.1.</span> <span class="nav-text">用移位实现“乘以2的幂“</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E7%A7%BB%E4%BD%8D%E5%AE%9E%E7%8E%B0%E2%80%9D%E9%99%A4%E4%BB%A52%E7%9A%84%E5%B9%82%E2%80%9C"><span class="nav-number">1.6.2.</span> <span class="nav-text">用移位实现”除以2的幂“</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-8-%E6%80%BB%E7%BB%93"><span class="nav-number">1.7.</span> <span class="nav-text">2.3.8 总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E5%9F%BA%E6%9C%AC%E8%A7%84%E5%88%99"><span class="nav-number">1.7.1.</span> <span class="nav-text">算术运算基本规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%97%A0%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0%E6%97%B6%E7%9A%84%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF"><span class="nav-number">1.7.2.</span> <span class="nav-text">使用无符号整数时的常见错误</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ZhangChunXian"
+      src="/images/config/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ZhangChunXian</p>
+  <div class="site-description" itemprop="description">ZhangChunXian</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZhangChunXian" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ZhangChunXian" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1836891291@qq.com" title="E-Mail → mailto:1836891291@qq.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="link fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://dase.ecnu.edu.cn/" title="http:&#x2F;&#x2F;dase.ecnu.edu.cn" rel="noopener" target="_blank">华东师范大学数据科学与工程学院</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/ZhangChunXian" class="github-corner" title="我的Github" aria-label="我的Github" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zhangchunxian.github.io/posts/CSAPP_2_3_%E6%95%B4%E6%95%B0%E7%9A%84%E8%BF%90%E7%AE%97_url.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/config/avatar.jpg">
+      <meta itemprop="name" content="ZhangChunXian">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZhangChunXian">
+      <meta itemprop="description" content="ZhangChunXian">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CSAPP 2.3 整数的运算 | ZhangChunXian">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CSAPP 2.3 整数的运算<a href="https://github.com/ZhangChunXian/ZhangChunXian.github.io/blob/source/source/_posts/_posts/posts/2.3Integer_Arithmetic.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-10-05 18:00:00" itemprop="dateCreated datePublished" datetime="2020-10-05T18:00:00+08:00">2020-10-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%AF%BE/" itemprop="url" rel="index"><span itemprop="name">计算机专业课</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%AF%BE/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">计算机系统</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="2-3-整数的运算"><a href="#2-3-整数的运算" class="headerlink" title="2.3 整数的运算"></a>2.3 整数的运算</h1><span id="more"></span>
+
+<h2 id="2-3-1-无符号整数的加法"><a href="#2-3-1-无符号整数的加法" class="headerlink" title="2.3.1 无符号整数的加法"></a>2.3.1 无符号整数的加法</h2><p>假设有两个w位的无符号整数x与y，当我们计算它们的和时，会发现如下两种情况。</p>
+<ol>
+<li><p>0 &lt;= x+y &lt;= 2^w^-1</p>
+<p>这时我们可以直接用一个唯一的w位二进制数来表示<code>x+y</code>的值。</p>
+</li>
+<li><p>x+y &gt; 2^w^-1</p>
+<p>这种情况称为”溢出“(overflow)。大部分编程语言，包括C语言，仅仅支持固定位数的运算，也就是说两个w位的整数相加，其结果必定是w位的整数，不可能会产生w+1位的整数。<strong>二进制的溢出仅仅会溢出一位。</strong></p>
+<p>两个w位的整数相加从算术上看至多会产生w+1位整数。当产生”溢出“时，计算机会抛弃运算结果的最高位，即第w+1位，留下其余w位作为运算结果。</p>
+<p>例如 考虑以下4位无符号整数运算</p>
+<p>x = [1001] y = [1100]</p>
+<p>从算术结果上来看， sum(x, y) = [10101]， 但是计算机不支持在溢出时进位，所以运算结果需要砍掉最高位的1。计算机的实际运算结果 x+y = [0101]。</p>
+</li>
+</ol>
+<p>综上所述，w位无符号整数的加法运算结果实际上就是   实际运算结果 mod 2^w^。</p>
+<blockquote>
+<p>在执行C语言过程中，”溢出“并不会报错。</p>
+<p>这就需要开发者去留心，去警惕可能会发生的溢出现象。</p>
+<p>当然也可以用专门的函数去检测”溢出现象“</p>
+</blockquote>
+   <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Determine whether arguments can be added without overflow*/</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">uadd_ok</span><span class="params">(<span class="type">unsigned</span> x, <span class="type">unsigned</span> y)</span>&#123;</span><br><span class="line">    <span class="type">int</span> sum = x+y;</span><br><span class="line">    <span class="keyword">return</span> sum &gt; x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 当发生溢出时，函数就会返回0， 不发生溢出时返回1</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-3-2-有符号整数（补码）的加法"><a href="#2-3-2-有符号整数（补码）的加法" class="headerlink" title="2.3.2 有符号整数（补码）的加法"></a>2.3.2 有符号整数（补码）的加法</h2><p>对于w位有符号整数的加法，就要更复杂一些了。当两者的和小于-2^w-1^，或者大于2^w-1^-1时，就会发生溢出现象。</p>
+<p>但即使更加复杂，有符号整数的加法遵循的原则与无符号整数无异，仍然时去掉溢出的最高位。<strong>不同点是有符号整数的加法的剩余位数必须视作补码</strong>。</p>
+<ol>
+<li><p>x+y &lt; -2^w-1^</p>
+<p>此时会发生”负溢出“（<code>negative overflow</code>）。计算机会自动抛弃运算产生的最高位，留下其余w位作为运算结果</p>
+<p>eg1 当w=4, x = [1000], y = [1011], 从算术结果上来看，sum(x, y) = [10011], 抛弃最高位后，计算机的实际运算结果 x+y = [0011] = (3)<del>10</del></p>
+</li>
+<li><p>-2^w-1^ &lt;= x+y &lt;= 2^w-1^-1</p>
+<p>此时计算机不发生溢出现象。计算机得到的实际结果等于算术结果。</p>
+<p>eg2 当w=4， x =1000, y = 0101, 算术结果和计算机的实际运行结果都为sum(x+y) = [1101] = (-3)<del>10</del></p>
+</li>
+<li><p>x+y &gt; 2^w-1^-1</p>
+<p>此时会发生”正溢出“（<code>positive overflow</code>）。计算机会自动抛弃运算产生的最高位，留下其余w位作为运算结果</p>
+<p>eg1 当w=4, x = [0101], y = [0101], 从算术结果上来看，sum(x, y) = [1010]..计算机的实际运算结果也是 x+y= [1010] = (-6)<del>10</del></p>
+</li>
+</ol>
+<p>那我们如何检查和分辨出正溢出和负溢出呢？规律如下</p>
+<ol>
+<li>当 x &gt; 0, y &gt; 0, 且计算机的实际运算结果 x+y 小于零时，就说明发生了正溢出现象。</li>
+<li>当 x &lt; 0,  y &lt; 0, 且计算机的实际运算结果 x+y 大于零时, 就说明发生了负溢出现象。</li>
+</ol>
+<p>我们可以用以下代码来检验溢出(int 类型有符号整数）。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Determine whether arguments can be added without overflow*/</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">tadd_ok</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span>&#123;</span><br><span class="line">    <span class="type">int</span> sum = x+y;</span><br><span class="line">    <span class="type">int</span> neg_over = x &lt; <span class="number">0</span> &amp;&amp; y &lt; <span class="number">0</span> &amp;&amp; sum &gt;= <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> pos_over = x &gt;= <span class="number">0</span> &amp;&amp; y &gt;= <span class="number">0</span> &amp;&amp; sum &lt; <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> !neg_over &amp;&amp; !pos_over;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-3-3-补码的非"><a href="#2-3-3-补码的非" class="headerlink" title="2.3.3 补码的非"></a>2.3.3 补码的非</h2><h3 id="求有符号正数的相反数"><a href="#求有符号正数的相反数" class="headerlink" title="求有符号正数的相反数"></a>求有符号正数的相反数</h3><p>第一种方法：</p>
+<p>我们知道了一个有符号整数的二进制表示，求出该整数的相反数的二进制表示只需要下列两步</p>
+<ol>
+<li><p>将二进制的所有位取反。</p>
+</li>
+<li><p>将1.得到的结果的最后一位再加1.</p>
+</li>
+</ol>
+<p>eg1. (5)<del>10</del> = (0101)<del>2</del>, 将二进制所有位取反后得到(1010)<del>2</del>， 最后一位加1得到 (1011)<del>2</del>, 按照补码的运算， (1011)<del>2</del> = (5)<del>10</del></p>
+<p>第二种方法：</p>
+<p>找出二进制表示中最右边的1，该1的位置左侧取反，右侧不变。</p>
+<p>eg2. (5)<del>10</del> = (010<em><strong>1</strong></em>)<del>2</del>, 最右边的1已经用粗斜体表示，按照规则转化为 (1011)<del>2</del>。按照补码的运算， (1011)<del>2</del> = (5)<del>10</del></p>
+<p>对于一个w位整数x，x的非（在算术中称为相反数）的规律如下 TMin指x所能表示的最小值。<br>$$<br>-x = \begin{cases}<br>TMin &amp; \text{ if } x= TMin \<br>-x &amp; \text{ if } x&gt; TMin<br>\end{cases}<br>$$</p>
+<p>解释以下唯一的例外，以4位二进制为例， TMin = (1000)<del>2</del>, 所有位取反得到(0111)<del>2</del>, 最后一位加1后得到 (1000)<del>2</del>, 正好是本身。<strong>这是表达式中唯一的例外。</strong></p>
+<h2 id="2-3-4-无符号数乘法"><a href="#2-3-4-无符号数乘法" class="headerlink" title="2.3.4 无符号数乘法"></a>2.3.4 无符号数乘法</h2><p>w位无符号整数的范围为 0 ~ 2^w^-1, 两个w位整数相乘，范围为 0 ~(2^w^-1)^2^, 至少需要2w位才能完成表示。但C语言中仍然用w位表示二者乘积，即抛弃前w位，只留下后w的数据, 在公式中结果用$x * _{u}^{w}\textrm{y}$表示。则<br>$$<br>x * _{w}^{u}\textrm{y} = (x \cdot y ) mod  2^{w}<br>$$</p>
+<h2 id="2-3-5-有符号数乘法"><a href="#2-3-5-有符号数乘法" class="headerlink" title="2.3.5 有符号数乘法"></a>2.3.5 有符号数乘法</h2><p>与无符号数乘法规则基本相同。</p>
+<p>唯一的不同点是，<strong>最后的结果是用补码表示的</strong>。我们用$x * _{t}^{w}\textrm{y}$代表C语言中的乘积值。则<br>$$<br>x * _{w}^{t}\textrm{y} = (x \cdot y ) mod  2^{w}<br>$$</p>
+<p><img data-src="/../../images/IMG_1097(20201005-104026).JPG" alt="IMG_1097(20201005-104026)"></p>
+<p>下面用一个程序来检验乘法运算时的溢出</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Determine whether arguments can be multiplied without overflow */</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">tmult_ok</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span>&#123;</span><br><span class="line">    <span class="type">int</span> p = x*y;</span><br><span class="line">    <span class="comment">/* Either x is zero, or dividing p by x gives y */</span></span><br><span class="line">    <span class="keyword">return</span> !x || p/x == y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-3-6-常数的乘除法"><a href="#2-3-6-常数的乘除法" class="headerlink" title="2.3.6 常数的乘除法"></a>2.3.6 常数的乘除法</h2><p>计算机中乘法的运算速度相对于加减法，位运算，移位运算来说时比较慢的。因此，我们可以考虑用较快的位运算，移位等操作来代替缓慢的乘法。</p>
+<h3 id="用移位实现“乘以2的幂“"><a href="#用移位实现“乘以2的幂“" class="headerlink" title="用移位实现“乘以2的幂“"></a>用移位实现“乘以2的幂“</h3><ul>
+<li>无论有符号数还是无符号数<ul>
+<li> u&lt;&lt; k 可得到 u * 2^k^ </li>
+</ul>
+</li>
+</ul>
+<p>如果运算结果溢出，那么遵守和前面乘法一样的规则，去掉溢出的高位，保留原本的位数。</p>
+<p>c编译器会通过移位，加法和减法的组合来消除许多整数与常数相乘的情况。</p>
+<p>例如 表达式 x*14， 因为 14 = 2^3^ + 2^2^ + 2^1^, 所以编译器将这个乘法运算转变为</p>
+<p> (x&lt;&lt;3) + (x&lt;&lt;2) + (x&lt;&lt;1)**注意，移位运算与加减法在一个表达式中时一定要加括号！)**，即将一次乘法运算转变为3个移位运算和两个加法运算。 </p>
+<h3 id="用移位实现”除以2的幂“"><a href="#用移位实现”除以2的幂“" class="headerlink" title="用移位实现”除以2的幂“"></a>用移位实现”除以2的幂“</h3><p>在机器中除法的运算比乘法更慢。</p>
+<ul>
+<li><p>整数“除以2的幂”的商</p>
+<ul>
+<li><p>u &gt;&gt; k 得到  小于等于（u / 2^k^ ）的最大整数</p>
+</li>
+<li><p> 无符号整数使用逻辑右移，有符号整数使用算术右移。</p>
+</li>
+<li><p>右移会产生二进制小数，在机器运算最后的结果中被去掉。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>具体如图所示（以无符号整数为例子）</p>
+<p><img data-src="/../../images/image-20201005185835285.png" alt="image-20201005185835285"></p>
+<p>从中我们可以看出，在C语言中整数与整数做除法得到的一定还是个整数，而且得到的整数是小于等于（u / 2 ^k^ ）的最大整数。</p>
+<p>此外，还可以通过特殊的运算得到 大于等于（u/2^k^)的最小整数。具体见CSAPP英文版p141.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return x&gt;&gt;4</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-3-8-总结"><a href="#2-3-8-总结" class="headerlink" title="2.3.8 总结"></a>2.3.8 总结</h2><h3 id="算术运算基本规则"><a href="#算术运算基本规则" class="headerlink" title="算术运算基本规则"></a>算术运算基本规则</h3><p>加法：</p>
+<ul>
+<li>无/有符号数的加法：正常加法后再截断，位级的运算相同</li>
+</ul>
+<p>乘法：</p>
+<ul>
+<li>无/有符号数的乘法: 正常乘法后加截断操作,位级运算相同</li>
+</ul>
+<h3 id="使用无符号整数时的常见错误"><a href="#使用无符号整数时的常见错误" class="headerlink" title="使用无符号整数时的常见错误"></a>使用无符号整数时的常见错误</h3><ul>
+<li><p>忽略有符号数隐式转换(casting)到无符号数。</p>
+</li>
+<li><p>无符号数在运算过程中在数学算术上会产生负数结果，在计算机中转换为正数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* WARNING: This is buggy code */</span></span><br><span class="line"><span class="type">float</span> <span class="title function_">sum_elements</span><span class="params">(<span class="type">float</span> a[], <span class="type">unsigned</span> length)</span>&#123;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="type">float</span> result = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i&lt;= length<span class="number">-1</span>; i++)		<span class="comment">// bug句需纠正</span></span><br><span class="line">        result += a[i];</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意，当<code>length=0</code>时， 第一次判断条件中length-1算术结果为-1，但是无符号整数的运算规则可知，实际产生结果将是一个相当大的正数。</p>
+<p>纠正</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(i=<span class="number">0</span>; i &lt; length; i++)</span><br></pre></td></tr></table></figure></li>
+<li><p>不知道一些函数方法默认返回无符号整数，采用有符号整数的算法</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Determine whether string s is longer than string t*/</span></span><br><span class="line"><span class="comment">/* a buggy function */</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">strlonger</span><span class="params">(<span class="type">char</span> *s, <span class="type">char</span> *t)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">strlen</span>(s) - <span class="built_in">strlen</span>(t) &gt; <span class="number">0</span>;		<span class="comment">// 待修改代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意<strong>strlen函数的返回值是无符号整数。</strong>无符号整数的减法得到的仍然是无符号整数！除非s数组与t数组长度相同，否则该函数输出均为1.</p>
+<p>纠正</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="built_in">strlen</span>(s) &gt; <span class="built_in">strlen</span>(t)</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>坚持原创分享，您的支持将鼓励我继续创作!</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/config/wechatpay.jpg" alt="ZhangChunXian 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/config/alipay.jpg" alt="ZhangChunXian 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>ZhangChunXian
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://zhangchunxian.github.io/posts/CSAPP_2_3_%E6%95%B4%E6%95%B0%E7%9A%84%E8%BF%90%E7%AE%97_url.html" title="CSAPP 2.3 整数的运算">http://zhangchunxian.github.io/posts/CSAPP_2_3_整数的运算_url.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" rel="tag"># 计算机系统</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/CSAPP_2_1_%E4%BF%A1%E6%81%AF%E7%9A%84%E5%AD%98%E5%82%A8_url.html" rel="prev" title="CSAPP 2.1 信息的存储">
+                  <i class="fa fa-chevron-left"></i> CSAPP 2.1 信息的存储
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/CSAPP_%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E5%88%AB%E8%A1%A8%E7%A4%BA%E5%9F%BA%E7%A1%80_url.html" rel="next" title="CSAPP 程序的机器级别表示基础">
+                  CSAPP 程序的机器级别表示基础 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">皖ICP备 2020015666 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZhangChunXian</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">62k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:45</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":false,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"ignores":null,"url":"http://zhangchunxian.github.io/posts/CSAPP_2_3_%E6%95%B4%E6%95%B0%E7%9A%84%E8%BF%90%E7%AE%97_url.html"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1.2,"jsonPath":"https://unpkg.com/live2d-widget-model-haruto@1.0.5/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
