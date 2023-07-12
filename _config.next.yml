@@ -189,8 +189,8 @@ footer:
 
   # Beian ICP and gongan information for Chinese users. See: http://www.beian.miit.gov.cn, http://www.beian.gov.cn
   beian:
-    enable: false
-    icp:
+    enable: true
+    icp: 皖ICP备 2020015666
     # The digit in the num of gongan beian.
     gongan_id:
     # The full num of gongan beian.
@@ -205,7 +205,7 @@ footer:
 # CC licenses are available in 39 languages, you can find the specific and correct abbreviation you need on https://creativecommons.org
 creative_commons:
   license: by-nc-sa
-  sidebar: true
+  sidebar: true 
   post: true
   language:
 
